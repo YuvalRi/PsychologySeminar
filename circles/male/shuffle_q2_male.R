@@ -127,12 +127,6 @@ p2 <- ggplot(sim_results, aes(x=number.of.circles,
                               fill= factor(ifelse(number.of.circles=="20","Highlighted","Normal")))) + 
   scale_fill_manual(name = "20", values=c("salmon3","white")) +
   geom_histogram(bins = 80, aes(y = after_stat(count / sum(count))), colour="black")+
-  stat_function(
-    fun = dnorm, 
-    args = list(mean = mean(sim_results$number.of.circles), sd = sd(sim_results$number.of.circles)), 
-    lwd = 0.65, 
-    col = 'midnightblue'
-  ) +
   theme_bw() +
   xlab("Number of Circles") + ylab("Frequency") +
   theme(

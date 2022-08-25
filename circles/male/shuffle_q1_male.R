@@ -69,22 +69,6 @@ creating_edges <- function(data){
   return(edges_vec)
 }
 
-# converting data frame to directed graph
-data_to_Dgraph <- function(data){
-  data <- name_to_number(data)
-  edges <- creating_edges(data)
-  graph <- graph(edges, directed = T)
-  return(graph)
-}
-
-# converting data frame to undirected graph
-data_to_Ugraph <- function(data){
-  data <- name_to_number(data)
-  edges <- creating_edges(data)
-  graph <- graph(edges, directed = F)
-  return(graph)
-}
-
 # return a permutation of 0,1 where 1 represent an edges and 0 represent no edge
 sample_values <- function(data){
   
@@ -133,19 +117,26 @@ write_xlsx(sim_results,"C://Users//yuval//OneDrive//english folder//Seminar - si
 data_q1_male <- read.csv("C://Users//yuval//OneDrive//english folder//Seminar - clicks//datasets created by simulations//circles//sim_data_q1_male_circles.csv")
 
 # histogram
-p <- ggplot(data_q1_male, aes(x=ï..number.of.circles,
-                             fill= "white")) + 
-  #scale_fill_manual(name = "14", values=c("white")) +
-  geom_vline(aes(xintercept= 14 ),
-             color="red", linetype="dashed", size=1) +
-  geom_histogram(bins = 25, aes(y= after_stat(count / sum(count))), colour= "black")+
-  theme_bw() +
-  xlab("Number of Circles") + ylab("Frequency") +
-  theme(
-    plot.title = element_text(size=15)
-  ) +
-  scale_x_continuous(breaks=c(12:20)) + 
-  ggtitle("Frequency of Number of circles in the shuffle")
+p <- ggplot(data_q1_male, 
+            aes(x=ï..number.of.circles,
+                fill= factor(ifelse(ï..number.of.circles=="14","Highlighted","Normal"))
+                )
+            ) + 
+      scale_fill_manual(name = "14", 
+                        values=c("steelblue2","white")) +
+      geom_histogram(bins = 25, 
+                     aes(y= after_stat(count / sum(count))), 
+                     colour= "black") +
+      theme_bw() +
+      xlab("Number of circles") + 
+      ylab("Frequency") +
+      theme(plot.title = element_text(size=15),
+            panel.grid.major = element_blank(),
+            panel.grid.minor = element_blank(),
+            text = element_text(size = 15)) +
+      scale_x_continuous(breaks=c(12:20)) + 
+      ggtitle("Frequency of number of circles in the shuffle") +
+      theme(legend.position = "none")  
 p 
 
 
