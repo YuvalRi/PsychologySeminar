@@ -131,15 +131,6 @@ sample_values <- function(data){
   return(new_vec)
 }
 
-
-#Data Frame
-Clicks_origin_men_and_women <- read.csv("C://Users//yuval//Desktop//english folder//Seminar - clicks//ClicksMales.csv", header = TRUE)
-#Sub df - Male only
-Clicks_men <- Clicks_origin_men_and_women[c(1:42), c(1,2,16)]
-#Sorted Male df
-Clicks_sorted_men <- arrange(Clicks_men, ï..Participant)
-
-
 # shuffle simulation 
 # n - number of vertices 
 B <- 10000
@@ -154,6 +145,19 @@ sim_1_diff <- function(data, n){
   sim_1_diff_results <- as.data.frame(do.call(rbind, diff_mat))
   return(sim_1_diff_results)
 }
+
+pvalue <- function(data, real_value){
+  vec <- ifelse(data[,1] > real_value, 1,0)
+  return(mean(vec))
+}
+
+
+#Data Frame
+Clicks_origin_men_and_women <- read.csv("C://Users//yuval//Desktop//english folder//Seminar - clicks//ClicksMales.csv", header = TRUE)
+#Sub df - Male only
+Clicks_men <- Clicks_origin_men_and_women[c(1:42), c(1,2,16)]
+#Sorted Male df
+Clicks_sorted_men <- arrange(Clicks_men, ï..Participant)
 
 sim_res_1 <- sim_1_diff(Clicks_sorted_men, 7)
 
@@ -178,29 +182,40 @@ diff_data_q1_male <- read_csv("C://Users//yuval//OneDrive//english folder//Semin
 diff_data_q1_male$mean <- rowMeans(diff_data_q1_male, na.rm=TRUE)
 
 # histogram
-diff_hist_q1_male <- ggplot(diff_data_q1_male, aes(x=mean)) + 
-  geom_vline(aes(xintercept= mean(as.numeric(diff_rates(Clicks_sorted_men, 7)))),
-             color="red", linetype="dashed", size=1) +
-  geom_histogram(bins = 20, aes(y= after_stat(count / sum(count))), colour= "black")+
+diff_hist_q1_male <- ggplot(diff_data_q1_male,
+                            aes(x= mean,
+                            fill=factor(ifelse(mean == diff_data_q1_male$mean[2],"Highlighted","Normal")))
+                            ) +
+  scale_fill_manual(name = "2.5",
+                    values=c("cornflowerblue","gray87")) +
+  geom_histogram(bins = 14,
+                 aes(y= after_stat(count / sum(count))),
+                 colour= "black") +
+  theme_bw() +
   ylab("Frequency") +
   xlab("Differences") +
-  theme_bw() +
-  theme(
-    plot.title = element_text(size=15)
-  ) +
-  scale_x_continuous(breaks = seq(0.5,3.2,0.2)) +
-  geom_text(x=2.65, y=0.2, label="2.57") +  ggtitle("Frequency of differences in the shuffle")
+  theme(plot.title = element_text(size=15),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        text = element_text(size = 15),
+        aspect.ratio=1) +
+  scale_x_continuous(breaks = seq(0.5,3.2,0.2),
+                     expand = c(0, 0)) +
+  scale_y_continuous(expand = c(0, 0)) +
+  geom_vline(aes(xintercept= mean(as.numeric(diff_rates(Clicks_sorted_men, 7)))),
+             color="black",
+             linetype="dashed",
+             size=1) +
+  geom_text(x=2.7,
+            y=0.2,
+            label="2.57") + 
+  coord_cartesian(ylim = c(0, 0.5)) +
+  theme(legend.position = "none") +
+  ggtitle("Frequency of differences in the shuffle") 
 diff_hist_q1_male
 
+
 # 2.57 - number of differences in the real graph
-pvalue <- function(data, real_value){
-  vec <- ifelse(data[,1] > real_value, 1,0)
-  return(mean(vec))
-}
-
-
-#pvalue
-#mean(as.numeric(diff_rates(Clicks_sorted_men, 7))) < quantile(diff_data_q1_male$mean, 0.05)
-#pvalue(diff_data_q1_male, mean(as.numeric(diff_rates(Clicks_sorted_men, 7))))
+pvalue(data_q1_male,2.571429)
 
 ## Unsiginificant 

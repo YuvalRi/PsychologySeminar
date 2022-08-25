@@ -85,6 +85,11 @@ sample_values <- function(data){
   return(new_vec)
 }
 
+pvalue <- function(data, real_value){
+  vec <- ifelse(data[,1] > real_value, 1,0)
+  return(1-mean(vec))
+}
+
 # Question 1
 #Data Frame
 Clicks_origin_men_and_women <- read.csv("C://Users//yuval//Desktop//english folder//Seminar - clicks//ClicksMales.csv", header = TRUE)
@@ -133,7 +138,8 @@ p <- ggplot(data_q1_male,
       theme(plot.title = element_text(size=15),
             panel.grid.major = element_blank(),
             panel.grid.minor = element_blank(),
-            text = element_text(size = 15)) +
+            text = element_text(size = 15),
+            aspect.ratio=1) +
       scale_x_continuous(breaks=c(12:20)) + 
       ggtitle("Frequency of number of circles in the shuffle") +
       theme(legend.position = "none")  
@@ -141,11 +147,6 @@ p
 
 
 # pvalue, 14 - number of circles in the real graph
-pvalue <- function(data, real_value){
-  vec <- ifelse(data[,1] > real_value, 1,0)
-  return(1-mean(vec))
-}
-
 pvalue(data_q1_male,14)
 
-
+## UNSIGNIFICANT 
