@@ -43,7 +43,7 @@ neighbors_directed <- function(df, v){
       vec[i] <- df[i,2]
     }
   }
-  return(vec[!is.na(vec)])
+  return(unique(vec[!is.na(vec)]))
 }
 
 # input: edge - pair of vertices of df - dataframe
@@ -103,8 +103,8 @@ sample_values <- function(data){
 
 # function for getting pvalue 
 pvalue <- function(data, real_value){
-  p_vec <- ifelse(data[,11] >= real_value, 0, 1)
-  return(mean(p_vec))
+  vec <- ifelse(data[,1] > real_value, 1,0)
+  return(mean(vec))
 }
 
 #DF

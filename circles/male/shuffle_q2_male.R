@@ -88,9 +88,10 @@ sample_values <- function(data){
 
 # function for getting pvalue 
 pvalue <- function(data, real_value){
-  p_vec <- ifelse(data[,1] <= real_value, 0, 1)
-  return(mean(p_vec))
+  vec <- ifelse(data[,1] > real_value, 1,0)
+  return(1-mean(vec))
 }
+
 
 #Data Frame
 Clicks_origin_men_and_women <- read.csv("C://Users//yuval//Desktop//english folder//Seminar - clicks//ClicksMales.csv", header = TRUE)
@@ -102,7 +103,6 @@ Clicks_sorted_men <- arrange(Clicks_men, ï..Participant)
 Clicks_sorted_men <- name_to_number(Clicks_sorted_men)
 
 # simulation 
-# we have 19 edges over all
 B <- 10000 #number of iterations
 circles <- c() #empty vector which will get the number of circles in each iteration (vector of length - 10000)
 sim_2 <- function(data){

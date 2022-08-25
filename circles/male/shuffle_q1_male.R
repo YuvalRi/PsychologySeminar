@@ -90,15 +90,7 @@ pvalue <- function(data, real_value){
   return(1-mean(vec))
 }
 
-# Question 1
-#Data Frame
-Clicks_origin_men_and_women <- read.csv("C://Users//yuval//Desktop//english folder//Seminar - clicks//ClicksMales.csv", header = TRUE)
-#Sub df - Male only
-Clicks_men <- Clicks_origin_men_and_women[c(1:42),c(1,2,16)]
-#Sorted Male df
-Clicks_sorted_men <- arrange(Clicks_men, ï..Participant)
-
-# simulation 
+# Question 1 - simulation
 B <- 10000
 circles <- c()
 sim_1 <- function(data){
@@ -112,6 +104,13 @@ sim_1 <- function(data){
   }
   return(circles)
 }
+
+#Data Frame
+Clicks_origin_men_and_women <- read.csv("C://Users//yuval//Desktop//english folder//Seminar - clicks//ClicksMales.csv", header = TRUE)
+#Sub df - Male only
+Clicks_men <- Clicks_origin_men_and_women[c(1:42),c(1,2,16)]
+#Sorted Male df
+Clicks_sorted_men <- arrange(Clicks_men, ï..Participant)
 
 sim_results <- data.frame("number of circles" = c(sim_1(Clicks_sorted_men))) 
 
@@ -128,7 +127,7 @@ p <- ggplot(data_q1_male,
                 )
             ) + 
       scale_fill_manual(name = "14", 
-                        values=c("steelblue2","white")) +
+                        values=c("dodgerblue2","gray63")) +
       geom_histogram(bins = 25, 
                      aes(y= after_stat(count / sum(count))), 
                      colour= "black") +
@@ -140,7 +139,10 @@ p <- ggplot(data_q1_male,
             panel.grid.minor = element_blank(),
             text = element_text(size = 15),
             aspect.ratio=1) +
-      scale_x_continuous(breaks=c(12:20)) + 
+      scale_x_continuous(breaks=c(10:20),
+                         expand = c(0, 0)) +
+      scale_y_continuous(expand = c(0, 0)) + 
+      coord_cartesian(ylim = c(0,0.4), xlim = c(10, 20)) +
       ggtitle("Frequency of number of circles in the shuffle") +
       theme(legend.position = "none")  
 p 

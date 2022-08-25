@@ -189,7 +189,7 @@ dev.off()
 # 45 males df
 males_45 <- read.csv("C://Users//yuval//OneDrive//english folder//Seminar - clicks//more datasets//45males_subset.csv")
 
-#number of circles in our graph - Q1
+#number of circles in our graph - Q1: 60 
 males_45 <- name_to_number(males_45)
 males_45 <- directed_to_undirected_q3(males_45, TRUE)
 edges <- creating_edges(males_45)

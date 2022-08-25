@@ -183,14 +183,12 @@ diff_data_q1_male$mean <- rowMeans(diff_data_q1_male, na.rm=TRUE)
 
 # histogram
 diff_hist_q1_male <- ggplot(diff_data_q1_male,
-                            aes(x= mean,
-                            fill=factor(ifelse(mean == diff_data_q1_male$mean[2],"Highlighted","Normal")))
+                            aes(x= mean)
                             ) +
-  scale_fill_manual(name = "2.5",
-                    values=c("cornflowerblue","gray87")) +
   geom_histogram(bins = 14,
                  aes(y= after_stat(count / sum(count))),
-                 colour= "black") +
+                 fill = "gray63",
+                 colour = "black") +
   theme_bw() +
   ylab("Frequency") +
   xlab("Differences") +
@@ -199,17 +197,17 @@ diff_hist_q1_male <- ggplot(diff_data_q1_male,
         panel.grid.minor = element_blank(),
         text = element_text(size = 15),
         aspect.ratio=1) +
-  scale_x_continuous(breaks = seq(0.5,3.2,0.2),
+  scale_x_continuous(breaks = seq(0.5,3.5,0.5),
                      expand = c(0, 0)) +
   scale_y_continuous(expand = c(0, 0)) +
-  geom_vline(aes(xintercept= mean(as.numeric(diff_rates(Clicks_sorted_men, 7)))),
-             color="black",
+  geom_vline(aes(xintercept = mean(as.numeric(diff_rates(Clicks_sorted_men, 7)))),
+             color="dodgerblue2",
              linetype="dashed",
              size=1) +
   geom_text(x=2.7,
-            y=0.2,
+            y=0.3,
             label="2.57") + 
-  coord_cartesian(ylim = c(0, 0.5)) +
+  coord_cartesian(ylim = c(0, 0.4), xlim = c(0.3, 3.5)) +
   theme(legend.position = "none") +
   ggtitle("Frequency of differences in the shuffle") 
 diff_hist_q1_male
