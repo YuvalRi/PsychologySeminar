@@ -139,10 +139,10 @@ p <- ggplot(data_q1_male,
             panel.grid.minor = element_blank(),
             text = element_text(size = 15),
             aspect.ratio=1) +
-      scale_x_continuous(breaks=c(10:20),
+      scale_x_continuous(breaks=c(11:21),
                          expand = c(0, 0)) +
       scale_y_continuous(expand = c(0, 0)) + 
-      coord_cartesian(ylim = c(0,0.4), xlim = c(10, 20)) +
+      coord_cartesian(ylim = c(0,0.4), xlim = c(11, 21)) +
       ggtitle("Frequency of number of circles in the shuffle") +
       theme(legend.position = "none")  
 p 
