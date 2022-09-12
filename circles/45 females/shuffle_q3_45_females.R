@@ -128,18 +128,30 @@ export(sim_results, "sim_3_shuffle_45_females_q3.xlsx")
 sim_results_df <- read.csv("C://Users//yuval//OneDrive//english folder//Seminar - clicks//datasets created by simulations//circles//sim_3_shuffle_45_females_q3.csv")
 
 # histogram
-p <- ggplot(sim_results_df, aes(x=ï..number.of.circles,
-                                fill= factor(ifelse(ï..number.of.circles== "0","Highlighted","Normal")))) + 
-  scale_fill_manual(name = "0", values=c("tan1","white")) +
-  geom_histogram(bins = 20, aes(y= after_stat(count / sum(count))), colour= "black")+
+p <- ggplot(sim_results_df, 
+            aes(x=ï..number.of.circles,
+                fill= factor(ifelse(ï..number.of.circles=="0","Highlighted","Normal"))
+            )
+) + 
+  scale_fill_manual(name = "0", 
+                    values=c("dodgerblue2","gray63")) +
+  geom_histogram(bins = 15, 
+                 aes(y= after_stat(count / sum(count))), 
+                 colour= "black") +
   theme_bw() +
-  xlab("Number of Circles") +
+  xlab("Number of circles") + 
   ylab("Frequency") +
-  theme(
-    plot.title = element_text(size=15)
-  ) +
-  scale_x_continuous(breaks = seq(0,5,1)) + 
-  ggtitle("Frequency of Number of circles in the shuffle")
+  theme(plot.title = element_text(size=15),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        text = element_text(size = 15),
+        aspect.ratio=1) +
+  scale_x_continuous(breaks=c(0:3),
+                     expand = c(0, 0)) +
+  scale_y_continuous(expand = c(0, 0)) + 
+  coord_cartesian(ylim = c(0,0.8), xlim = c(-0.5, 3)) +
+  ggtitle("Frequency of number of circles in the shuffle") +
+  theme(legend.position = "none")  
 p 
 
 # pvalue, 0 - number of circles in the real graph
