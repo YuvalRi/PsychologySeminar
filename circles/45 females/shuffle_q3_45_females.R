@@ -34,14 +34,14 @@ name_to_number <- function(data) {
 }
 
 # function which return a data frame that represent an undirected graph (removing duplicated edges)
-# Q1: version == TRUE
+# Q3: version == FALSE
 directed_to_undirected_q3 <- function(df, version){
   
   df_undirected <- data.frame() # TODO: CREATE A NEW DF
   
   for( i in 1:nrow(df)){
     for( j in (i+1):nrow(df)){
-      if (j == 91){
+      if (j == 73){
         {break}
       }
       if( df[i,1] == df[j,2] & df[i,2] == df[j,1] ){
@@ -102,8 +102,12 @@ B <- 10000
 circles <- c()
 sim_3 <- function(data){
   data <- name_to_number(data)
+  # '4' has only one neighbor
+  data <- data[-which(data[,1] == "4" | data[,2] == "4"),] #removing '4' participant
   data <- directed_to_undirected_q3(data, version = FALSE)
   for (i in 1:B){
+    if ( i %% 100 == 0) 
+      cat("Progress: ", i / 100, "%\n")
     data[,3] <- sample_values(data)
     edges <- creating_edges(data)
     graph <- graph(edges, directed = F)

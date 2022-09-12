@@ -113,6 +113,7 @@ B <- 10000 #number of iterations
 circles <- c() #empty vector which will get the number of circles in each iteration (vector of length - 10000)
 sim_2 <- function(data){
   data <- name_to_number(data) # changing participants name to number
+  data <- data[-which(data[,1] == "4" | data[,2] == "4"),] #removing '4' participant
   for (i in 1:B){
     if ( i %% 100 == 0) 
       cat("Progress: ", i / 100, "%\n")
@@ -126,7 +127,6 @@ sim_2 <- function(data){
   }
   return(circles)
 }
-
 
 #  45 males df
 females_45 <- read.csv("C:\\Users\\yuval\\OneDrive\\english folder\\Seminar - clicks\\more datasets\\45females_subset.csv")
@@ -159,7 +159,7 @@ p <- ggplot(sim_results_df, aes(x=ï..number.of.circles,
 p 
 
 
-# pvalue, 72 - number of circles in the real graph
-pvalue(sim_results_df,72)
+# pvalue, 56 - number of circles in the real graph
+pvalue(sim_results_df,56)
 
 ## UNSIGNIFICANT 
