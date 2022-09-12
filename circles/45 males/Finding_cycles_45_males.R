@@ -64,36 +64,6 @@ directed_to_undirected_q3 <- function(df, version){
 }
 
 
-# function which return a data frame that represent an undirected graph (removing duplicated edges)
-# Q1: version == TRUE
-directed_to_undirected_q3 <- function(df, version){
-  
-  df_undirected <- data.frame() # TODO: CREATE A NEW DF
-  
-  for( i in 1:nrow(df)){
-    for( j in (i+1):nrow(df)){
-      if (j == 74){
-        {break}
-      }
-      if( df[i,1] == df[j,2] & df[i,2] == df[j,1] ){
-        if (df[i,3] == 1 & df[j,3] == 1){
-          df_undirected <- rbind(df_undirected, c(df[i,]))
-        }
-        if (df[i,3] == 0 & df[j,3] == 0){
-          df_undirected <- rbind(df_undirected, c(df[i,]))
-        }
-        if (df[i,3] == version & df[j,3] == !version){
-          df_undirected <- rbind(df_undirected, c(df[i,]))
-        }
-        if (df[i,3] == !version & df[j,3] == version){
-          df_undirected <- rbind(df_undirected, c(df[j,]))
-        }
-      }
-    }
-  }
-  return(df_undirected)
-}
-
 # input - data frame, output - vector of characters
 creating_edges <- function(data){
   edges_vec <- c()
@@ -174,22 +144,52 @@ neighbors <- function(df, v){
   return(vec[!is.na(vec)])
 }
 
-#  45 males df
+# function which return a data frame that represent an undirected graph (removing duplicated edges)
+# Q3: version == FALSE
+directed_to_undirected_q3 <- function(df, version){
+  
+  df_undirected <- data.frame() # TODO: CREATE A NEW DF
+  
+  for( i in 1:nrow(df)){
+    for( j in (i+1):nrow(df)){
+      if (j == 74){
+        {break}
+      }
+      if( df[i,1] == df[j,2] & df[i,2] == df[j,1] ){
+        if (df[i,3] == 1 & df[j,3] == 1){
+          df_undirected <- rbind(df_undirected, c(df[i,]))
+        }
+        if (df[i,3] == 0 & df[j,3] == 0){
+          df_undirected <- rbind(df_undirected, c(df[i,]))
+        }
+        if (df[i,3] == version & df[j,3] == !version){
+          df_undirected <- rbind(df_undirected, c(df[i,]))
+        }
+        if (df[i,3] == !version & df[j,3] == version){
+          df_undirected <- rbind(df_undirected, c(df[j,]))
+        }
+      }
+    }
+  }
+  return(df_undirected)
+}
+
+
+## Figure
+# 45 males df
 males_45 <- read.csv("C://Users//yuval//OneDrive//english folder//Seminar - clicks//more datasets//45males_subset.csv")
 males_45 <- name_to_number(males_45)
 edges <- creating_edges(males_45)
 males_45_graph <- graph(edges, directed = TRUE)
-males_45_plot <- plot(males_45_graph, layout = layout_with_graphopt, edge.arrow.size = 0.2, vertex.color="lightsteelblue1", vertex.label.color="black", vertex.frame.color="black", vertex.label.cex = 0.6,vertex.size = 25, edge.color = "black")
+males_45_plot <- plot(males_45_graph, layout = layout_with_graphopt, edge.arrow.size = 0.2, vertex.color="gray63", vertex.label.color="black", vertex.frame.color="black", vertex.label.cex = 1,vertex.size = 25, edge.color = "black")
 
 svg("figure3.svg")
-plot(males_45_graph, layout = layout_with_graphopt, edge.arrow.size = 0.2, vertex.color="lightsteelblue1", vertex.label.color="black", vertex.frame.color="black", vertex.label.cex = 0.6,vertex.size = 25, edge.color = "black", main = "Figure 3")
+plot(males_45_graph, layout = layout_with_graphopt, edge.arrow.size = 0.2, vertex.color="gray63", vertex.label.color="black", vertex.frame.color="black", vertex.label.cex = 1,vertex.size = 25, edge.color = "black", main = "nodesGraphDataset2")
 dev.off()
 
-
+## Q1 - 60 circles
 # 45 males df
 males_45 <- read.csv("C://Users//yuval//OneDrive//english folder//Seminar - clicks//more datasets//45males_subset.csv")
-
-#number of circles in our graph - Q1: 60 
 males_45 <- name_to_number(males_45)
 males_45 <- directed_to_undirected_q3(males_45, TRUE)
 edges <- creating_edges(males_45)
@@ -197,10 +197,11 @@ males_45_graph <- graph(edges, directed = FALSE)
 graph.motifs(males_45_graph,size=3)[length(graph.motifs(males_45_graph,size=3))]
 
 
-#number of circles in our graph - Q2
+## Q2 - 108 circles
 males_45 <- read.csv("C://Users//yuval//OneDrive//english folder//Seminar - clicks//more datasets//45males_subset.csv")
 males_45 <- name_to_number(males_45)
-males_45 <- males_45[-c(4,6,12, 15,24, 25, 32,34,41, 44, 51,59, 63,69, 75,83, 85),]
+# '10' has no neighbors
+males_45 <- males_45[-which(males_45[,1] == "10" | males_45[,2] == "10"),] #removing '10' participant
 # creating df with edges only
 vec1 <- ifelse(males_45[,3] == "1", males_45[,1],"0")
 vec1_nozero <- vec1[vec1 != "0"]
@@ -210,10 +211,12 @@ d <- data.frame(vec1_nozero, vec2_nozero)
 count_circles(d)
 
 
-#number of circles in our graph - Q3
+## Q3 - 10 circles
+# 45 males df
 males_45 <- read.csv("C://Users//yuval//OneDrive//english folder//Seminar - clicks//more datasets//45males_subset.csv")
 males_45 <- name_to_number(males_45)
-males_45 <- males_45[-c(4,6,12, 15,24, 25, 32,34,41, 44, 51,59, 63,69, 75,83, 85),]
+# '10' has no neighbors
+males_45 <- males_45[-which(males_45[,1] == "10" | males_45[,2] == "10"),] #removing '10' participant
 males_45 <- directed_to_undirected_q3(males_45, FALSE)
 edges <- creating_edges(males_45)
 graph <- graph(edges, directed = F)

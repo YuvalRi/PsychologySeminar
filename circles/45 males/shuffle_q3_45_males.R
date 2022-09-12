@@ -93,17 +93,16 @@ sample_values <- function(data){
 
 # function for getting pvalue 
 pvalue <- function(data, real_value){
-  p_vec <- ifelse(data[,1] <= real_value, 0, 1)
-  return(mean(p_vec))
+  vec <- ifelse(data[,1] < real_value, 1,0)
+  return(1-mean(vec))
 }
-
 
 # simulation 
 B <- 10000
 circles <- c()
 sim_3 <- function(data){
   data <- name_to_number(data)
-  data <- data[-c(4,6,12, 15,24, 25, 32,34,41, 44, 51,59, 63,69, 75,83, 85),] # 10 has no neighbors  data <- directed_to_undirected_q3(data, version = FALSE)
+  data <- data[-which(data[,1] == "10" | data[,2] == "10"),] #removing '10' participant
   data <- directed_to_undirected_q3(data, version = FALSE)
   for (i in 1:B){
     data[,3] <- sample_values(data)
@@ -147,9 +146,8 @@ p <- ggplot(sim_results_df, aes(x=ï..number.of.circles,
 p 
 
 
-#pvalue
-# 10 is the number of required circles
-10 > quantile(sim_results_df$ï..number.of.circles, 0.95)
+#pvalue, 10 - number of circles in the real graph
 pvalue(sim_results_df, 10)
 
-## UNSIGNIFICANT 
+## UNSIGNIFICANT
+

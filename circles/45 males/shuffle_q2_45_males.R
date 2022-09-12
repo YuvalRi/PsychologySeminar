@@ -93,9 +93,10 @@ sample_values <- function(data){
 
 # function for getting pvalue 
 pvalue <- function(data, real_value){
-  p_vec <- ifelse(data[,1] <= real_value, 0, 1)
-  return(mean(p_vec))
+  vec <- ifelse(data[,1] < real_value, 1,0)
+  return(1-mean(vec))
 }
+
 
 neighbors_directed <- function(df, v){
   vec <- c()
@@ -112,7 +113,7 @@ B <- 10000 #number of iterations
 circles <- c() #empty vector which will get the number of circles in each iteration (vector of length - 10000)
 sim_2 <- function(data){
   data <- name_to_number(data) # changing participants name to number
-  data <- data[-c(4,6,12, 15,24, 25, 32,34,41, 44, 51,59, 63,69, 75,83, 85),] # 10 has no neighbors
+  data <-  data[-which(data[,1] == "10" | data[,2] == "10"),] #removing '10' participant # 10 has no neighbors
   for (i in 1:B){ 
     data[,3] <- sample_values(data) 
     vec1 <- ifelse(data[,3] == "1", data[,1],"0")
@@ -157,9 +158,8 @@ p <- ggplot(sim_results_df, aes(x=ï..number.of.circles,
 p 
 
 
-#pvalue
-# 108 is the number of required circles
-108 > quantile(sim_results$number.of.circles, 0.95)
-pvalue(sim_results, 108)
+#pvalue, 108 - number of circles in the real graph
+pvalue(sim_results_df, 108)
 
-## UNSIGNIFICANT 
+## UNSIGNIFICANT
+
