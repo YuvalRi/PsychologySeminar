@@ -136,24 +136,6 @@ p2 <- ggplot(sim_results, aes(x=number.of.circles,
   ggtitle("Frequency of Number of circles in the shuffle")
 p2
  
-# we want to check if our result (number of circles) is bigger than the 95% precentile
-#Data Frame
-Clicks_origin_men_and_women <- read.csv("C://Users//yuval//Desktop//english folder//Seminar - clicks//ClicksMales.csv", header = TRUE)
-#Sub df - Male only
-Clicks_men <- Clicks_origin_men_and_women[c(1:42),c(1,2,16)]
-#Sorted Male df
-Clicks_sorted_men <- arrange(Clicks_men, ï..Participant)
-
-Clicks_sorted_men <- name_to_number(Clicks_sorted_men)
-Clicks_sorted_men <- Clicks_sorted_men[-c(5, 11, 17, 23, 29, 31:36, 42),]
-
-# creating df with edges only
-vec1 <- ifelse(Clicks_sorted_men[,3] == "1", Clicks_sorted_men[,1],"0")
-vec1_nozero <- vec1[vec1 != "0"]
-vec2 <- ifelse(Clicks_sorted_men[,3] == "1", Clicks_sorted_men[,2],"0")
-vec2_nozero <- vec2[vec2 != "0"]
-d <- data.frame(vec1_nozero, vec2_nozero)
-count_circles(d)
 
 # exporting sim_results to excel file
 library(writexl)
@@ -170,7 +152,7 @@ p <- ggplot(data_q2_male,
 ) + 
   scale_fill_manual(name = "20", 
                     values=c("dodgerblue2","gray63")) +
-  geom_histogram(bins = 20, 
+  geom_histogram(bins = 25, 
                  aes(y= after_stat(count / sum(count))), 
                  colour= "black") +
   theme_bw() +
@@ -181,10 +163,10 @@ p <- ggplot(data_q2_male,
         panel.grid.minor = element_blank(),
         text = element_text(size = 15),
         aspect.ratio=1) +
-  scale_x_continuous(breaks=seq(5,35,5),
+  scale_x_continuous(breaks=c(10:30),
                      expand = c(0, 0)) +
   scale_y_continuous(expand = c(0, 0)) + 
-  coord_cartesian(ylim = c(0,0.3), xlim = c(9, 35)) +
+  coord_cartesian(ylim = c(0,0.2), xlim = c(10, 32)) +
   ggtitle("Frequency of number of circles in the shuffle") +
   theme(legend.position = "none")  
 p 
