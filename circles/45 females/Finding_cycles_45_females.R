@@ -97,13 +97,13 @@ is_circle <- function(v1, v2, v3, df){
 # counting circles in the graph (directed graph)
 count_circles <- function(df){
   count <- 0 
-  vec <- c(1,2,3,4,5,6,7,8,9,10) # the vertices in the graph
-  for (v in 1:10){ 
-    for(w in 1:9){
+  vec <- c(1,2,3,5,6,7,8,9,10) # the vertices in the graph
+  for (v in 1:9){ 
+    for(w in 1:8){
       if (w == v){
         next
       }
-      for(z in (w+1):10){
+      for(z in (w+1):9){
         if(z == v | z == w){
           next
         }
@@ -115,7 +115,6 @@ count_circles <- function(df){
   }
   return(count)
 }
-
 
 # input: df - dataframe, v - vertex
 # output: vector of all neighbors of the vertex v
@@ -143,22 +142,52 @@ neighbors_directed <- function(df, v){
   return(unique(vec[!is.na(vec)]))
 }
 
+# function which return a data frame that represent an undirected graph (removing duplicated edges)
+# Q3: version == FALSE
+directed_to_undirected_q3 <- function(df, version){
+  
+  df_undirected <- data.frame() # TODO: CREATE A NEW DF
+  
+  for( i in 1:nrow(df)){
+    for( j in (i+1):nrow(df)){
+      if (j == 73){
+        {break}
+      }
+      if( df[i,1] == df[j,2] & df[i,2] == df[j,1] ){
+        if (df[i,3] == 1 & df[j,3] == 1){
+          df_undirected <- rbind(df_undirected, c(df[i,]))
+        }
+        if (df[i,3] == 0 & df[j,3] == 0){
+          df_undirected <- rbind(df_undirected, c(df[i,]))
+        }
+        if (df[i,3] == version & df[j,3] == !version){
+          df_undirected <- rbind(df_undirected, c(df[i,]))
+        }
+        if (df[i,3] == !version & df[j,3] == version){
+          df_undirected <- rbind(df_undirected, c(df[j,]))
+        }
+      }
+    }
+  }
+  return(df_undirected)
+}
+
+
 # 45 females df
 females_45 <- read.csv("C:\\Users\\yuval\\OneDrive\\english folder\\Seminar - clicks\\more datasets\\45females_subset.csv")
 females_45 <- name_to_number(females_45)
 edges <- creating_edges(females_45)
 females_45_graph <- graph(edges, directed = TRUE)
-females_45_plot <- plot(females_45_graph, layout = layout_with_graphopt, edge.arrow.size = 0.3, vertex.color="pink", vertex.label.color="black", vertex.frame.color="black", vertex.label.cex = 0.8,vertex.size = 25, edge.color = "black", main = "Figure 4")
+females_45_plot <- plot(females_45_graph, layout = layout_with_graphopt, edge.arrow.size = 0.3, vertex.color="pink", vertex.label.color="black", vertex.frame.color="black", vertex.label.cex = 1,vertex.size = 25, edge.color = "black", main = "Figure 4")
 
 svg("figure4.svg")
-plot(females_45_graph, layout = layout_with_graphopt, edge.arrow.size = 0.3, vertex.color="pink", vertex.label.color="black", vertex.frame.color="black", vertex.label.cex = 0.8,vertex.size = 25, edge.color = "black", main = "Figure 4")
+plot(females_45_graph, layout = layout_with_graphopt, edge.arrow.size = 0.3, vertex.color="gray63", vertex.label.color="black", vertex.frame.color="black", vertex.label.cex = 1,vertex.size = 25, edge.color = "black", main = "nodesGraphDataset2")
 dev.off()
 
 
-# 45 males df
+## Q1 - 55 circles
+# 45 females df
 females_45 <- read.csv("C:\\Users\\yuval\\OneDrive\\english folder\\Seminar - clicks\\more datasets\\45females_subset.csv")
-
-#number of circles in our graph - Q1: 55
 females_45 <- name_to_number(females_45)
 females_45 <- directed_to_undirected_q3(females_45, TRUE)
 edges <- creating_edges(females_45)
@@ -166,9 +195,11 @@ females_45_graph <- graph(edges, directed = FALSE)
 graph.motifs(females_45_graph,size=3)[length(graph.motifs(females_45_graph,size=3))]
 
 
-#number of circles in our graph - Q2: 72 
+## Q2 - 56 circles
 females_45 <- read.csv("C:\\Users\\yuval\\OneDrive\\english folder\\Seminar - clicks\\more datasets\\45females_subset.csv")
 females_45 <- name_to_number(females_45)
+# '4' has only one neighbor
+females_45 <- females_45[-which(females_45[,1] == "4" | females_45[,2] == "4"),] #removing '4' participant
 # creating df with edges only
 vec1 <- ifelse(females_45[,3] == "1", females_45[,1],"0")
 vec1_nozero <- vec1[vec1 != "0"]
@@ -178,9 +209,11 @@ d <- data.frame(vec1_nozero, vec2_nozero)
 count_circles(d)
 
 
-#number of circles in our graph - Q3: 0 
+## Q3 -  0 circles
 females_45 <- read.csv("C:\\Users\\yuval\\OneDrive\\english folder\\Seminar - clicks\\more datasets\\45females_subset.csv")
 females_45 <- name_to_number(females_45)
+# '4' has only one neighbor
+females_45 <- females_45[-which(females_45[,1] == "4" | females_45[,2] == "4"),] #removing '4' participant
 females_45 <- directed_to_undirected_q3(females_45, FALSE)
 edges <- creating_edges(females_45)
 graph <- graph(edges, directed = F)

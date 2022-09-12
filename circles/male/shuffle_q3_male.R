@@ -68,21 +68,6 @@ creating_edges <- function(data){
   return(edges_vec)
 }
 
-# converting data frame to directed graph
-data_to_Dgraph <- function(data){
-  data <- name_to_number(data)
-  edges <- creating_edges(data)
-  graph <- graph(edges, directed = T)
-  return(graph)
-}
-
-# converting data frame to undirected graph
-data_to_Ugraph <- function(data){
-  data <- name_to_number(data)
-  edges <- creating_edges(data)
-  graph <- graph(edges, directed = F)
-  return(graph)
-}
 
 # return a permutation of 0,1 where 1 represent an edges and 0 represent no edge
 sample_values <- function(data){
@@ -102,20 +87,12 @@ sample_values <- function(data){
 
 # function for getting pvalue 
 pvalue <- function(data, real_value){
-  p_vec <- ifelse(data[,1] <= real_value, 0, 1)
-  return(mean(p_vec))
+  vec <- ifelse(data[,1] < real_value, 1,0)
+  return(1-mean(vec))
 }
 
 
 # Question 3
-
-#Data Frame
-Clicks_origin_men_and_women <- read.csv("C://Users//yuval//Desktop//english folder//Seminar - clicks//ClicksMales.csv", header = TRUE)
-#Sub df - Male only
-Clicks_men <- Clicks_origin_men_and_women[c(1:42),c(1,2,16)]
-#Sorted Male df
-Clicks_sorted_men <- arrange(Clicks_men, ï..Participant)
-
 
 # simulation 
 B <- 10000
@@ -133,7 +110,20 @@ sim_3 <- function(data){
   return(circles)
 }
 
-sim_results_3 <- data.frame("number of circles" = c(sim_3(Clicks_sorted_men))) 
+#Data Frame
+Clicks_origin_men_and_women <- read.csv("C://Users//yuval//Desktop//english folder//Seminar - clicks//ClicksMales.csv", header = TRUE)
+#Sub df - Male only
+Clicks_men <- Clicks_origin_men_and_women[c(1:42),c(1,2,16)]
+#Sorted Male df
+Clicks_sorted_men <- arrange(Clicks_men, ï..Participant)
+
+sim_results <- data.frame("number of circles" = c(sim_3(Clicks_sorted_men))) 
+
+library(writexl)
+write_xlsx(sim_results,"C://Users//yuval//OneDrive//english folder//Seminar - sim_data_q3.xlsx")
+
+# simulation data set 
+data_q3_male <- read.csv("C://Users//yuval//OneDrive//english folder//Seminar - clicks//datasets created by simulations//circles//sim_data_q3_male_circles.csv")
 
 # histogram 
 p3 <- ggplot(sim_results, aes(x=number.of.circles,
@@ -153,20 +143,10 @@ p3 <- ggplot(sim_results, aes(x=number.of.circles,
 p3 
 
 
-#pvalue
-2 > quantile(sim_results$number.of.circles, 0.95)
-pvalue(sim_results, 2)
+# pvalue, 2 - number of circles in the real graph
+pvalue(data_q3_male,2)
 
-library(writexl)
-write_xlsx(sim_results,"C://Users//yuval//OneDrive//english folder//Seminar - sim_data_q3.xlsx")
-
-
-#Clicks_sorted_men <- name_to_number(Clicks_sorted_men)
-#Clicks_sorted_men <- Clicks_sorted_men[-c(5, 11, 17, 23, 29, 31:36, 42),]
-
-
-
-
+## UNSIGNIFICANT 
 
 
 

@@ -92,8 +92,8 @@ sample_values <- function(data){
 
 # function for getting pvalue 
 pvalue <- function(data, real_value){
-  p_vec <- ifelse(data[,1] <= real_value, 0, 1)
-  return(mean(p_vec))
+  vec <- ifelse(data[,1] < real_value, 1,0)
+  return(1-mean(vec))
 }
 
 
@@ -143,6 +143,7 @@ p <- ggplot(sim_results_df, aes(x=ï..number.of.circles,
 p 
 
 
-#pvalue
-55 > quantile(sim_results_df$ï..number.of.circles, 0.95)
-pvalue(sim_results_df, 55)
+# pvalue, 55 - number of circles in the real graph
+pvalue(sim_results_df,55)
+
+## UNSIGNIFICANT 

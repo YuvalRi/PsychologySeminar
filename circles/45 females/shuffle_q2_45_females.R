@@ -56,13 +56,13 @@ is_circle <- function(v1, v2, v3, df){
 # counting circles in the graph (directed graph)
 count_circles <- function(df){
   count <- 0 
-  vec <- c(1,2,3,4,5,6,7,8,9,10) # the vertices in the graph
-  for (v in 1:10){ 
-    for(w in 1:9){
+  vec <- c(1,2,3,5,6,7,8,9,10) # the vertices in the graph
+  for (v in 1:9){ 
+    for(w in 1:8){
       if (w == v){
         next
       }
-      for(z in (w+1):10){
+      for(z in (w+1):9){
         if(z == v | z == w){
           next
         }
@@ -93,8 +93,8 @@ sample_values <- function(data){
 
 # function for getting pvalue 
 pvalue <- function(data, real_value){
-  p_vec <- ifelse(data[,1] <= real_value, 0, 1)
-  return(mean(p_vec))
+  vec <- ifelse(data[,1] < real_value, 1,0)
+  return(1-mean(vec))
 }
 
 
@@ -159,9 +159,7 @@ p <- ggplot(sim_results_df, aes(x=ï..number.of.circles,
 p 
 
 
-#pvalue
-72 > quantile(sim_results_df$ï..number.of.circles, 0.95)
-pvalue(sim_results_df, 72)
+# pvalue, 72 - number of circles in the real graph
+pvalue(sim_results_df,72)
 
-
-## SIGNIFICANT 
+## UNSIGNIFICANT 

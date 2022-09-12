@@ -88,7 +88,7 @@ sample_values <- function(data){
 
 # function for getting pvalue 
 pvalue <- function(data, real_value){
-  vec <- ifelse(data[,1] > real_value, 1,0)
+  vec <- ifelse(data[,1] < real_value, 1,0)
   return(1-mean(vec))
 }
 
@@ -153,17 +153,46 @@ vec1_nozero <- vec1[vec1 != "0"]
 vec2 <- ifelse(Clicks_sorted_men[,3] == "1", Clicks_sorted_men[,2],"0")
 vec2_nozero <- vec2[vec2 != "0"]
 d <- data.frame(vec1_nozero, vec2_nozero)
-
-# checking if the number of circles in our graph is bigger than the 95% precentile
-count_circles(d) > quantile(sim_results$number.of.circles, 0.95)
-
-pvalue(sim_results, 20)
-
-#potential number of required circles = 3*choose(6,3)
+count_circles(d)
 
 # exporting sim_results to excel file
 library(writexl)
 write_xlsx(sim_results,"C://Users//yuval//OneDrive//english folder//Seminar - sim_data_q2.xlsx")
 
+# simulation data set 
+data_q2_male <- read.csv("C://Users//yuval//OneDrive//english folder//Seminar - clicks//datasets created by simulations//circles//sim_data_q2_male_circles.csv")
+
+# histogram
+p <- ggplot(data_q2_male, 
+            aes(x=ï..number.of.circles,
+                fill= factor(ifelse(ï..number.of.circles=="20","Highlighted","Normal"))
+            )
+) + 
+  scale_fill_manual(name = "20", 
+                    values=c("dodgerblue2","gray63")) +
+  geom_histogram(bins = 20, 
+                 aes(y= after_stat(count / sum(count))), 
+                 colour= "black") +
+  theme_bw() +
+  xlab("Number of circles") + 
+  ylab("Frequency") +
+  theme(plot.title = element_text(size=15),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        text = element_text(size = 15),
+        aspect.ratio=1) +
+  scale_x_continuous(breaks=seq(5,35,5),
+                     expand = c(0, 0)) +
+  scale_y_continuous(expand = c(0, 0)) + 
+  coord_cartesian(ylim = c(0,0.3), xlim = c(9, 35)) +
+  ggtitle("Frequency of number of circles in the shuffle") +
+  theme(legend.position = "none")  
+p 
+
+
+# pvalue, 20 - number of circles in the real graph
+pvalue(data_q2_male,20)
+
+## UNSIGNIFICANT 
 
 

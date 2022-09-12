@@ -7,22 +7,36 @@ library(ggplot2)
 name_to_number <- function(data) {
   for(j in 1:2){
     for (i in 1:nrow(data)){
-      if (data[i,j] == "W396"){
+      if (data[i,j] == "M567"){
         data[i,j] <- "1"
-      } else if(data[i,j] == "W515") {
+      } else if(data[i,j] == "M597") {
         data[i,j] <- "2"
-      } else if(data[i,j] == "W686") {
+      } else if(data[i,j] == "M607") {
         data[i,j] <- "3"
-      } else if(data[i,j] == "W717") {
+      } else if(data[i,j] == "M614" | data[i,j] == "M614 ") {
         data[i,j] <- "4"
-      } else if(data[i,j] == "W755") {
+      } else if(data[i,j] == "M615") {
         data[i,j] <- "5"
-      } else if(data[i,j] == "W756") {
+      } else if(data[i,j] == "M632") {
         data[i,j] <- "6"
+      } else if(data[i,j] == "M633") {
+        data[i,j] <- "7"
       }
     }
   }
   return(data)
+}
+
+# input - data frame, output - vector of characters
+creating_edges <- function(data){
+  edges_vec <- c()
+  for (i in 1:nrow(data)) {
+    if (data[i,3] == 1) {
+      edges_vec <- append(edges_vec, data[i,1])
+      edges_vec <- append(edges_vec, data[i,2])
+    }
+  }
+  return(edges_vec)
 }
 
 # input: df - dataframe, v - vertex
@@ -37,6 +51,7 @@ neighbors_directed <- function(df, v){
   }
   return(unique(vec[!is.na(vec)]))
 }
+
 
 # check if edge is found in df (the df should include only edges that appear in the graph)
 
@@ -57,16 +72,17 @@ is_circle <- function(v1, v2, v3, df){
   return(FALSE)
 }
 
+
 # counting circles in the graph (directed graph)
 count_circles <- function(df){
   count <- 0 
-  vec <- c(1,2,3,4,5,7) # the vertices in the graph
-  for (v in 1:6){ 
-    for(w in 1:5){
+  vec <- c(1,3,5) # the vertices in the graph
+  for (v in 1:3){ 
+    for(w in 1:2){
       if (w == v){
         next
       }
-      for(z in (w+1):6){
+      for(z in (w+1):3){
         if(z == v | z == w){
           next
         }
@@ -79,12 +95,11 @@ count_circles <- function(df){
   return(count)
 }
 
-
 # return a permutation of 0,1 where 1 represent an edges and 0 represent no edge
 sample_values <- function(data){
   
   # original vector
-  g_vec <- data$click0no1yes
+  g_vec <- data$click_1yes_0no
   n <- length(g_vec)
   new_vec <- c()
   # sample permutations between [0,1] with length n
@@ -102,13 +117,20 @@ pvalue <- function(data, real_value){
   return(1-mean(vec))
 }
 
+
 # simulation 
 B <- 10000 #number of iterations
 circles <- c() #empty vector which will get the number of circles in each iteration (vector of length - 10000)
 sim_2 <- function(data){
   data <- name_to_number(data) # changing participants name to number
   data <- data[-which(data[,1] == "6" | data[,2] == "6"),]
-  # removing 6 participant which had only 1 neighbor
+  # removing 6 participant which has only 1 neighbor
+  data <- data[-which(data[,1] == "4" | data[,2] == "6"),]
+  # removing 4 participant which has no neighbors at all 
+  data <- data[-which(data[,1] == "2" | data[,2] == "6"),]
+  # removing 2 participant which has only 1 neighbor
+  data <- data[-which(data[,1] == "7" | data[,2] == "6"),]
+  # removing 7 participant which has only 1 neighbor
   for (i in 1:B){ 
     data[,3] <- sample_values(data) 
     vec1 <- ifelse(data[,3] == "1", data[,1],"0")
@@ -122,25 +144,25 @@ sim_2 <- function(data){
 }
 
 # df
-small_female <- read.csv("C://Users//yuval//OneDrive//english folder//Seminar - clicks//more datasets//small_female_subset.csv")
+small_male <- read.csv("C://Users//yuval//OneDrive//english folder//Seminar - clicks//more datasets//small_male_subset.csv")
 
-sim_results <- data.frame("number of circles" = c(sim_2(small_female))) 
+sim_results <- data.frame("number of circles" = c(sim_2(small_male))) 
 
 # saving simulation results in excel file
 library(writexl)
-write_xlsx(sim_results,"C://Users//yuval//OneDrive//english folder//Seminar - clicks//datasets created by simulations//circles//sim_2_shuffle_small_female_q2.xlsx")
+write_xlsx(sim_results,"C://Users//yuval//OneDrive//english folder//Seminar - clicks//datasets created by simulations//circles//sim_2_shuffle_small_male_q2.xlsx")
 
 
 # simulation data set 
-data_small_female_q2 <- read.csv("C://Users//yuval//OneDrive//english folder//Seminar - clicks//datasets created by simulations//circles//sim_2_shuffle_small_female_q2.csv")
+data_small_male_q2 <- read.csv("C://Users//yuval//OneDrive//english folder//Seminar - clicks//datasets created by simulations//circles//sim_2_shuffle_small_male_q2.csv")
 
 # histogram
-p <- ggplot(data_small_female_q2, 
+p <- ggplot(data_small_male_q2, 
             aes(x=ï..number.of.circles,
-                fill= factor(ifelse(ï..number.of.circles=="5","Highlighted","Normal"))
+                fill= factor(ifelse(ï..number.of.circles=="0","Highlighted","Normal"))
             )
-            ) + 
-  scale_fill_manual(name = "5", 
+) + 
+  scale_fill_manual(name = "0", 
                     values=c("dodgerblue2","gray63")) +
   geom_histogram(bins = 25, 
                  aes(y= after_stat(count / sum(count))), 
@@ -156,16 +178,13 @@ p <- ggplot(data_small_female_q2,
   scale_x_continuous(breaks=c(0:10),
                      expand = c(0, 0)) +
   scale_y_continuous(expand = c(0, 0)) + 
-  coord_cartesian(ylim = c(0,0.4), xlim = c(-1, 10)) +
+  coord_cartesian(ylim = c(0,1.1), xlim = c(-1, 2)) +
   ggtitle("Frequency of number of circles in the shuffle") +
   theme(legend.position = "none")  
 p 
 
-# pvalue, 5 - number of circles in the real graph
-pvalue(data_small_female_q2,5)
+# pvalue, 0 - number of circles in the real graph
+pvalue(data_small_male_q2, 0)
 
 ## UNSIGNIFICANT 
-
-
-
 

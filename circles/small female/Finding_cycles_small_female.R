@@ -28,6 +28,7 @@ name_to_number <- function(data) {
 
 # function which return a data frame that represent an undirected graph (removing duplicated edges)
 # Q1: version == TRUE
+# for Q1
 directed_to_undirected_q3 <- function(df, version){
   
   df_undirected <- data.frame() # TODO: CREATE A NEW DF
@@ -35,6 +36,35 @@ directed_to_undirected_q3 <- function(df, version){
   for( i in 1:nrow(df)){
     for( j in (i+1):nrow(df)){
       if (j == 29){
+        {break}
+      }
+      if( df[i,1] == df[j,2] & df[i,2] == df[j,1] ){
+        if (df[i,3] == 1 & df[j,3] == 1){
+          df_undirected <- rbind(df_undirected, c(df[i,]))
+        }
+        if (df[i,3] == 0 & df[j,3] == 0){
+          df_undirected <- rbind(df_undirected, c(df[i,]))
+        }
+        if (df[i,3] == version & df[j,3] == !version){
+          df_undirected <- rbind(df_undirected, c(df[i,]))
+        }
+        if (df[i,3] == !version & df[j,3] == version){
+          df_undirected <- rbind(df_undirected, c(df[j,]))
+        }
+      }
+    }
+  }
+  return(df_undirected)
+}
+
+# for Q3
+directed_to_undirected_q3 <- function(df, version){
+  
+  df_undirected <- data.frame() # TODO: CREATE A NEW DF
+  
+  for( i in 1:nrow(df)){
+    for( j in (i+1):nrow(df)){
+      if (j == 19){
         {break}
       }
       if( df[i,1] == df[j,2] & df[i,2] == df[j,1] ){
@@ -68,6 +98,20 @@ creating_edges <- function(data){
   }
   return(edges_vec)
 }
+
+# input: df - dataframe, v - vertex
+# output: vector of all neighbors of the vertex v
+
+neighbors_directed <- function(df, v){
+  vec <- c()
+  for(i in 1:nrow(df)){
+    if( df[i,3] == "1" && df[i,1] == v){
+      vec[i] <- df[i,2]
+    }
+  }
+  return(unique(vec[!is.na(vec)]))
+}
+
 
 # check if edge is found in df (the df should include only edges that appear in the graph)
 
@@ -147,6 +191,7 @@ count_circles(d)
 #number of circles in our graph - Q3: 0 
 small_female <- read.csv("C://Users//yuval//OneDrive//english folder//Seminar - clicks//more datasets//small_female_subset.csv")
 small_female <- name_to_number(small_female)
+small_female <- small_female[-which(small_female[,1] == "6" | small_female[,2] == "6"),]
 small_female <- directed_to_undirected_q3(small_female, FALSE)
 edges <- creating_edges(small_female)
 graph <- graph(edges, directed = F)

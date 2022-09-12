@@ -139,6 +139,9 @@ sim_3 <- function(data){
 
 sim_results <- data.frame("number of circles" = c(sim_3(Clicks_sorted_women))) 
 
+# simulation data set 
+data_q3_female <- read.csv("C://Users//yuval//OneDrive//english folder//Seminar - clicks//datasets created by simulations//circles//sim_data_q3_female_circles.csv")
+
 # histogram
 p3_female <- ggplot(sim_results, aes(x=number.of.circles,
                                     fill= factor(ifelse(number.of.circles== "9","Highlighted","Normal")))) + 
@@ -160,9 +163,10 @@ p3_female <- ggplot(sim_results, aes(x=number.of.circles,
 p3_female
 
 
-#pvalue
-9 > quantile(sim_results$number.of.circles, 0.95)
-pvalue(sim_results, 9)
+# pvalue, 9 - number of circles in the real graph
+pvalue(data_q3_female, 9)
+
+## SIGNIFICANT
 
 library(writexl)
 write_xlsx(sim_results,"C://Users//yuval//OneDrive//english folder//Seminar - sim_data_q3.xlsx")

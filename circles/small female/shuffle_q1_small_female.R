@@ -85,7 +85,7 @@ sample_values <- function(data){
 
 # pvalue function
 pvalue <- function(data, real_value){
-  vec <- ifelse(data[,1] > real_value, 1,0)
+  vec <- ifelse(data[,1] < real_value, 1,0)
   return(1-mean(vec))
 }
 

@@ -92,8 +92,8 @@ sample_values <- function(data){
 
 # function for getting pvalue 
 pvalue <- function(data, real_value){
-  p_vec <- ifelse(data[,1] <= real_value, 0, 1)
-  return(mean(p_vec))
+  vec <- ifelse(data[,1] < real_value, 1,0)
+  return(1-mean(vec))
 }
 
 #Df
@@ -124,6 +124,8 @@ sim_2 <- function(data){
 }
 
 sim_results <- data.frame("number of circles" = c(sim_2(Clicks_sorted_women))) 
+
+data_q2_female <- read.csv("C://Users//yuval//OneDrive//english folder//Seminar - clicks//datasets created by simulations//circles//sim_data_q2_female_circles.csv")
 
 # histogram
 p2_female <- ggplot(sim_results, aes(x=number.of.circles,
@@ -159,11 +161,11 @@ d <- data.frame(vec1_nozero, vec2_nozero)
 # checking if the number of circles in our graph is bigger than the 95% precentile
 count_circles(d) > quantile(sim_results$number.of.circles, 0.95)
 
-pvalue(sim_results, 85)
+# pvalue, 85 - number of circles in the real graph
+pvalue(data_q2_female, 85)
 
-# test 
-85 > quantile(sim_results$number.of.circles, 0.95)
-pvalue(sim_results, 85)
+## SIGNIFICANT 
+
 
 # exporting sim_results to excel file
 library(writexl)
