@@ -119,14 +119,14 @@ write_xlsx(sim_results,"C://Users//yuval//OneDrive//english folder//Seminar - cl
 data_small_female_q3 <- read.csv("C://Users//yuval//OneDrive//english folder//Seminar - clicks//datasets created by simulations//circles//sim_3_shuffle_small_female_q3.csv")
 
 # histogram - the number of all circles in each iteration equals to 0 because there are only 2 two-sided edges in our actual graph
-p <- ggplot(data_small_female_q3, 
+p <- ggplot(data_small_female_q2, 
             aes(x=ï..number.of.circles,
                 fill= factor(ifelse(ï..number.of.circles=="0","Highlighted","Normal"))
             )
 ) + 
   scale_fill_manual(name = "0", 
                     values=c("dodgerblue2","gray63")) +
-  geom_histogram(bins = 25, 
+  geom_histogram(bins = 10, 
                  aes(y= after_stat(count / sum(count))), 
                  colour= "black") +
   theme_bw() +
@@ -137,10 +137,10 @@ p <- ggplot(data_small_female_q3,
         panel.grid.minor = element_blank(),
         text = element_text(size = 15),
         aspect.ratio=1) +
-  scale_x_continuous(breaks=c(0:10),
+  scale_x_continuous(breaks=c(0:9),
                      expand = c(0, 0)) +
   scale_y_continuous(expand = c(0, 0)) + 
-  coord_cartesian(ylim = c(0,1.2), xlim = c(-1, 5)) +
+  coord_cartesian(ylim = c(0,0.35), xlim = c(-1, 9)) +
   ggtitle("Frequency of number of circles in the shuffle") +
   theme(legend.position = "none")  
 p 
