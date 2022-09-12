@@ -161,15 +161,14 @@ small_male <- read.csv("C://Users//yuval//OneDrive//english folder//Seminar - cl
 small_male <- name_to_number(small_male)
 edges <- creating_edges(small_male)
 small_male_graph <- graph(edges, directed = TRUE)
-small_male_plot <- plot(small_male_graph, layout = layout_with_graphopt, edge.arrow.size = 0.2, vertex.color="royalblue1", vertex.label.color="black", vertex.frame.color="black", vertex.label.cex = 0.8,vertex.size = 25, edge.color = "black")
+small_male_plot <- plot(small_male_graph, layout = layout_with_graphopt, edge.arrow.size = 0.2, vertex.color="gray63", vertex.label.color="black", vertex.frame.color="black", vertex.label.cex = 1,vertex.size = 25, edge.color = "black")
 
 svg("figure6.svg")
-plot(small_male_graph, layout = layout_with_graphopt, edge.arrow.size = 0.2, vertex.color="royalblue1", vertex.label.color="black", vertex.frame.color="black", vertex.label.cex = 0.8,vertex.size = 25, edge.color = "black", main = "Figure 6")
+plot(small_male_graph, layout = layout_with_graphopt, edge.arrow.size = 0.2, vertex.color="gray63", vertex.label.color="black", vertex.frame.color="black", vertex.label.cex = 1,vertex.size = 25, edge.color = "black", main = "nodesGraphDataset6")
 dev.off()
 
 
-# df
-#number of circles in our graph - Q1: 1
+## Q1 - 1 circle
 small_male <- read.csv("C://Users//yuval//OneDrive//english folder//Seminar - clicks//more datasets//small_male_subset.csv")
 small_male <- name_to_number(small_male)
 small_male <- directed_to_undirected_q3(small_male, TRUE)
@@ -178,9 +177,10 @@ small_male_graph <- graph(edges, directed = FALSE)
 graph.motifs(small_male_graph,size=3)[length(graph.motifs(small_male_graph,size=3))]
 
 
-#number of circles in our graph - Q2: 0 
+## Q2 - 0 circles
 small_male <- read.csv("C://Users//yuval//OneDrive//english folder//Seminar - clicks//more datasets//small_male_subset.csv")
 small_male <- name_to_number(small_male)
+# 2,6 and 7 have only 1 neighbor, 4 has no neighbor at all
 small_male <- small_male[-which(small_male[,1] == "4" | small_male[,2] == "4"),] # '4' participant has no neighbors, so it removed from analysis
 small_male <- small_male[-which(small_male[,1] == "2" | small_male[,2] == "2"),] # '2' participant had only 1 neighbor, so it removed from analysis
 small_male <- small_male[-which(small_male[,1] == "6" | small_male[,2] == "6"),] # '6' participant had only 1 neighbor, so it removed from analysis
@@ -194,7 +194,7 @@ d <- data.frame(vec1_nozero, vec2_nozero)
 count_circles(d)
 
 
-#number of circles in our graph - Q3:
+## Q3 - 0 circles
 small_male <- read.csv("C://Users//yuval//OneDrive//english folder//Seminar - clicks//more datasets//small_male_subset.csv")
 small_male <- name_to_number(small_male)
 small_male <- small_male[-which(small_male[,1] == "4" | small_male[,2] == "4"),] # '4' participant has no neighbors, so it removed from analysis
