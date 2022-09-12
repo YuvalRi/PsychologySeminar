@@ -130,7 +130,7 @@ p <- ggplot(data_small_male_q3,
 ) + 
   scale_fill_manual(name = "0", 
                     values=c("dodgerblue2","gray63")) +
-  geom_histogram(bins = 25, 
+  geom_histogram(bins = 5, 
                  aes(y= after_stat(count / sum(count))), 
                  colour= "black") +
   theme_bw() +
@@ -141,10 +141,10 @@ p <- ggplot(data_small_male_q3,
         panel.grid.minor = element_blank(),
         text = element_text(size = 15),
         aspect.ratio=1) +
-  scale_x_continuous(breaks=c(0:10),
+  scale_x_continuous(breaks=c(0:4),
                      expand = c(0, 0)) +
   scale_y_continuous(expand = c(0, 0)) + 
-  coord_cartesian(ylim = c(0,1.2), xlim = c(-1, 2)) +
+  coord_cartesian(ylim = c(0,1.2), xlim = c(-1, 3)) +
   ggtitle("Frequency of number of circles in the shuffle") +
   theme(legend.position = "none")  
 p 
