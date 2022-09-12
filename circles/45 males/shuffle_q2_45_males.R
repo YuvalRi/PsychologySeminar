@@ -157,7 +157,6 @@ p <- ggplot(sim_results_df, aes(x=ï..number.of.circles,
   ggtitle("Frequency of Number of circles in the shuffle")
 p 
 
-
 #pvalue, 108 - number of circles in the real graph
 pvalue(sim_results_df, 108)
 

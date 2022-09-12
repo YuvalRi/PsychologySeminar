@@ -40,7 +40,7 @@ directed_to_undirected_q3 <- function(df, version){
   
   for( i in 1:nrow(df)){
     for( j in (i+1):nrow(df)){
-      if (j == 73){
+      if (j == 57){
         {break}
       }
       if( df[i,1] == df[j,2] & df[i,2] == df[j,1] ){
@@ -75,21 +75,6 @@ creating_edges <- function(data){
   return(edges_vec)
 }
 
-# converting data frame to directed graph
-data_to_Dgraph <- function(data){
-  data <- name_to_number(data)
-  edges <- creating_edges(data)
-  graph <- graph(edges, directed = T)
-  return(graph)
-}
-
-# converting data frame to undirected graph
-data_to_Ugraph <- function(data){
-  data <- name_to_number(data)
-  edges <- creating_edges(data)
-  graph <- graph(edges, directed = F)
-  return(graph)
-}
 
 # return a permutation of 0,1 where 1 represent an edges and 0 represent no edge
 sample_values <- function(data){
@@ -107,28 +92,32 @@ sample_values <- function(data){
   return(new_vec)
 }
 
+
 # function for getting pvalue 
 pvalue <- function(data, real_value){
-  p_vec <- ifelse(data[,1] <= real_value, 0, 1)
-  return(mean(p_vec))
+  vec <- ifelse(data[,1] < real_value, 1,0)
+  return(1-mean(vec))
 }
+
 
 Clicks_origin_women <- read.csv("C://Users//yuval//OneDrive//english folder//Seminar - clicks//ClicksYuval.csv", header = TRUE)
 #sub df - relevant columns
 Clicks_women <- Clicks_origin_women[,c(1,2,25)]
 #Sorted Women df
 Clicks_sorted_women <- arrange(Clicks_women, Subject)
-Clicks_sorted_women <- name_to_number(Clicks_sorted_women)
-Clicks_sorted_women <- Clicks_sorted_women[-c(5, 12, 23, 32, 41, 46:54, 60, 69, 78, 87),]
-
 
 # simulation 
 B <- 10000
 circles <- c()
 sim_3 <- function(data){
   data <- name_to_number(data)
+  # '6' & '3' has only one neighbors 
+  data <- data[-which(data[,1] == "6" | data[,2] == "6"),] #removing '6' participant
+  data <- data[-which(data[,1] == "3" | data[,2] == "3"),] #removing '3' participant
   data <- directed_to_undirected_q3(data, version = FALSE)
   for (i in 1:B){
+    if ( i %% 100 == 0) 
+      cat("Progress: ", i / 100, "%\n")
     data[,3] <- sample_values(data)
     edges <- creating_edges(data)
     graph <- graph(edges, directed = F)
@@ -139,8 +128,12 @@ sim_3 <- function(data){
 
 sim_results <- data.frame("number of circles" = c(sim_3(Clicks_sorted_women))) 
 
+# exporting sim_results to excel file
+library(rio)
+export(sim_results, "sim_2_shuffle_female_q3.xlsx")
+
 # simulation data set 
-data_q3_female <- read.csv("C://Users//yuval//OneDrive//english folder//Seminar - clicks//datasets created by simulations//circles//sim_data_q3_female_circles.csv")
+data_q3_female <- read.csv("C://Users//yuval//OneDrive//english folder//Seminar - clicks//datasets created by simulations//circles//sim_2_shuffle_female_q3.csv")
 
 # histogram
 p3_female <- ggplot(sim_results, aes(x=number.of.circles,
@@ -163,13 +156,11 @@ p3_female <- ggplot(sim_results, aes(x=number.of.circles,
 p3_female
 
 
-# pvalue, 9 - number of circles in the real graph
-pvalue(data_q3_female, 9)
+# pvalue, 6 - number of circles in the real graph
+pvalue(data_q3_female, 6)
 
 ## SIGNIFICANT
 
-library(writexl)
-write_xlsx(sim_results,"C://Users//yuval//OneDrive//english folder//Seminar - sim_data_q3.xlsx")
 
 
 

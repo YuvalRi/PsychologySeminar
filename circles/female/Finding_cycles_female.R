@@ -100,13 +100,13 @@ is_circle <- function(v1, v2, v3, df){
 # counting circles in the graph (directed graph)
 count_circles <- function(df){
   count <- 0 
-  vec <- c(1,2,3,4,5,7,8,9,10) # the vertices in the graph
-  for (v in 1:9){ 
-    for(w in 1:8){
+  vec <- c(1,2,4,5,7,8,9,10) # the vertices in the graph
+  for (v in 1:8){ 
+    for(w in 1:7){
       if (w == v){
         next
       }
-      for(z in (w+1):9){
+      for(z in (w+1):8){
         if(z == v | z == w){
           next
         }
@@ -203,7 +203,7 @@ edges <- creating_edges(female)
 female_graph <- graph(edges, directed = FALSE)
 graph.motifs(female_graph,size=3)[length(graph.motifs(female_graph,size=3))]
 
-## Q2 - 85 circles
+## Q2 - 57 circles
 female <- read.csv("C://Users//yuval//OneDrive//english folder//Seminar - clicks//ClicksYuval.csv", header = TRUE)
 # sub df - relevant columns
 female <- female[,c(1,2,25)]

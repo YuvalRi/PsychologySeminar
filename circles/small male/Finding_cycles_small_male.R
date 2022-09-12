@@ -180,7 +180,6 @@ graph.motifs(small_male_graph,size=3)[length(graph.motifs(small_male_graph,size=
 ## Q2 - 0 circles
 small_male <- read.csv("C://Users//yuval//OneDrive//english folder//Seminar - clicks//more datasets//small_male_subset.csv")
 small_male <- name_to_number(small_male)
-# 2,6 and 7 have only 1 neighbor, 4 has no neighbor at all
 small_male <- small_male[-which(small_male[,1] == "4" | small_male[,2] == "4"),] # '4' participant has no neighbors, so it removed from analysis
 small_male <- small_male[-which(small_male[,1] == "2" | small_male[,2] == "2"),] # '2' participant had only 1 neighbor, so it removed from analysis
 small_male <- small_male[-which(small_male[,1] == "6" | small_male[,2] == "6"),] # '6' participant had only 1 neighbor, so it removed from analysis

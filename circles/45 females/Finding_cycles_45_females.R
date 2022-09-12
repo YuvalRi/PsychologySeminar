@@ -180,8 +180,8 @@ edges <- creating_edges(females_45)
 females_45_graph <- graph(edges, directed = TRUE)
 females_45_plot <- plot(females_45_graph, layout = layout_with_graphopt, edge.arrow.size = 0.3, vertex.color="pink", vertex.label.color="black", vertex.frame.color="black", vertex.label.cex = 1,vertex.size = 25, edge.color = "black", main = "Figure 4")
 
-svg("figure4.svg")
-plot(females_45_graph, layout = layout_with_graphopt, edge.arrow.size = 0.3, vertex.color="gray63", vertex.label.color="black", vertex.frame.color="black", vertex.label.cex = 1,vertex.size = 25, edge.color = "black", main = "nodesGraphDataset2")
+svg("nodesGraphDataset3.svg")
+plot(females_45_graph, layout = layout_with_graphopt, edge.arrow.size = 0.3, vertex.color="gray63", vertex.label.color="black", vertex.frame.color="black", vertex.label.cex = 1,vertex.size = 25, edge.color = "black", main = "nodesGraphDataset3")
 dev.off()
 
 

@@ -55,13 +55,13 @@ is_circle <- function(v1, v2, v3, df){
 # counting circles in the graph (directed graph)
 count_circles <- function(df){
   count <- 0 
-  vec <- c(1,2,3,4,5,7,8,9,10) # the vertices in the graph
-  for (v in 1:9){ 
-    for(w in 1:8){
+  vec <- c(1,2,4,5,7,8,9,10) # the vertices in the graph
+  for (v in 1:8){ 
+    for(w in 1:7){
       if (w == v){
         next
       }
-      for(z in (w+1):9){
+      for(z in (w+1):8){
         if(z == v | z == w){
           next
         }
@@ -103,15 +103,18 @@ Clicks_origin_women <- read.csv("C://Users//yuval//OneDrive//english folder//Sem
 Clicks_women <- Clicks_origin_women[,c(1,2,25)]
 #Sorted Women df
 Clicks_sorted_women <- arrange(Clicks_women, Subject)
-Clicks_sorted_women <- name_to_number(Clicks_sorted_women)
 
 # simulation 
 B <- 10000 #number of iterations
 circles <- c() #empty vector which will get the number of circles in each iteration (vector of length - 10000)
 sim_2 <- function(data){
   data <- name_to_number(data) # changing participants name to number
-  data <- data[-c(5, 12, 23, 32, 41, 46:54, 60, 69, 78, 87),] # removing 6 participant
+  # '6' & '3' has only one neighbors 
+  data <- data[-which(data[,1] == "6" | data[,2] == "6"),] #removing '6' participant
+  data <- data[-which(data[,1] == "3" | data[,2] == "3"),] #removing '3' participant
   for (i in 1:B){ 
+    if ( i %% 100 == 0) 
+      cat("Progress: ", i / 100, "%\n")
     data[,3] <- sample_values(data) 
     vec1 <- ifelse(data[,3] == "1", data[,1],"0")
     vec1_nozero <- vec1[vec1 != "0"]
@@ -125,7 +128,11 @@ sim_2 <- function(data){
 
 sim_results <- data.frame("number of circles" = c(sim_2(Clicks_sorted_women))) 
 
-data_q2_female <- read.csv("C://Users//yuval//OneDrive//english folder//Seminar - clicks//datasets created by simulations//circles//sim_data_q2_female_circles.csv")
+# exporting sim_results to excel file
+library(rio)
+export(sim_results, "sim_1_shuffle_female_q2.xlsx")
+
+data_q2_female <- read.csv("C://Users//yuval//OneDrive//english folder//Seminar - clicks//datasets created by simulations//circles//sim_1_shuffle_female_q2.csv")
 
 # histogram
 p2_female <- ggplot(sim_results, aes(x=number.of.circles,
@@ -148,25 +155,8 @@ p2_female <- ggplot(sim_results, aes(x=number.of.circles,
 p2_female
 
 
-Clicks_sorted_women <- Clicks_sorted_women[-c(5, 12, 23, 32, 41, 46:54, 60, 69, 78, 87),]
-
-
-# creating df with edges only
-vec1 <- ifelse(Clicks_sorted_women[,3] == "1", Clicks_sorted_women[,1],"0")
-vec1_nozero <- vec1[vec1 != "0"]
-vec2 <- ifelse(Clicks_sorted_women[,3] == "1", Clicks_sorted_women[,2],"0")
-vec2_nozero <- vec2[vec2 != "0"]
-d <- data.frame(vec1_nozero, vec2_nozero)
-
-# checking if the number of circles in our graph is bigger than the 95% precentile
-count_circles(d) > quantile(sim_results$number.of.circles, 0.95)
-
-# pvalue, 85 - number of circles in the real graph
-pvalue(data_q2_female, 85)
+# pvalue, 57 - number of circles in the real graph
+pvalue(data_q2_female, 57)
 
 ## SIGNIFICANT 
 
-
-# exporting sim_results to excel file
-library(writexl)
-write_xlsx(sim_results,"C://Users//yuval//OneDrive//english folder//Seminar - sim_data_q2.xlsx")
