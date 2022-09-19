@@ -140,7 +140,7 @@ sample_values <- function(data){
 
 # function for getting pvalue 
 pvalue <- function(data, real_value){
-  p_vec <- ifelse(data[,8] > real_value, 0, 1)
+  p_vec <- ifelse(data[,11] >= real_value, 0, 1)
   return(mean(p_vec))
 }
 
@@ -174,7 +174,7 @@ males_45 <- name_to_number(males_45)
 males_45 <- directed_to_undirected_q3(males_45,TRUE)
 males_45 <- arrange(males_45, ï..Participant)
 diff_rates(males_45, 10)
-mean(as.numeric(diff_rates(males_45, 10))) #3.3
+mean(as.numeric(diff_rates(males_45, 10))) 
 
 # diff data
 
@@ -185,25 +185,39 @@ diff_data_q1_45_males <- read_csv("C://Users//yuval//OneDrive//english folder//S
 diff_data_q1_45_males$mean <- rowMeans(diff_data_q1_45_males, na.rm=TRUE)
 
 # histogram
-diff_hist_q1_45_males <- ggplot(diff_data_q1_45_males, aes(x=mean)) + 
-  geom_vline(aes(xintercept= mean(as.numeric(diff_rates(males_45, 10)))),
-             color="tan1", linetype="dashed", size=1) +
-  geom_histogram(bins = 30, aes(y= after_stat(count / sum(count))), colour= "black")+
+diff_hist_q1_45_male <- ggplot(diff_data_q1_45_males,
+                                 aes(x= mean)
+) +
+  geom_histogram(bins = 14,
+                 aes(y= after_stat(count / sum(count))),
+                 fill = "gray63",
+                 colour = "black") +
+  theme_bw() +
   ylab("Frequency") +
   xlab("Differences") +
-  theme_bw() +
-  theme(
-    plot.title = element_text(size=15)
-  ) +
-  scale_x_continuous(breaks = seq(2,5.7,0.3)) +
-  ylim(0,1.3) +
-  geom_text(x=3.4, y=0.8, label="3.3") +  ggtitle("Frequency of differences in the shuffle")
-diff_hist_q1_45_males
+  theme(plot.title = element_text(size=15),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        text = element_text(size = 15),
+        aspect.ratio=1) +
+  scale_x_continuous(breaks = seq(2,6.5,0.5),
+                     expand = c(0, 0)) +
+  scale_y_continuous(expand = c(0, 0)) +
+  geom_vline(aes(xintercept = mean(as.numeric(diff_rates(males_45, 10)))),
+             color="dodgerblue2",
+             linetype="dashed",
+             size=1) +
+  geom_text(x=2.9,
+            y=0.3,
+            label="2.8") + 
+  coord_cartesian(ylim = c(0, 0.35), xlim = c(2, 6.5)) +
+  theme(legend.position = "none") +
+  ggtitle("Frequency of differences in the shuffle") 
+diff_hist_q1_45_male
 
 
 #pvalue
-mean(as.numeric(diff_rates(males_45, 10))) < quantile(diff_data_q1_45_males$mean, 0.05)
-#pvalue(diff_data_q1_45_males, mean(as.numeric(diff_rates(males_45, 10)))) #talk with inbal about calculating pvalues
+pvalue(diff_data_q1_45_males, mean(as.numeric(diff_rates(males_45, 10)))) 
 
 ## SIGNIFICANT  
 
