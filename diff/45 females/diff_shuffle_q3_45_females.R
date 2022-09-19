@@ -135,10 +135,10 @@ sample_values <- function(data){
 }
 
 # function for getting pvalue 
-#pvalue <- function(data, real_value){
-#p_vec <- ifelse(data[, 11] > real_value, 0, 1)
-#return(mean(p_vec))
-#}
+pvalue <- function(data, real_value){
+  p_vec <- ifelse(data[,11] >= real_value, 0, 1)
+  return(mean(p_vec))
+}
 
 # simulation 
 B <- 10000
@@ -179,23 +179,38 @@ diff_data_q3_45_females <- read_csv("C://Users//yuval//OneDrive//english folder/
 diff_data_q3_45_females$mean <- rowMeans(diff_data_q3_45_females, na.rm=TRUE)
 
 # histogram
-diff_hist_q3_female <- ggplot(diff_data_q3_45_females, aes(x=mean)) + 
-  geom_vline(aes(xintercept= mean(as.numeric(diff_rates(females_45, 10)))),
-             color="red", linetype="dashed", size=1) +
-  geom_histogram(bins = 15, aes(y= after_stat(count / sum(count))), colour= "black")+
+diff_hist_q3_45_female <- ggplot(diff_data_q3_45_females,
+                                 aes(x= mean)
+) +
+  geom_histogram(bins = 14,
+                 aes(y= after_stat(count / sum(count))),
+                 fill = "gray63",
+                 colour = "black") +
+  theme_bw() +
   ylab("Frequency") +
   xlab("Differences") +
-  theme_bw() +
-  theme(
-    plot.title = element_text(size=15)
-  ) +
-  scale_x_continuous(breaks = seq(0.2,2,0.2)) +
-  geom_text(x=1.55, y=0.1, label="1.5") +
-  ggtitle("Frequency of differences in the shuffle")
-diff_hist_q3_female
+  theme(plot.title = element_text(size=15),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        text = element_text(size = 15),
+        aspect.ratio=1) +
+  scale_x_continuous(breaks = seq(0,2.5,0.5),
+                     expand = c(0, 0)) +
+  scale_y_continuous(expand = c(0, 0)) +
+  geom_vline(aes(xintercept = mean(as.numeric(diff_rates(females_45, 10)))),
+             color="dodgerblue2",
+             linetype="dashed",
+             size=1) +
+  geom_text(x=1.55,
+            y=0.25,
+            label="1.5") + 
+  coord_cartesian(ylim = c(0, 0.4), xlim = c(0, 2.5)) +
+  theme(legend.position = "none") +
+  ggtitle("Frequency of differences in the shuffle") 
+diff_hist_q3_45_female
 
 
-mean(as.numeric(diff_rates(females_45, 10))) < quantile(diff_data_q3_45_females$mean, 0.05)
-#pvalue(diff_data_q3_female, mean(as.numeric(diff_rates(Clicks_sorted_women, 10))))
+#pvalue
+pvalue(diff_data_q3_45_females, mean(as.numeric(diff_rates(females_45, 10))))
 
-## UNSIGNIFICANT
+## UNSIGNIFICANT  
