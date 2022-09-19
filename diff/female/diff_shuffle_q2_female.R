@@ -103,7 +103,7 @@ sample_values <- function(data){
 
 # function for getting pvalue 
 pvalue <- function(data, real_value){
-  vec <- ifelse(data[,1] > real_value, 1,0)
+  vec <- ifelse(data[,1] >= real_value, 1,0)
   return(mean(vec))
 }
 
@@ -158,29 +158,38 @@ diff_data_q2_female <- read_csv("C://Users//yuval//OneDrive//english folder//Sem
 diff_data_q2_female$mean <- rowMeans(diff_data_q2_female, na.rm=TRUE)
 
 # histogram
-diff_hist_q2_female <- ggplot(diff_data_q2_female, aes(x=mean)) + 
-  geom_vline(aes(xintercept= mean(as.numeric(diff_rates(Clicks_sorted_women, 10)))),
-             color="red", linetype="dashed", size=1) +
-  geom_histogram(bins = 40, aes(y= after_stat(count / sum(count))), colour= "black")+
-  stat_function(
-    fun = dnorm, 
-    args = list(mean = mean(diff_data_q2_female$mean), sd = sd(diff_data_q2_female$mean)), 
-    lwd = 0.65, 
-    col = 'black')  +
+diff_hist_q2_female <- ggplot(diff_data_q2_female,
+                              aes(x= mean)
+) +
+  geom_histogram(bins = 14,
+                 aes(y= after_stat(count / sum(count))),
+                 fill = "gray63",
+                 colour = "black") +
+  theme_bw() +
   ylab("Frequency") +
   xlab("Differences") +
-  theme_bw() +
-  theme(
-    plot.title = element_text(size=15)
-  ) +
-  scale_x_continuous(breaks = seq(min(diff_data_q2_female$mean), max(diff_data_q2_female$mean),0.5)) +
-  ylim(0,1) +
-  geom_text(x=8, y=0.8, label="7.8") +
-  ggtitle("Frequency of differences in the shuffle")
+  theme(plot.title = element_text(size=15),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        text = element_text(size = 15),
+        aspect.ratio=1) +
+  scale_x_continuous(breaks = seq(5,14,1),
+                     expand = c(0, 0)) +
+  scale_y_continuous(expand = c(0, 0)) +
+  geom_vline(aes(xintercept = mean(as.numeric(diff_rates(Clicks_sorted_women, 10)))),
+             color="dodgerblue2",
+             linetype="dashed",
+             size=1) +
+  geom_text(x=8,
+            y=0.3,
+            label="7.8") + 
+  coord_cartesian(ylim = c(0, 0.35), xlim = c(5, 14)) +
+  theme(legend.position = "none") +
+  ggtitle("Frequency of differences in the shuffle") 
 diff_hist_q2_female
 
+
 #pvalue
-mean(as.numeric(diff_rates(Clicks_sorted_women, 10))) < quantile(diff_data_q2_female$mean, 0.05)
 pvalue(diff_data_q2_female, mean(as.numeric(diff_rates(Clicks_sorted_women, 10))))
 
 

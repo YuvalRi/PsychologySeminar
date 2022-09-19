@@ -135,10 +135,10 @@ sample_values <- function(data){
 }
 
 # function for getting pvalue 
-#pvalue <- function(data, real_value){
-#p_vec <- ifelse(data[, 11] > real_value, 0, 1)
-#return(mean(p_vec))
-#}
+pvalue <- function(data, real_value){
+  p_vec <- ifelse(data[,11] >= real_value, 0, 1)
+  return(mean(p_vec))
+}
 
 # shuffle simulation 
 # n - number of vertices 

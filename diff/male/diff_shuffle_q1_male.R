@@ -147,7 +147,7 @@ sim_1_diff <- function(data, n){
 }
 
 pvalue <- function(data, real_value){
-  vec <- ifelse(data[,1] > real_value, 1,0)
+  vec <- ifelse(data[,1] >= real_value, 1,0)
   return(mean(vec))
 }
 
@@ -175,7 +175,7 @@ mean(as.numeric(diff_rates(Clicks_sorted_men, 7)))
 
 # diff data
 
-diff_data_q1_male <- read_csv("C://Users//yuval//OneDrive//english folder//Seminar - clicks//datasets created by simulations//diff//sim_1_diff_q1_male.csv")
+diff_data_q1_male <- read.csv("C://Users//yuval//OneDrive//english folder//Seminar - clicks//datasets created by simulations//diff//sim_1_diff_q1_male.csv")
 
 # adding column - mean of the differences of each row
 
@@ -214,6 +214,6 @@ diff_hist_q1_male
 
 
 # 2.57 - number of differences in the real graph
-pvalue(data_q1_male,2.571429)
+pvalue(diff_data_q1_male,mean(as.numeric(diff_rates(Clicks_sorted_men, 7))))
 
 ## Unsiginificant 

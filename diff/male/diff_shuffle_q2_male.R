@@ -161,33 +161,40 @@ diff_data_q2_male <- read_csv("C:\\Users\\yuval\\OneDrive\\english folder\\Semin
 diff_data_q2_male$mean <- rowMeans(diff_data_q2_male, na.rm=TRUE)
 
 # histogram
-diff_hist_q2_male <- ggplot(diff_data_q2_male, aes(x=mean)) + 
-  geom_vline(aes(xintercept= mean(as.numeric(diff_rates(Clicks_sorted_men, 7)))),
-             color="tan1", linetype="dashed", size=1) +
-  geom_histogram(bins = 25, aes(y= after_stat(count / sum(count))), colour= "black")+
-  stat_function(
-    fun = dnorm, 
-    args = list(mean = mean(diff_data_q2_male$mean), sd = sd(diff_data_q2_male$mean)), 
-    lwd = 0.65, 
-    col = 'black')  +
+diff_hist_q2_male <- ggplot(diff_data_q2_male,
+                            aes(x= mean)
+) +
+  geom_histogram(bins = 14,
+                 aes(y= after_stat(count / sum(count))),
+                 fill = "gray63",
+                 colour = "black") +
+  theme_bw() +
   ylab("Frequency") +
   xlab("Differences") +
-  theme_bw() +
-  theme(
-    plot.title = element_text(size=15)
-  ) +
-  scale_x_continuous(breaks = seq(0,7.5,0.5)) +
-  ylim(0,1.3) +
-  geom_text(x=5.3, y=0.8, label="5.14", color = "black") +  
-  ggtitle("Frequency of differences in the shuffle")
+  theme(plot.title = element_text(size=15),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        text = element_text(size = 15),
+        aspect.ratio=1) +
+  scale_x_continuous(breaks = seq(1,8,1),
+                     expand = c(0, 0)) +
+  scale_y_continuous(expand = c(0, 0)) +
+  geom_vline(aes(xintercept = mean(as.numeric(diff_rates(Clicks_sorted_men, 7)))),
+             color="dodgerblue2",
+             linetype="dashed",
+             size=1) +
+  geom_text(x=5.4,
+            y=0.3,
+            label="5.14") + 
+  coord_cartesian(ylim = c(0, 0.35), xlim = c(1, 8)) +
+  theme(legend.position = "none") +
+  ggtitle("Frequency of differences in the shuffle") 
 diff_hist_q2_male
 
-#pvalue
-mean(as.numeric(diff_rates(Clicks_sorted_men, 7))) < quantile(diff_data_q2_male$mean, 0.05)
-pvalue(diff_data_q2_male, mean(as.numeric(diff_rates(Clicks_sorted_men, 7))))
+# p value
+pvalue(diff_data_q2_male,mean(as.numeric(diff_rates(Clicks_sorted_men, 7))))
 
 ## Unsiginificant 
-
 
 
 

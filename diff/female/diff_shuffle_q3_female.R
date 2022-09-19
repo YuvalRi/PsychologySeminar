@@ -196,33 +196,38 @@ diff_data_q3_female <- read_csv("C://Users//yuval//OneDrive//english folder//Sem
 diff_data_q3_female$mean <- rowMeans(diff_data_q3_female, na.rm=TRUE)
 
 # histogram
-diff_hist_q3_female <- ggplot(diff_data_q3_female, aes(x=mean)) + 
-  geom_vline(aes(xintercept= mean(as.numeric(diff_rates(Clicks_sorted_women, 10)))),
-             color="red", linetype="dashed", size=1) +
-  geom_histogram(bins = 30, aes(y= after_stat(count / sum(count))), colour= "black")+
-  stat_function(
-    fun = dnorm, 
-    args = list(mean = mean(diff_data_q3_female$mean), sd = sd(diff_data_q3_female$mean)), 
-    lwd = 0.65, 
-    col = 'black')  +
+diff_hist_q3_female <- ggplot(diff_data_q3_female,
+                              aes(x= mean)
+) +
+  geom_histogram(bins = 7,
+                 aes(y= after_stat(count / sum(count))),
+                 fill = "gray63",
+                 colour = "black") +
+  theme_bw() +
   ylab("Frequency") +
   xlab("Differences") +
-  theme_bw() +
-  theme(
-    plot.title = element_text(size=15)
-  ) +
-  scale_x_continuous(breaks = seq(min(diff_data_q3_female$mean), max(diff_data_q3_female$mean),0.2)) +
-  ylim(0,1.3) +
-  scale_y_continuous(breaks = seq(0,1,0.2)) +
-  geom_text(x=2.4, y=0.8, label="2.3") +
-  ggtitle("Frequency of differences in the shuffle")
+  theme(plot.title = element_text(size=15),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        text = element_text(size = 15),
+        aspect.ratio=1) +
+  scale_x_continuous(breaks = seq(0,5,0.5),
+                     expand = c(0, 0)) +
+  scale_y_continuous(expand = c(0, 0)) +
+  geom_vline(aes(xintercept = mean(as.numeric(diff_rates(Clicks_sorted_women, 10)))),
+             color="dodgerblue2",
+             linetype="dashed",
+             size=1) +
+  geom_text(x=2.45,
+            y=0.6,
+            label="2.3") + 
+  coord_cartesian(ylim = c(0, 0.7), xlim = c(0, 5)) +
+  theme(legend.position = "none") +
+  ggtitle("Frequency of differences in the shuffle") 
 diff_hist_q3_female
 
-
 #pvalue
-mean(as.numeric(diff_rates(Clicks_sorted_women, 10))) < quantile(diff_data_q3_female$mean, 0.05)
 pvalue(diff_data_q3_female, mean(as.numeric(diff_rates(Clicks_sorted_women, 10))))
-
 
 ##Unsignificant
 

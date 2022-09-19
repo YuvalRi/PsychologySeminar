@@ -140,8 +140,3 @@ z_observed_Q2 <=  -qnorm(1-(alpha/2)) | z_observed_Q2 >= qnorm(1-(alpha/2))
 p_val_Q2 = 2*pnorm(z_observed_Q2,lower.tail = FALSE) #the difference is not significant at 5%
 p_val_Q2
 
-
-
-
-
-
