@@ -158,8 +158,8 @@ shapiro.test(prop_vec_Q3)
 alpha <- 0.05
 n1 <- nrow(Clicks_sorted_men)
 n2 <- nrow(Clicks_sorted_men)
-Q3_p2_hat <- mean(get_prop(Clicks_sorted_men, 7))
 Q3_p1_hat <- (sum(Clicks_sorted_men$click_1yes_0no == "1"))/nrow(Clicks_sorted_men)
+Q3_p2_hat <- mean(get_prop(Clicks_sorted_men, 7))
 Q3_p_hat <- (n1*Q3_p1_hat + n2*Q3_p2_hat)/(n1+n2)
 
 # H0: p1 = p2 - null hypothesis

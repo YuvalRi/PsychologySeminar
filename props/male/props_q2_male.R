@@ -126,8 +126,8 @@ alpha <- 0.05
 # Question 2 - Given a graph G = (V,E) we chose a vertex v_i. What is the probability that v_j and v_k are connect by one edge where both v_j,v_k are v_i's neighbors (there is an edge from v_i to v_j,v_k)?
 n1 <- nrow(Clicks_sorted_men)
 n2 <- nrow(Clicks_sorted_men)
-Q2_p2_hat <- mean(prop_vec_Q2)
 Q2_p1_hat <- (sum(Clicks_sorted_men$click_1yes_0no == "1"))/n1 #number of edges in the given graph 
+Q2_p2_hat <- mean(prop_vec_Q2)
 Q2_p_hat <- (n1*Q2_p1_hat + n2*Q2_p2_hat)/(n1+n2)
 
 # H0: p1 = p2 - null hypothesis
@@ -137,6 +137,8 @@ z_observed_Q2 <- ((Q2_p1_hat- Q2_p2_hat) - 0)/(sqrt(Q2_p_hat*(1-Q2_p_hat)*((1/n1
 z_observed_Q2
 z_observed_Q2 <=  -qnorm(1-(alpha/2)) | z_observed_Q2 >= qnorm(1-(alpha/2))
 
-p_val_Q2 = 2*pnorm(z_observed_Q2,lower.tail = FALSE) #the difference is not significant at 5%
+p_val_Q2 = 2*pnorm(z_observed_Q2,lower.tail = FALSE) 
 p_val_Q2
+
+## UNSIGNIFICANT
 
