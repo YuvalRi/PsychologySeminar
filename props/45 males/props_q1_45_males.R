@@ -156,8 +156,8 @@ alpha <- 0.05
 # Question 1 - Given a graph G = (V,E) we chose a vertex v_i. What is the probability that v_j and v_k are connect by one edge where each v_j,v_k connects to v_i by one edge? 
 n1 <- nrow(males_45)
 n2 <- nrow(males_45)
-Q1_p2_hat <- mean(prop_vec_Q1_male) #mean of proportions vector 
 Q1_p1_hat <- (sum(males_45$click_1yes_0no == "1"))/n1 #number of edges in the given graph 
+Q1_p2_hat <- mean(prop_vec_Q1_male) #mean of proportions vector 
 Q1_p_hat <- (n1*Q1_p1_hat + n2*Q1_p2_hat)/(n1+n2)
 
 # H0: p1 = p2 - null hypothesis
@@ -169,4 +169,4 @@ z_observed_Q1 <= -qnorm(1-(alpha/2)) | z_observed_Q1 >= qnorm(1-(alpha/2)) #the 
 p_val_Q1 = 2*pnorm(z_observed_Q1,lower.tail = TRUE)
 p_val_Q1
 
-
+## UNSIGNIFICANT

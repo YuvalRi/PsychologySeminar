@@ -157,9 +157,10 @@ shapiro.test(prop_vec_Q3)
 alpha <- 0.05
 n1 <- nrow(males_45)
 n2 <- nrow(males_45)
-Q3_p2_hat <- mean(get_prop(males_45, 10))
 Q3_p1_hat <- (sum(males_45$click_1yes_0no == "1"))/nrow(males_45)
+Q3_p2_hat <- mean(get_prop(males_45, 10))
 Q3_p_hat <- (n1*Q3_p1_hat + n2*Q3_p2_hat)/(n1+n2)
+
 
 # H0: p1 = p2 - null hypothesis
 # H1: p2 != p1 - research hypothesis
@@ -170,4 +171,4 @@ z_observed_Q3 <= -qnorm(1-(alpha/2)) | z_observed_Q3 >= qnorm(1-(alpha/2)) #the 
 p_val_Q3 = 2*pnorm(z_observed_Q3,lower.tail = TRUE)
 p_val_Q3
 
-
+## SIGNIFICANT
