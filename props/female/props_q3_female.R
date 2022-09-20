@@ -155,8 +155,8 @@ shapiro.test(prop_vec_Q3_female)
 alpha <- 0.05
 n1 <- nrow(Clicks_sorted_women)
 n2 <- nrow(Clicks_sorted_women)
-Q3_p2_hat <- mean(get_prop(Clicks_sorted_women, 10))
 Q3_p1_hat <- (sum(Clicks_sorted_women$click0no1yes == "1"))/nrow(Clicks_sorted_women)
+Q3_p2_hat <- mean(get_prop(Clicks_sorted_women, 10))
 Q3_p_hat <- (n1*Q3_p1_hat + n2*Q3_p2_hat)/(n1+n2)
 
 # H0: p1 = p2 - null hypothesis
@@ -168,4 +168,6 @@ z_observed_Q3 <= -qnorm(1-(alpha/2)) | z_observed_Q3 >= qnorm(1-(alpha/2)) #the 
 p_val_Q3 = 2*pnorm(z_observed_Q3,lower.tail = TRUE)
 p_val_Q3
 
+
+## UNSIGNIFICANT
 
