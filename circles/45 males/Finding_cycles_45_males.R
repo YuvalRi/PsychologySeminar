@@ -222,4 +222,3 @@ edges <- creating_edges(males_45)
 graph <- graph(edges, directed = F)
 graph.motifs(graph,size=3)[length(graph.motifs(graph,size=3))] 
 
-
