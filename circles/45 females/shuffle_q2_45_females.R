@@ -56,13 +56,13 @@ is_circle <- function(v1, v2, v3, df){
 # counting circles in the graph (directed graph)
 count_circles <- function(df){
   count <- 0 
-  vec <- c(1,2,3,5,6,7,8,9,10) # the vertices in the graph
-  for (v in 1:9){ 
-    for(w in 1:8){
+  vec <- c(1,2,3,4,5,6,7,8,9,10) # the vertices in the graph
+  for (v in 1:10){ 
+    for(w in 1:9){
       if (w == v){
         next
       }
-      for(z in (w+1):9){
+      for(z in (w+1):10){
         if(z == v | z == w){
           next
         }
@@ -113,7 +113,6 @@ B <- 10000 #number of iterations
 circles <- c() #empty vector which will get the number of circles in each iteration (vector of length - 10000)
 sim_2 <- function(data){
   data <- name_to_number(data) # changing participants name to number
-  data <- data[-which(data[,1] == "4" | data[,2] == "4"),] #removing '4' participant
   for (i in 1:B){
     if ( i %% 100 == 0) 
       cat("Progress: ", i / 100, "%\n")
@@ -141,10 +140,10 @@ sim_results_df <- read.csv("C:\\Users\\yuval\\OneDrive\\english folder\\Seminar 
 # histogram
 p <- ggplot(sim_results_df, 
             aes(x=ï..number.of.circles,
-                fill= factor(ifelse(ï..number.of.circles=="56","Highlighted","Normal"))
+                fill= factor(ifelse(ï..number.of.circles=="72","Highlighted","Normal"))
             )
 ) + 
-  scale_fill_manual(name = "56", 
+  scale_fill_manual(name = "72", 
                     values=c("dodgerblue2","gray63")) +
   geom_histogram(bins = 40, 
                  aes(y= after_stat(count / sum(count))), 
@@ -157,16 +156,16 @@ p <- ggplot(sim_results_df,
         panel.grid.minor = element_blank(),
         text = element_text(size = 15),
         aspect.ratio=1) +
-  scale_x_continuous(breaks=seq(20,65,2),
+  scale_x_continuous(breaks=seq(35,85,5),
                      expand = c(0, 0)) +
   scale_y_continuous(expand = c(0, 0)) + 
-  coord_cartesian(ylim = c(0,0.10), xlim = c(20, 65)) +
+  coord_cartesian(ylim = c(0,0.15), xlim = c(35, 85)) +
   ggtitle("Frequency of number of circles in the shuffle") +
   theme(legend.position = "none")  
 p 
 
 
-# pvalue, 56 - number of circles in the real graph
-pvalue(sim_results_df,56)
+# pvalue, 72 - number of circles in the real graph
+pvalue(sim_results_df,72)
 
-## UNSIGNIFICANT 
+## SIGNIFICANT 

@@ -97,13 +97,13 @@ is_circle <- function(v1, v2, v3, df){
 # counting circles in the graph (directed graph)
 count_circles <- function(df){
   count <- 0 
-  vec <- c(1,2,3,5,6,7,8,9,10) # the vertices in the graph
-  for (v in 1:9){ 
-    for(w in 1:8){
+  vec <- c(1,2,3,4,5,6,7,8,9,10) # the vertices in the graph
+  for (v in 1:10){ 
+    for(w in 1:9){
       if (w == v){
         next
       }
-      for(z in (w+1):9){
+      for(z in (w+1):10){
         if(z == v | z == w){
           next
         }
@@ -150,7 +150,7 @@ directed_to_undirected_q3 <- function(df, version){
   
   for( i in 1:nrow(df)){
     for( j in (i+1):nrow(df)){
-      if (j == 73){
+      if (j == 91){
         {break}
       }
       if( df[i,1] == df[j,2] & df[i,2] == df[j,1] ){
@@ -195,11 +195,9 @@ females_45_graph <- graph(edges, directed = FALSE)
 graph.motifs(females_45_graph,size=3)[length(graph.motifs(females_45_graph,size=3))]
 
 
-## Q2 - 56 circles
+## Q2 - 72 circles
 females_45 <- read.csv("C:\\Users\\yuval\\OneDrive\\english folder\\Seminar - clicks\\more datasets\\45females_subset.csv")
 females_45 <- name_to_number(females_45)
-# '4' has only one neighbor
-females_45 <- females_45[-which(females_45[,1] == "4" | females_45[,2] == "4"),] #removing '4' participant
 # creating df with edges only
 vec1 <- ifelse(females_45[,3] == "1", females_45[,1],"0")
 vec1_nozero <- vec1[vec1 != "0"]
@@ -212,8 +210,6 @@ count_circles(d)
 ## Q3 -  0 circles
 females_45 <- read.csv("C:\\Users\\yuval\\OneDrive\\english folder\\Seminar - clicks\\more datasets\\45females_subset.csv")
 females_45 <- name_to_number(females_45)
-# '4' has only one neighbor
-females_45 <- females_45[-which(females_45[,1] == "4" | females_45[,2] == "4"),] #removing '4' participant
 females_45 <- directed_to_undirected_q3(females_45, FALSE)
 edges <- creating_edges(females_45)
 graph <- graph(edges, directed = F)
