@@ -181,10 +181,10 @@ males_45 <- read.csv("C://Users//yuval//OneDrive//english folder//Seminar - clic
 males_45 <- name_to_number(males_45)
 edges <- creating_edges(males_45)
 males_45_graph <- graph(edges, directed = TRUE)
-males_45_plot <- plot(males_45_graph, layout = layout_with_graphopt, edge.arrow.size = 0.2, vertex.color="gray63", vertex.label.color="black", vertex.frame.color="black", vertex.label.cex = 1,vertex.size = 25, edge.color = "black")
+males_45_plot <- plot(males_45_graph, layout = layout_with_graphopt, edge.arrow.size = 0.3, vertex.color="gray63", vertex.label.color="black", vertex.frame.color="black", vertex.label.cex = 1,vertex.size = 25, edge.color = "black")
 
 svg("nodesGraphDataset4.svg")
-plot(males_45_graph, layout = layout_with_graphopt, edge.arrow.size = 0.2, vertex.color="gray63", vertex.label.color="black", vertex.frame.color="black", vertex.label.cex = 1,vertex.size = 25, edge.color = "black", main = "nodesGraphDataset4")
+plot(males_45_graph, layout = layout_with_graphopt, edge.arrow.size = 0.3, vertex.color="gray63", vertex.label.color="black", vertex.frame.color="black", vertex.label.cex = 1,vertex.size = 25, edge.color = "black", main = "nodesGraphDataset4")
 dev.off()
 
 ## Q1 - 60 circles

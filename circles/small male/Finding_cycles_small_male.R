@@ -161,10 +161,10 @@ small_male <- read.csv("C://Users//yuval//OneDrive//english folder//Seminar - cl
 small_male <- name_to_number(small_male)
 edges <- creating_edges(small_male)
 small_male_graph <- graph(edges, directed = TRUE)
-small_male_plot <- plot(small_male_graph, layout = layout_with_graphopt, edge.arrow.size = 0.2, vertex.color="gray63", vertex.label.color="black", vertex.frame.color="black", vertex.label.cex = 1,vertex.size = 25, edge.color = "black")
+small_male_plot <- plot(small_male_graph, layout = layout_with_graphopt, edge.arrow.size = 0.3, vertex.color="gray63", vertex.label.color="black", vertex.frame.color="black", vertex.label.cex = 1,vertex.size = 25, edge.color = "black")
 
 svg("figure6.svg")
-plot(small_male_graph, layout = layout_with_graphopt, edge.arrow.size = 0.2, vertex.color="gray63", vertex.label.color="black", vertex.frame.color="black", vertex.label.cex = 1,vertex.size = 25, edge.color = "black", main = "nodesGraphDataset6")
+plot(small_male_graph, layout = layout_with_graphopt, edge.arrow.size = 0.3, vertex.color="gray63", vertex.label.color="black", vertex.frame.color="black", vertex.label.cex = 1,vertex.size = 25, edge.color = "black", main = "nodesGraphDataset6")
 dev.off()
 
 

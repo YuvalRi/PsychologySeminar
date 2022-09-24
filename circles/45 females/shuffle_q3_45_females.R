@@ -41,7 +41,7 @@ directed_to_undirected_q3 <- function(df, version){
   
   for( i in 1:nrow(df)){
     for( j in (i+1):nrow(df)){
-      if (j == 73){
+      if (j == 91){
         {break}
       }
       if( df[i,1] == df[j,2] & df[i,2] == df[j,1] ){

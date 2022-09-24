@@ -122,7 +122,7 @@ sim_2 <- function(data){
     vec2 <- ifelse(data[,3] == "1", data[,2],"0")
     vec2_nozero <- vec2[vec2 != "0"]
     d <- data.frame(vec1_nozero, vec2_nozero) #getting the data with edges only
-    circles[i] <- count_circles(d) #counting circles in each iteration
+    circles[i] <- count_circles(d) #counting circrmles in each iteration
   }
   return(circles)
 }

@@ -170,10 +170,10 @@ small_female <- read.csv("C://Users//yuval//OneDrive//english folder//Seminar - 
 small_female <- name_to_number(small_female)
 edges <- creating_edges(small_female)
 small_female_graph <- graph(edges, directed = TRUE)
-small_female_plot <- plot(small_female_graph, layout = layout_with_graphopt, edge.arrow.size = 0.2, vertex.color="gray63", vertex.label.color="black", vertex.frame.color="black", vertex.label.cex = 1,vertex.size = 25, edge.color = "black")
+small_female_plot <- plot(small_female_graph, layout = layout_with_graphopt, edge.arrow.size = 0.3, vertex.color="gray63", vertex.label.color="black", vertex.frame.color="black", vertex.label.cex = 1,vertex.size = 25, edge.color = "black")
 
 svg("figure5.svg")
-plot(small_female_graph, layout = layout_with_graphopt, edge.arrow.size = 0.2, vertex.color="gray63", vertex.label.color="black", vertex.frame.color="black", vertex.label.cex = 1,vertex.size = 25, edge.color = "black", main = "nodesGraphDataset5")
+plot(small_female_graph, layout = layout_with_graphopt, edge.arrow.size = 0.3, vertex.color="gray63", vertex.label.color="black", vertex.frame.color="black", vertex.label.cex = 1,vertex.size = 25, edge.color = "black", main = "nodesGraphDataset5")
 dev.off()
 
 

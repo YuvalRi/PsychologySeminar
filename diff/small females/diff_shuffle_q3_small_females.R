@@ -199,8 +199,8 @@ diff_hist_q3_small_female <- ggplot(diff_data_q3_small_females,
              color="dodgerblue2",
              linetype="dashed",
              size=1) +
-  geom_text(x=1.55,
-            y=0.25,
+  geom_text(x=0.2,
+            y=0.5,
             label="0.166") + 
   coord_cartesian(ylim = c(0, 0.6), xlim = c(-0.1, 0.75)) +
   theme(legend.position = "none") +
