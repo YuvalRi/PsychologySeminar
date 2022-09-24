@@ -1,6 +1,5 @@
 library(tidyverse)
 library(dplyr)
-library(igraph)
 
 # function for converting names of participants to numebrs
 name_to_number <- function(data) {
@@ -70,16 +69,16 @@ males_45 <- name_to_number(males_45)
 
 
 # subject's clicks
-neighbors_directed(males_45,1)
-neighbors_directed(males_45,2)
-neighbors_directed(males_45,3)
-neighbors_directed(males_45,4)
-neighbors_directed(males_45,5)
-neighbors_directed(males_45,6)
-neighbors_directed(males_45,7)
-neighbors_directed(males_45,8)
-neighbors_directed(males_45,9)
-neighbors_directed(males_45,10)
+length(neighbors_directed(males_45,1))
+length(neighbors_directed(males_45,2))
+length(neighbors_directed(males_45,3))
+length(neighbors_directed(males_45,4))
+length(neighbors_directed(males_45,5))
+length(neighbors_directed(males_45,6))
+length(neighbors_directed(males_45,7))
+length(neighbors_directed(males_45,8))
+length(neighbors_directed(males_45,9))
+length(neighbors_directed(males_45,10))
 
 # mutual clicks
 mutual_clicks(males_45,1)
