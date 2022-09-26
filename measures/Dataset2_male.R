@@ -51,7 +51,16 @@ male_plot <- plot(male_graph_directed, layout = layout_with_graphopt, edge.arrow
 
 ## CC - Clustering Coefficient (calculated for undirected graph only)
 transitivity(male_graph, type = c("global"))
-transitivity(male_graph, type = c("local"))
+transitivity(male_graph,vids = V(male_graph), type = c("local"))
+
+
+vertex_names = function (g) {
+  vert = V(g)
+  if (! is.null(names(vert))) names(vert) else as.vector(vert)
+}
+
+trans = data.frame(Vertex = vertex_names(male_graph),
+                   Transitivity = transitivity(male_graph, type = 'local', vids = V(male_graph)))
 
 ## ASPL - average shortest path length
 # in directed graph

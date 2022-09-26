@@ -65,6 +65,11 @@ mean_distance(small_male_graph, directed = TRUE)
 # in undirected graph
 mean_distance(small_male_graph, directed = FALSE)
 
+# can also be calculated by
+average.path.length(small_male_graph, directed = TRUE)
+average.path.length(small_male_graph, directed = FALSE)
+
+
 ## <k>
 mean(degree(small_male_graph))
 
