@@ -77,8 +77,12 @@ neighbors <- function(df, v){
       vec[i] <- df[i,1]
     }
   }
-  return(vec[!is.na(vec)])
+  if (all(df[df$ï..Subject == v,3]) == "0"){
+    vec[v] <- 0
+  }
+  return(unique(vec[!is.na(vec)]))
 }
+
 
 # input: edge - pair of vertices of df - dataframe
 # output: TRUE - if there is no edge in the graph for a pair of vertices,

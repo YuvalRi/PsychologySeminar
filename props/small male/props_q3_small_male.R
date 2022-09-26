@@ -63,19 +63,18 @@ directed_to_undirected_q3 <- function(df, version){
 
 neighbors <- function(df, v){
   vec <- c()
-  
   for(i in 1:nrow(df)){
-    if(df[i,3] == "1" && df[i,1] == v){
+    if( df[i,3] == "1" && df[i,1] == v){
       vec[i] <- df[i,2]
     }
     if( df[i,3] == "1" && df[i,2] == v){
       vec[i] <- df[i,1]
     }
   }
-  if (all(df[df$Subject == v,3] == "0")){
-    vec[v] <- 0
+  if (is.null(vec)){ #if v has no neighbors -> return "0"
+    return("0")
   }
-  return(unique(vec[!is.na(vec)]))
+  return(vec[!is.na(vec)])
 }
 
 # input: edge - pair of vertices of df - dataframe
@@ -122,8 +121,13 @@ get_prop <- function(data,n){
   total <- c()
   prop <- c()
   for (i in 1:n){
-    total[i] <- choose(length(neighbors(data,i)), 2)
-    prop[i] <- (total[i] - diff_rates(data, n)[[i]])/ total[i]
+    if(neighbors(data,i) != "0"){
+      total[i] <- choose(length(neighbors(data,i)), 2)
+      prop[i] <- (total[i] - diff_rates(data, n)[[i]])/ total[i]
+    }
+    else {
+      prop[i] <- NA
+    }
   }
   if(any(is.na(prop) == TRUE)){
     prop[which(is.na(prop))] <- mean(prop, na.rm = TRUE) 
@@ -162,7 +166,7 @@ z_observed_Q3 <- ((Q3_p1_hat- Q3_p2_hat) - 0)/sqrt(Q3_p_hat*(1-Q3_p_hat)*((1/n1)
 z_observed_Q3
 z_observed_Q3 <= -qnorm(1-(alpha/2)) | z_observed_Q3 >= qnorm(1-(alpha/2)) #the difference is not significant at 5%
 
-p_val_Q3 = 2*pnorm(z_observed_Q3,lower.tail = TRUE)
+p_val_Q3 = 2*pnorm(z_observed_Q3,lower.tail = FALSE)
 p_val_Q3
 
 ## SIGNIFICANT

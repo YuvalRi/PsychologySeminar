@@ -43,7 +43,10 @@ neighbors_directed <- function(df, v){
       vec[i] <- df[i,2]
     }
   }
-  return(vec[!is.na(vec)])
+  if (all(df[df$Subject == v,3] == "0")){
+    vec[v] <- 0
+  }
+  return(unique(vec[!is.na(vec)]))
 }
 
 

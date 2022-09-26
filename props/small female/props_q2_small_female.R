@@ -35,11 +35,12 @@ neighbors_directed <- function(df, v){
       vec[i] <- df[i,2]
     }
   }
-  if (all(df[df$ï..Participant == v,3]) == "0"){
+  if (all(df[df$Subject == v,3] == "0")){
     vec[v] <- 0
   }
-  return(vec[!is.na(vec)])
+  return(unique(vec[!is.na(vec)]))
 }
+
 
 # input: edge - pair of vertices of df - dataframe
 # output: TRUE - if there is no edge in the graph for a pair of vertices,
