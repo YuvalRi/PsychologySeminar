@@ -37,11 +37,12 @@ neighbors_directed <- function(df, v){
       vec[i] <- df[i,2]
     }
   }
-  if (all(df[df$ï..Participant == v,3]) == "0"){
+  if (all(df[df$ï..Participant == v,3] == "0")){
     vec[v] <- 0
   }
   return(unique(vec[!is.na(vec)]))
 }
+
 
 # input: edge - pair of vertices of df - dataframe
 # output: TRUE - if there is no edge in the graph for a pair of vertices,
@@ -87,19 +88,15 @@ get_prop_directed <- function(data,n){
   total <- c()
   prop <- c()
   for (i in 1:n) {
-    if(neighbors_directed(data,i) != "0"){
-      total[i] <- (length(neighbors_directed(data,i)))*((length(neighbors_directed(data,i)))-1)
-      prop[i] <- (total[i] - diff_rates(data, n)[[i]]) / total[i]
-    }
-    else {
-      prop[i] <- NA
-    }
+    total[i] <- (length(neighbors_directed(data,i)))*((length(neighbors_directed(data,i)))-1)
+    prop[i] <- (total[i] - diff_rates(data, n)[[i]]) / total[i]
   }
   if(any(is.na(prop) == TRUE)){
     prop[which(is.na(prop))] <- mean(prop, na.rm = TRUE) 
   }
   return(prop)
 }
+
 
 #Data Frame
 small_male <- read.csv("C://Users//yuval//OneDrive//english folder//Seminar - clicks//more datasets//small_male_subset.csv")
@@ -133,7 +130,7 @@ z_observed_Q2 <- ((Q2_p1_hat- Q2_p2_hat) - 0)/(sqrt(Q2_p_hat*(1-Q2_p_hat)*((1/n1
 z_observed_Q2
 z_observed_Q2 <=  -qnorm(1-(alpha/2)) | z_observed_Q2 >= qnorm(1-(alpha/2))
 
-p_val_Q2 = 2*pnorm(z_observed_Q2,lower.tail = TRUE) #the difference is not significant at 5%
+p_val_Q2 = 2*pnorm(z_observed_Q2,lower.tail = FALSE) #the difference is not significant at 5%
 p_val_Q2
 
 ## SIGNIFICANT

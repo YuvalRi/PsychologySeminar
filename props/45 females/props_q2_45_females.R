@@ -94,13 +94,8 @@ get_prop_directed <- function(data,n){
   total <- c()
   prop <- c()
   for (i in 1:n) {
-    if(neighbors_directed(data,i) != "0"){
-      total[i] <- (length(neighbors_directed(data,i)))*((length(neighbors_directed(data,i)))-1)
-      prop[i] <- (total[i] - diff_rates(data, n)[[i]]) / total[i]
-    }
-    else {
-      prop[i] <- NA
-    }
+    total[i] <- (length(neighbors_directed(data,i)))*((length(neighbors_directed(data,i)))-1)
+    prop[i] <- (total[i] - diff_rates(data, n)[[i]]) / total[i]
   }
   if(any(is.na(prop) == TRUE)){
     prop[which(is.na(prop))] <- mean(prop, na.rm = TRUE) 

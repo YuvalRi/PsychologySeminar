@@ -35,7 +35,7 @@ neighbors_directed <- function(df, v){
       vec[i] <- df[i,2]
     }
   }
-  if (all(df[df$Subject == v,3] == "0")){
+  if (all(df[df$ï..Subject == v,3] == "0")){
     vec[v] <- 0
   }
   return(unique(vec[!is.na(vec)]))
@@ -86,13 +86,8 @@ get_prop_directed <- function(data,n){
   total <- c()
   prop <- c()
   for (i in 1:n) {
-    if(neighbors_directed(data,i) != "0"){
-      total[i] <- (length(neighbors_directed(data,i)))*((length(neighbors_directed(data,i)))-1)
-      prop[i] <- (total[i] - diff_rates(data, n)[[i]]) / total[i]
-    }
-    else {
-      prop[i] <- NA
-    }
+    total[i] <- (length(neighbors_directed(data,i)))*((length(neighbors_directed(data,i)))-1)
+    prop[i] <- (total[i] - diff_rates(data, n)[[i]]) / total[i]
   }
   if(any(is.na(prop) == TRUE)){
     prop[which(is.na(prop))] <- mean(prop, na.rm = TRUE) 
