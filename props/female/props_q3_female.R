@@ -66,6 +66,7 @@ directed_to_undirected_q3 <- function(df, version){
 # input: df - dataframe, v - vertex
 # output: vector of all neighbors of the vertex v
 
+
 neighbors <- function(df, v){
   vec <- c()
   for(i in 1:nrow(df)){
@@ -79,7 +80,7 @@ neighbors <- function(df, v){
   if (is.null(vec)){ #if v has no neighbors -> return "0"
     return("0")
   }
-  return(vec[!is.na(vec)])
+  return(unique(vec[!is.na(vec)]))
 }
 
 # input: edge - pair of vertices of df - dataframe
@@ -169,5 +170,5 @@ p_val_Q3 = 2*pnorm(z_observed_Q3,lower.tail = TRUE)
 p_val_Q3
 
 
-## UNSIGNIFICANT
+## MarginalSignificant
 

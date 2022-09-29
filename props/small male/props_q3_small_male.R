@@ -74,7 +74,7 @@ neighbors <- function(df, v){
   if (is.null(vec)){ #if v has no neighbors -> return "0"
     return("0")
   }
-  return(vec[!is.na(vec)])
+  return(unique(vec[!is.na(vec)]))
 }
 
 # input: edge - pair of vertices of df - dataframe
@@ -121,19 +121,15 @@ get_prop <- function(data,n){
   total <- c()
   prop <- c()
   for (i in 1:n){
-    if(neighbors(data,i) != "0"){
-      total[i] <- choose(length(neighbors(data,i)), 2)
-      prop[i] <- (total[i] - diff_rates(data, n)[[i]])/ total[i]
-    }
-    else {
-      prop[i] <- NA
-    }
+    total[i] <- choose(length(neighbors(data,i)), 2)
+    prop[i] <- (total[i] - diff_rates(data, n)[[i]])/ total[i]
   }
   if(any(is.na(prop) == TRUE)){
     prop[which(is.na(prop))] <- mean(prop, na.rm = TRUE) 
   }
   return(prop)
 }
+
 
 #Data Frame
 small_male <- read.csv("C://Users//yuval//OneDrive//english folder//Seminar - clicks//more datasets//small_male_subset.csv")

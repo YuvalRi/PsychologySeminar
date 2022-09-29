@@ -69,17 +69,16 @@ directed_to_undirected_q3 <- function(df, version){
 
 neighbors <- function(df, v){
   vec <- c()
-  
   for(i in 1:nrow(df)){
-    if(df[i,3] == "1" && df[i,1] == v){
+    if( df[i,3] == "1" && df[i,1] == v){
       vec[i] <- df[i,2]
     }
     if( df[i,3] == "1" && df[i,2] == v){
       vec[i] <- df[i,1]
     }
   }
-  if (all(df[df$Subject == v,3] == "0")){
-    vec[v] <- 0
+  if (is.null(vec)){ #if v has no neighbors -> return "0"
+    return("0")
   }
   return(unique(vec[!is.na(vec)]))
 }
