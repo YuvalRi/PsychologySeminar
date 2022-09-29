@@ -161,8 +161,14 @@ neighbors <- function(df, v){
       vec[i] <- df[i,1]
     }
   }
+  if (is.null(vec)){ #if v has no neighbors -> return "0"
+    return("0")
+  }
   return(unique(vec[!is.na(vec)]))
 }
+
+# input: df - dataframe, v - vertex
+# output: vector of all neighbors of the vertex v in directed graph
 
 neighbors_directed <- function(df, v){
   vec <- c()
@@ -170,6 +176,9 @@ neighbors_directed <- function(df, v){
     if( df[i,3] == "1" && df[i,1] == v){
       vec[i] <- df[i,2]
     }
+  }
+  if (all(df[df$ï..Participant == v,3]) == "0"){
+    vec[v] <- 0
   }
   return(unique(vec[!is.na(vec)]))
 }
@@ -210,7 +219,7 @@ female <- female[,c(1,2,25)]
 # sorted Women df
 female <- arrange(female, Subject)
 female <- name_to_number(female)
-# '6' & '3' has only one neighbors 
+# '6' & '3' have only one neighbors 
 female <- female[-which(female[,1] == "6" | female[,2] == "6"),] #removing '6' participant
 female <- female[-which(female[,1] == "3" | female[,2] == "3"),] #removing '3' participant
 # creating df with edges only
@@ -228,7 +237,7 @@ female <- female[,c(1,2,25)]
 # sorted Women df
 female <- arrange(female, Subject)
 female <- name_to_number(female)
-# '6' & '3' has no neighbors 
+# '6' & '3' have only one neighbors 
 female <- female[-which(female[,1] == "6" | female[,2] == "6"),] #removing '6' participant
 female <- female[-which(female[,1] == "3" | female[,2] == "3"),] #removing '3' participant
 female <- directed_to_undirected_q3(female, FALSE)

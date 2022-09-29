@@ -110,16 +110,6 @@ count_circles <- function(df){
   return(count)
 }
 
-neighbors_directed <- function(df, v){
-  vec <- c()
-  for(i in 1:nrow(df)){
-    if( df[i,3] == "1" && df[i,1] == v){
-      vec[i] <- df[i,2]
-    }
-  }
-  return(unique(vec[!is.na(vec)]))
-}
-
 # input: df - dataframe, v - vertex
 # output: vector of all neighbors of the vertex v
 
@@ -133,7 +123,26 @@ neighbors <- function(df, v){
       vec[i] <- df[i,1]
     }
   }
-  return(vec[!is.na(vec)])
+  if (is.null(vec)){ #if v has no neighbors -> return "0"
+    return("0")
+  }
+  return(unique(vec[!is.na(vec)]))
+}
+
+# input: df - dataframe, v - vertex
+# output: vector of all neighbors of the vertex v in directed graph
+
+neighbors_directed <- function(df, v){
+  vec <- c()
+  for(i in 1:nrow(df)){
+    if( df[i,3] == "1" && df[i,1] == v){
+      vec[i] <- df[i,2]
+    }
+  }
+  if (all(df[df$ï..Participant == v,3]) == "0"){
+    vec[v] <- 0
+  }
+  return(unique(vec[!is.na(vec)]))
 }
 
 # for Q3
