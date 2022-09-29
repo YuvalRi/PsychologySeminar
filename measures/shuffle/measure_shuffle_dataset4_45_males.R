@@ -1,31 +1,30 @@
 library(tidyverse)
 library(dplyr)
 library(igraph)
-library(ggplot2)
 
 # function for converting names of participants to numebrs
 name_to_number <- function(data) {
   for(j in 1:2){
     for (i in 1:nrow(data)){
-      if (data[i,j] == "W788"){
+      if (data[i,j] == "M629"){
         data[i,j] <- "1"
-      } else if(data[i,j] == "W789") {
+      } else if(data[i,j] == "M634") {
         data[i,j] <- "2"
-      } else if(data[i,j] == "W790") {
+      } else if(data[i,j] == "M646") {
         data[i,j] <- "3"
-      } else if(data[i,j] == "W791") {
+      } else if(data[i,j] == "M647") {
         data[i,j] <- "4"
-      } else if(data[i,j] == "W792") {
+      } else if(data[i,j] == "M648") {
         data[i,j] <- "5"
-      } else if(data[i,j] == "W793") {
+      } else if(data[i,j] == "M650") {
         data[i,j] <- "6"
-      } else if(data[i,j] == "W794") {
+      } else if(data[i,j] == "M651") {
         data[i,j] <- "7"
-      } else if(data[i,j] == "W795") {
+      } else if(data[i,j] == "M652") {
         data[i,j] <- "8"
-      } else if(data[i,j] == "W796") {
+      } else if(data[i,j] == "M653") {
         data[i,j] <- "9"  
-      } else if(data[i,j] == "W797") {
+      } else if(data[i,j] == "M654") {
         data[i,j] <- "10"
       }
     }
@@ -45,11 +44,11 @@ creating_edges <- function(data){
   return(edges_vec)
 }
 
-
 # return a permutation of 0,1 where 1 represent an edges and 0 represent no edge
 sample_values <- function(data){
+  
   # original vector
-  g_vec <- data$click0no1yes
+  g_vec <- data$click_1yes_0no
   n <- length(g_vec)
   new_vec <- c()
   # sample permutations between [0,1] with length n
@@ -79,7 +78,6 @@ pvalue_3 <- function(data, real_value){
   return(mean(vec))
 }
 
-
 #shuffle 
 B <- 10000
 cc <- c()
@@ -105,19 +103,19 @@ sim_1 <- function(data){
 }
 
 #  45 males df
-females_45 <- read.csv("C:\\Users\\yuval\\OneDrive\\english folder\\Seminar - clicks\\more datasets\\45females_subset.csv")
+males_45 <- read.csv("C://Users//yuval//OneDrive//english folder//Seminar - clicks//more datasets//45males_subset.csv")
 
-sim_results <- sim_1(females_45)
+sim_results <- sim_1(males_45)
 
 library(writexl)
-write_xlsx(sim_results,"C://Users//yuval//OneDrive//english folder//Seminar - clicks//datasets created by simulations//measures//shuffle_dataset3_45_females.xlsx")
+write_xlsx(sim_results,"C://Users//yuval//OneDrive//english folder//Seminar - clicks//datasets created by simulations//measures//shuffle_dataset4_45_males.xlsx")
 
 # simulation data set 
-sim_res_dataset3 <- read.csv("C:\\Users\\yuval\\OneDrive\\english folder\\Seminar - clicks\\datasets created by simulations\\measures\\shuffle_dataset3_45_females.csv")
+sim_res_dataset4 <- read.csv("C:\\Users\\yuval\\OneDrive\\english folder\\Seminar - clicks\\datasets created by simulations\\measures\\shuffle_dataset4_45_males.csv")
 
 
 # cc hist
-cc_hist <- ggplot(sim_res_dataset2,
+cc_hist <- ggplot(sim_res_dataset4,
                   aes(x= ï..CCrand)
 ) +
   geom_histogram(bins = 14,
@@ -130,30 +128,30 @@ cc_hist <- ggplot(sim_res_dataset2,
   theme(plot.title = element_text(size=15),
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
-        text = element_text(size = 10),
+        text = element_text(size = 15),
         aspect.ratio=1) +
-  scale_x_continuous(breaks = seq(0.5,1,0.1),
+  scale_x_continuous(breaks = seq(0.6,1,0.1),
                      expand = c(0, 0)) +
   scale_y_continuous(expand = c(0, 0)) +
-  geom_vline(aes(xintercept = 0.7),
+  geom_vline(aes(xintercept = 0.843),
              color="dodgerblue2",
              linetype="dashed",
              size=1) +
-  geom_text(x=0.72,
+  geom_text(x=0.86,
             y=0.27,
-            label="0.7") + 
-  coord_cartesian(ylim = c(0, 0.32), xlim = c(0.5, 1)) +
+            label="0.843") + 
+  coord_cartesian(ylim = c(0, 0.32), xlim = c(0.6, 1)) +
   theme(legend.position = "none") 
 #ggtitle("Frequency of Clustering Coefficient (CC) in the shuffle") 
 cc_hist
 
-pvalue_1(sim_res_dataset3$ï..CCrand, 0.786)
+pvalue_1(sim_res_dataset4$ï..CCrand, 0.843)
 
 # aspl directed hist
-aspl_directed_hist <- ggplot(sim_res_dataset2,
+aspl_directed_hist <- ggplot(sim_res_dataset4,
                              aes(x= ASPL_directed_rand)
 ) +
-  geom_histogram(bins = 10,
+  geom_histogram(bins = 5,
                  aes(y= after_stat(count / sum(count))),
                  fill = "gray63",
                  colour = "black") +
@@ -163,27 +161,27 @@ aspl_directed_hist <- ggplot(sim_res_dataset2,
   theme(plot.title = element_text(size=15),
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
-        text = element_text(size = 10),
+        text = element_text(size = 15),
         aspect.ratio=1) +
-  scale_x_continuous(breaks = seq(1.3,1.85,0.1),
+  scale_x_continuous(breaks = seq(1.3,1.55,0.05),
                      expand = c(0, 0)) +
   scale_y_continuous(expand = c(0, 0)) +
-  geom_vline(aes(xintercept = 1.578),
+  geom_vline(aes(xintercept = 1.358),
              color="dodgerblue2",
              linetype="dashed",
              size=1) +
-  geom_text(x=1.62,
-            y=0.5,
-            label="1.578") + 
-  coord_cartesian(ylim = c(0, 0.6), xlim = c(1.3, 1.85)) +
+  geom_text(x=1.368,
+            y=0.65,
+            label="1.358") + 
+  coord_cartesian(ylim = c(0, 0.8), xlim = c(1.3, 1.55)) +
   theme(legend.position = "none") 
 #ggtitle("Frequency of Average shortest path length (ASPL) in directed graph") 
 aspl_directed_hist
 
-pvalue_2(sim_res_dataset3$ASPL_directed_rand, 1.431)
+pvalue_2(sim_res_dataset4$ASPL_directed_rand, 1.358)
 
 # aspl undirected hist
-aspl_undirected_hist <- ggplot(sim_res_dataset1,
+aspl_undirected_hist <- ggplot(sim_res_dataset4,
                                aes(x= ASPL_undirected_rand)
 ) +
   geom_histogram(bins = 14,
@@ -196,41 +194,41 @@ aspl_undirected_hist <- ggplot(sim_res_dataset1,
   theme(plot.title = element_text(size=15),
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
-        text = element_text(size = 10),
+        text = element_text(size = 15),
         aspect.ratio=1) +
-  scale_x_continuous(breaks = seq(1,1.5,0.1),
+  scale_x_continuous(breaks = seq(1,1.3,0.05),
                      expand = c(0, 0)) +
   scale_y_continuous(expand = c(0, 0)) +
-  geom_vline(aes(xintercept = 1.311),
+  geom_vline(aes(xintercept = 1.2),
              color="dodgerblue2",
              linetype="dashed",
              size=1) +
-  geom_text(x=1.35,
+  geom_text(x=1.205,
             y=0.25,
-            label="1.311") + 
-  coord_cartesian(ylim = c(0, 0.3), xlim = c(1, 1.5)) +
+            label="1.2") + 
+  coord_cartesian(ylim = c(0, 0.31), xlim = c(1, 1.3)) +
   theme(legend.position = "none") 
 #ggtitle("Frequency of Average shortest path length (ASPL) in undirected graph") 
 aspl_undirected_hist
 
-pvalue_2(sim_res_dataset2$ASPL_undirected_rand, 1.244)
+pvalue_2(sim_res_dataset4$ASPL_undirected_rand, 1.200)
 
 
-# diameter undirected hist
-diameter_undirected_hist<- ggplot(sim_res_dataset1,
+# diameter directed  hist
+diameter_directed_hist<- ggplot(sim_res_dataset4,
                                   aes(x= Diameter_directed_rand)
 ) +
-  geom_histogram(bins = 5,
+  geom_histogram(bins = 3,
                  aes(y= after_stat(count / sum(count))),
                  fill = "gray63",
                  colour = "black") +
   theme_bw() +
   ylab("Frequency") +
-  xlab("Diameter in undirected graph") +
+  xlab("Diameter - directed graph") +
   theme(plot.title = element_text(size=15),
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
-        text = element_text(size = 10),
+        text = element_text(size = 15),
         aspect.ratio=1) +
   scale_x_continuous(breaks = seq(1,6,1),
                      expand = c(0, 0)) +
@@ -242,15 +240,15 @@ diameter_undirected_hist<- ggplot(sim_res_dataset1,
   geom_text(x=3.1,
             y=0.95,
             label="3") + 
-  coord_cartesian(ylim = c(0, 1), xlim = c(1, 6)) +
+  coord_cartesian(ylim = c(0, 0.7), xlim = c(1, 6)) +
   theme(legend.position = "none") 
 #ggtitle("Frequency of diameter in undirected graph") 
-diameter_undirected_hist
+diameter_directed_hist
 
-pvalue_3(sim_res_dataset3$Diameter_directed_rand, 3)
+pvalue_3(sim_res_dataset4$Diameter_directed_rand, 3)
 
 # modularity hist
-modularity_hist <- ggplot(sim_res_dataset1,
+modularity_hist <- ggplot(sim_res_dataset4,
                           aes(x= Modularityrand)
 ) +
   geom_histogram(bins = 14,
@@ -263,24 +261,26 @@ modularity_hist <- ggplot(sim_res_dataset1,
   theme(plot.title = element_text(size=15),
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
-        text = element_text(size = 10),
+        text = element_text(size = 15),
         aspect.ratio=1) +
-  scale_x_continuous(breaks = seq(-0.12,-0.095, 0.01),
+  scale_x_continuous(breaks = seq(-0.112,-0.099, 0.005),
                      expand = c(0, 0)) +
   scale_y_continuous(expand = c(0, 0)) +
-  geom_vline(aes(xintercept = -0.118),
+  geom_vline(aes(xintercept = -0.109),
              color="dodgerblue2",
              linetype="dashed",
              size=1) +
-  geom_text(x=-0.116,
+  geom_text(x=-0.1085,
             y=0.2,
-            label="-0.115") + 
-  coord_cartesian(ylim = c(0, 0.25), xlim = c(-0.12, -0.095)) +
+            label="-0.109") + 
+  coord_cartesian(ylim = c(0, 0.25), xlim =  c(-0.112, -0.099)) +
   theme(legend.position = "none") 
 #ggtitle("Frequency of Clustering Coefficient (CC) in the shuffle") 
 modularity_hist
 
-pvalue_1(sim_res_dataset3$Modularityrand, -0.109)
-pvalue_2(sim_res_dataset3$Modularityrand, -0.109)
+pvalue_1(sim_res_dataset4$Modularityrand, -0.109)
+pvalue_2(sim_res_dataset4$Modularityrand, -0.109)
+
+
 
 
