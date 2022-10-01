@@ -1,4 +1,3 @@
-library(ggplot2)
 
 df <- read.csv("C:\\Users\\yuval\\OneDrive\\english folder\\Seminar - clicks\\analysis\\clicks counting\\r1.csv")
 y <- df$partner.s.clicks.with.subject
@@ -8,10 +7,9 @@ cor.test(x, y)
 
 
 plot(x,y, 
-     xlab = "Number of clicks a participant felt with others", 
-     ylab = "Number of clicks others felt with a participant", 
+     xlab = "# clicks each participant felt", 
+     ylab = "# clicks with each participant ", 
      pch = 19)
-abline(lm(y~x), col="dodgerblue2")
-legend(4.5, 9.2, legend=c(" R = 0.3, P = 0.04"), 
+abline(lm(y~x), col="dodgerblue2",
        fill = c("dodgerblue2"), bty = "n"
 )
