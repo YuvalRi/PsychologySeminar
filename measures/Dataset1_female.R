@@ -75,7 +75,7 @@ mean_distance(female_graph, directed = TRUE)
 # in undirected graph
 mean_distance(female_graph, directed = FALSE)
 
-## <k>
+## <k> - this is calculated for directed graphs
 mean(degree(female_graph))
 
 ## Diameter
