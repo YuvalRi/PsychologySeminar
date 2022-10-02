@@ -24,6 +24,36 @@ name_to_number <- function(data) {
   return(data)
 }
 
+# function which return a data frame that represent an undirected graph (removing duplicated edges)
+# Q1: version == TRUE
+directed_to_undirected_q3 <- function(df, version){
+  
+  df_undirected <- data.frame() # TODO: CREATE A NEW DF
+  
+  for( i in 1:nrow(df)){
+    for( j in (i+1):nrow(df)){
+      if (j == 29){
+        {break}
+      }
+      if( df[i,1] == df[j,2] & df[i,2] == df[j,1] ){
+        if (df[i,3] == 1 & df[j,3] == 1){
+          df_undirected <- rbind(df_undirected, c(df[i,]))
+        }
+        if (df[i,3] == 0 & df[j,3] == 0){
+          df_undirected <- rbind(df_undirected, c(df[i,]))
+        }
+        if (df[i,3] == version & df[j,3] == !version){
+          df_undirected <- rbind(df_undirected, c(df[i,]))
+        }
+        if (df[i,3] == !version & df[j,3] == version){
+          df_undirected <- rbind(df_undirected, c(df[j,]))
+        }
+      }
+    }
+  }
+  return(df_undirected)
+}
+
 # input - data frame, output - vector of characters
 creating_edges <- function(data){
   edges_vec <- c()
@@ -62,7 +92,16 @@ mean_distance(small_female_graph, directed = TRUE)
 # in undirected graph
 mean_distance(small_female_graph, directed = FALSE)
 
-## <k>
+## average amount of edges a node in the network has 
+# in directed graph
+mean(degree(small_female_graph))
+
+# in undirected graph
+small_female <- read.csv("C://Users//yuval//OneDrive//english folder//Seminar - clicks//more datasets//small_female_subset.csv")
+small_female <- name_to_number(small_female)
+small_female <- directed_to_undirected_q3(small_female, TRUE)
+edges <- creating_edges(small_female)
+small_female_graph <- graph(edges)
 mean(degree(small_female_graph))
 
 ## Diameter

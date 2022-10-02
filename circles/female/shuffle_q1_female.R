@@ -75,22 +75,6 @@ creating_edges <- function(data){
   return(edges_vec)
 }
 
-# converting data frame to directed graph
-data_to_Dgraph <- function(data){
-  data <- name_to_number(data)
-  edges <- creating_edges(data)
-  graph <- graph(edges, directed = T)
-  return(graph)
-}
-
-# converting data frame to undirected graph
-data_to_Ugraph <- function(data){
-  data <- name_to_number(data)
-  edges <- creating_edges(data)
-  graph <- graph(edges, directed = F)
-  return(graph)
-}
-
 # return a permutation of 0,1 where 1 represent an edges and 0 represent no edge
 sample_values <- function(data){
   
