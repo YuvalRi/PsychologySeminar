@@ -68,9 +68,10 @@ pvalue_2 <- function(data, real_value){
 
 #pvalue for  diameter (discrete values)
 pvalue_3 <- function(data, real_value){
-  vec <- ifelse(data > real_value, 1,0)
+  vec <- ifelse(data >= real_value, 1,0)
   return(mean(vec))
 }
+
 
 #shuffle 
 B <- 10000
