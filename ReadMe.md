@@ -41,7 +41,7 @@ Then, to use it write:
 For a documentation file press [here.](https://ggplot2.tidyverse.org/reference/)
 
 ## **library(dplyr)**
-What is it?
+**What is it?**
 
 •	A grammar of data manipulation, providing a consistent set of verbs that help you solve the most common data manipulations challenges.
 
