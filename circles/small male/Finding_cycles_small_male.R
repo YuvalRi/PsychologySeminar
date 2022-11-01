@@ -99,7 +99,7 @@ neighbors_directed <- function(df, v){
       vec[i] <- df[i,2]
     }
   }
-  if (all(df[df$ï..Participant == v,3]) == "0"){
+  if (all(df[df$Participant == v,3]) == "0"){
     vec[v] <- 0
   }
   return(unique(vec[!is.na(vec)]))
@@ -178,7 +178,7 @@ directed_to_undirected_q3 <- function(df, version){
 }
 
 #  small female df
-small_male <- read.csv("C://Users//yuval//OneDrive//english folder//Seminar - clicks//more datasets//small_male_subset.csv")
+small_male <- read.csv("C://Users//yuval//OneDrive//english folder//Seminar - clicks//more datasets//Dataset6Corrected3columns.csv")
 small_male <- name_to_number(small_male)
 edges <- creating_edges(small_male)
 small_male_graph <- graph(edges, directed = TRUE)

@@ -59,7 +59,7 @@ partner_click_with_subject <- function(df,v){
 }
 
 
-small_male <- read.csv("C://Users//yuval//OneDrive//english folder//Seminar - clicks//more datasets//small_male_subset.csv")
+small_male <- read.csv("C://Users//yuval//OneDrive//english folder//Seminar - clicks//more datasets//Dataset6Corrected3columns.csv")
 small_male <- name_to_number(small_male)
 
 

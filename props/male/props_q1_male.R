@@ -1,7 +1,6 @@
 library(tidyverse)
 library(dplyr)
 library(igraph)
-library(ggplot2)
 
 # function for converting names of participants to numebrs
 name_to_number <- function(data) {
@@ -72,7 +71,7 @@ neighbors <- function(df, v){
       vec[i] <- df[i,1]
     }
   }
-  if (all(df[df$ï..Participant == v,3]) == "0"){
+  if (all(df[df$Participant == v,3]) == "0"){
     vec[v] <- 0
   }
   return(unique(vec[!is.na(vec)]))
@@ -92,6 +91,7 @@ is_edge_2 <- function(edge, df){
   }
   return(FALSE)
 }
+
 
 # counting the potential edges which could exist in our actual graph
 is_any_edge <-  function(df,v){
@@ -125,6 +125,7 @@ get_prop <- function(data,n){
     total[i] <- choose(length(neighbors(data,i)), 2)
     prop[i] <- (total[i] - diff_rates(data, n)[[i]])/ total[i]
   }
+  # if a vertex has no neighbors, insert the total mean 
   if(any(is.na(prop) == TRUE)){
     prop[which(is.na(prop))] <- mean(prop, na.rm = TRUE) 
   }
@@ -132,16 +133,20 @@ get_prop <- function(data,n){
 }
 
 
-#Data Frame
+# Original dataframe
 Clicks_origin_men_and_women <- read.csv("C://Users//yuval//Desktop//english folder//Seminar - clicks//ClicksMales.csv", header = TRUE)
-#Sub df - Male only
+# only relevant columns 
 Clicks_men <- Clicks_origin_men_and_women[c(1:42), c(1,2,16)]
-#Sorted Male df
-Clicks_sorted_men <- arrange(Clicks_men, ï..Participant)
+# sorted dataframe
+Clicks_sorted_men <- arrange(Clicks_men, Participant)
+# converting participant's name into number
 Clicks_sorted_men <- name_to_number(Clicks_sorted_men)
+# converting original graph (directed) to undirected graph
 Clicks_sorted_men <- directed_to_undirected_q3(Clicks_sorted_men, TRUE)
-Clicks_sorted_men <- arrange(Clicks_sorted_men, ï..Participant)
+# sorted dataframe
+Clicks_sorted_men <- arrange(Clicks_sorted_men, Participant)
 
+# proportions rates 
 get_prop(Clicks_sorted_men, 7)
 
 

@@ -66,7 +66,7 @@ partner_click_with_subject <- function(df,v){
 }
 
 
-females_45 <- read.csv("C:\\Users\\yuval\\OneDrive\\english folder\\Seminar - clicks\\more datasets\\45females_subset.csv")
+females_45 <- read.csv("C://Users//yuval//OneDrive//english folder//Seminar - clicks//more datasets//45females_subset.csv")
 females_45 <- name_to_number(females_45)
 
 

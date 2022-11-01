@@ -1,7 +1,6 @@
 library(tidyverse)
 library(dplyr)
 library(igraph)
-library(ggplot2)
 
 # function for converting names of participants to numebrs
 name_to_number <- function(data) {
@@ -37,7 +36,7 @@ neighbors_directed <- function(df, v){
       vec[i] <- df[i,2]
     }
   }
-  if (all(df[df$ï..Participant == v,3] == "0")){
+  if (all(df[df$Participant == v,3] == "0")){
     vec[v] <- 0
   }
   return(unique(vec[!is.na(vec)]))
@@ -99,10 +98,10 @@ get_prop_directed <- function(data,n){
 
 
 #Data Frame
-small_male <- read.csv("C://Users//yuval//OneDrive//english folder//Seminar - clicks//more datasets//small_male_subset.csv")
-small_male <- arrange(small_male, ï..Participant)
+small_male <- read.csv("C://Users//yuval//OneDrive//english folder//Seminar - clicks//more datasets//Dataset6Corrected3columns.csv")
+small_male <- arrange(small_male, Participant)
 small_male <- name_to_number(small_male)
-small_male <- arrange(small_male, ï..Participant)
+small_male <- arrange(small_male, Participant)
 
 get_prop_directed(small_male, 7)
 
@@ -133,4 +132,4 @@ z_observed_Q2 <=  -qnorm(1-(alpha/2)) | z_observed_Q2 >= qnorm(1-(alpha/2))
 p_val_Q2 = 2*pnorm(z_observed_Q2,lower.tail = FALSE) #the difference is not significant at 5%
 p_val_Q2
 
-## SIGNIFICANT
+## UNSIGNIFICANT

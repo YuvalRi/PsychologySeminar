@@ -1,7 +1,6 @@
 library(tidyverse)
 library(dplyr)
 library(igraph)
-library(ggplot2)
 
 # function for converting names of participants to numebrs
 name_to_number <- function(data) {
@@ -130,10 +129,10 @@ get_prop <- function(data,n){
 
 #Data Frame
 small_female <- read.csv("C://Users//yuval//OneDrive//english folder//Seminar - clicks//more datasets//small_female_subset.csv")
-small_female <- arrange(small_female, ï..Subject)
+small_female <- arrange(small_female, Subject)
 small_female <- name_to_number(small_female)
 small_female <- directed_to_undirected_q3(small_female, FALSE)
-small_female <- arrange(small_female, ï..Subject)
+small_female <- arrange(small_female, Subject)
 
 get_prop(small_female, 6)
 
@@ -162,4 +161,4 @@ p_val_Q3 = 2*pnorm(z_observed_Q3,lower.tail = FALSE)
 p_val_Q3
 
 
-## SIGNIFICANT
+## MarginalSIGNIFICANT

@@ -1,7 +1,6 @@
 library(tidyverse)
 library(dplyr)
 library(igraph)
-library(ggplot2)
 
 # function for converting names of participants to numebrs
 name_to_number <- function(data) {
@@ -135,10 +134,10 @@ Clicks_origin_men_and_women <- read.csv("C://Users//yuval//Desktop//english fold
 #Sub df - Male only
 Clicks_men <- Clicks_origin_men_and_women[c(1:42), c(1,2,16)]
 #Sorted Male df
-Clicks_sorted_men <- arrange(Clicks_men, ï..Participant)
+Clicks_sorted_men <- arrange(Clicks_men, Participant)
 Clicks_sorted_men <- name_to_number(Clicks_sorted_men)
 Clicks_sorted_men <- directed_to_undirected_q3(Clicks_sorted_men, FALSE)
-Clicks_sorted_men <- arrange(Clicks_sorted_men, ï..Participant)
+Clicks_sorted_men <- arrange(Clicks_sorted_men, Participant)
 
 get_prop(Clicks_sorted_men, 7)
 

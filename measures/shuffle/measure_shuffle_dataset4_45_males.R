@@ -45,6 +45,7 @@ creating_edges <- function(data){
 }
 
 # return a permutation of 0,1 where 1 represent an edges and 0 represent no edge
+# keeping the number of edges but randomize between which nodes the edges will be 
 sample_values <- function(data){
   
   # original vector
@@ -62,20 +63,20 @@ sample_values <- function(data){
 
 # pvalue for cc and modularity
 pvalue_1 <- function(data, real_value){
-  vec <- ifelse(data <= real_value, 1,0)
+  vec <- ifelse(data <= real_value, 1, 0)
   return(1-mean(vec))
 }
 
-#pvalue for aspl (continuous values)
+# pvalue for aspl (continuous values)
 pvalue_2 <- function(data, real_value){
-  vec <- ifelse(data >= real_value, 0,1)
+  vec <- ifelse(data >= real_value, 0, 1)
   return(mean(vec))
 }
 
-#pvalue for  diameter (discrete values)
+# pvalue for  diameter (discrete values)
 pvalue_3 <- function(data, real_value){
-  vec <- ifelse(data >= real_value, 1,0)
-  return(mean(vec))
+  vec <- ifelse(data >= real_value, 1, 0)
+  return(1-mean(vec))
 }
 
 
@@ -92,11 +93,11 @@ sim_1 <- function(data){
     data[,3] <- sample_values(data)
     edges <- creating_edges(data)
     g <- graph(edges, directed = TRUE)
-    cc[i] <- transitivity(g, type = c("global"))
-    aspl_directed[i] <- mean_distance(g, directed = TRUE)
+    cc[i] <- transitivity(g, type = c("global")) # calculating global CC
+    aspl_directed[i] <- mean_distance(g, directed = TRUE) 
     aspl_undirected[i] <- mean_distance(g, directed = FALSE)
     diameter_directed[i] <- diameter(g, directed = TRUE)
-    mod[i] <- modularity(g, membership = c(1:10), directed = FALSE)
+    mod[i] <- modularity(g, membership = c(1:10), directed = FALSE) # calculating modularity
   }
   df <- data.frame(cc, aspl_directed, aspl_undirected, diameter_directed, mod)
   colnames(df) <- c("CCrand","ASPL_directed_rand", "ASPL_undirected_rand", "Diameter_directed_rand", "Modularityrand")
@@ -104,20 +105,20 @@ sim_1 <- function(data){
 }
 
 #  45 males df
-males_45 <- read.csv("C://Users//yuval//OneDrive//english folder//Seminar - clicks//more datasets//45males_subset.csv")
+males_45 <- read.csv("C://Users//yuval//OneDrive//english folder//Seminar - clicks//more datasets//45males_subset_new.csv")
 
 sim_results <- sim_1(males_45)
 
 library(writexl)
-write_xlsx(sim_results,"C://Users//yuval//OneDrive//english folder//Seminar - clicks//datasets created by simulations//measures//shuffle_dataset4_45_males.xlsx")
+write_xlsx(sim_results,"C://Users//yuval//OneDrive//english folder//Seminar - clicks//datasets created by simulations//measures//shuffle_dataset4_45_males_new.xlsx")
 
 # simulation data set 
-sim_res_dataset4 <- read.csv("C:\\Users\\yuval\\OneDrive\\english folder\\Seminar - clicks\\datasets created by simulations\\measures\\shuffle_dataset4_45_males.csv")
+sim_res_dataset4 <- read.csv("C:\\Users\\yuval\\OneDrive\\english folder\\Seminar - clicks\\datasets created by simulations\\measures\\shuffle_dataset4_45_males_new.csv")
 
 
 # cc hist
 cc_hist <- ggplot(sim_res_dataset4,
-                  aes(x= ï..CCrand)
+                  aes(x= CCrand)
 ) +
   geom_histogram(bins = 14,
                  aes(y= after_stat(count / sum(count))),
@@ -134,19 +135,20 @@ cc_hist <- ggplot(sim_res_dataset4,
   scale_x_continuous(breaks = seq(0.6,1,0.1),
                      expand = c(0, 0)) +
   scale_y_continuous(expand = c(0, 0)) +
-  geom_vline(aes(xintercept = 0.843),
+  geom_vline(aes(xintercept = 0.850),
              color="dodgerblue2",
              linetype="dashed",
              size=1) +
-  geom_text(x=0.86,
+  geom_text(x=0.87,
             y=0.27,
-            label="0.843") + 
+            label="0.850") + 
   coord_cartesian(ylim = c(0, 0.32), xlim = c(0.6, 1)) +
   theme(legend.position = "none") 
 #ggtitle("Frequency of Clustering Coefficient (CC) in the shuffle") 
 cc_hist
 
-pvalue_1(sim_res_dataset4$ï..CCrand, 0.843)
+# pvalue CC global
+pvalue_1(sim_res_dataset4$CCrand, 0.850)
 
 # aspl directed hist
 aspl_directed_hist <- ggplot(sim_res_dataset4,
@@ -167,19 +169,20 @@ aspl_directed_hist <- ggplot(sim_res_dataset4,
   scale_x_continuous(breaks = seq(1.3,1.55,0.05),
                      expand = c(0, 0)) +
   scale_y_continuous(expand = c(0, 0)) +
-  geom_vline(aes(xintercept = 1.358),
+  geom_vline(aes(xintercept = 1.333),
              color="dodgerblue2",
              linetype="dashed",
              size=1) +
-  geom_text(x=1.368,
-            y=0.65,
+  geom_text(x=1.345,
+            y=0.67,
             label="1.358") + 
   coord_cartesian(ylim = c(0, 0.8), xlim = c(1.3, 1.55)) +
   theme(legend.position = "none") 
 #ggtitle("Frequency of Average shortest path length (ASPL) in directed graph") 
 aspl_directed_hist
 
-pvalue_2(sim_res_dataset4$ASPL_directed_rand, 1.358)
+# pvalue aspl directed
+pvalue_2(sim_res_dataset4$ASPL_directed_rand, 1.333)
 
 # aspl undirected hist
 aspl_undirected_hist <- ggplot(sim_res_dataset4,
@@ -200,19 +203,20 @@ aspl_undirected_hist <- ggplot(sim_res_dataset4,
   scale_x_continuous(breaks = seq(1,1.3,0.05),
                      expand = c(0, 0)) +
   scale_y_continuous(expand = c(0, 0)) +
-  geom_vline(aes(xintercept = 1.2),
+  geom_vline(aes(xintercept = 1.180),
              color="dodgerblue2",
              linetype="dashed",
              size=1) +
-  geom_text(x=1.205,
+  geom_text(x=1.195,
             y=0.25,
-            label="1.2") + 
+            label="1.180") + 
   coord_cartesian(ylim = c(0, 0.31), xlim = c(1, 1.3)) +
   theme(legend.position = "none") 
 #ggtitle("Frequency of Average shortest path length (ASPL) in undirected graph") 
 aspl_undirected_hist
 
-pvalue_2(sim_res_dataset4$ASPL_undirected_rand, 1.200)
+#pvalue aspl undirected
+pvalue_2(sim_res_dataset4$ASPL_undirected_rand, 1.180)
 
 
 # diameter directed  hist
@@ -246,6 +250,7 @@ diameter_directed_hist<- ggplot(sim_res_dataset4,
 #ggtitle("Frequency of diameter in undirected graph") 
 diameter_directed_hist
 
+# pvalue diameter directed
 pvalue_3(sim_res_dataset4$Diameter_directed_rand, 3)
 
 # modularity hist
@@ -267,20 +272,19 @@ modularity_hist <- ggplot(sim_res_dataset4,
   scale_x_continuous(breaks = seq(-0.112,-0.099, 0.005),
                      expand = c(0, 0)) +
   scale_y_continuous(expand = c(0, 0)) +
-  geom_vline(aes(xintercept = -0.109),
+  geom_vline(aes(xintercept = -0.108),
              color="dodgerblue2",
              linetype="dashed",
              size=1) +
-  geom_text(x=-0.1085,
+  geom_text(x=-0.1073,
             y=0.2,
-            label="-0.109") + 
-  coord_cartesian(ylim = c(0, 0.25), xlim =  c(-0.112, -0.099)) +
+            label="-0.108") + 
+  coord_cartesian(ylim = c(0, 0.3), xlim =  c(-0.112, -0.099)) +
   theme(legend.position = "none") 
 #ggtitle("Frequency of Clustering Coefficient (CC) in the shuffle") 
 modularity_hist
 
-pvalue_1(sim_res_dataset4$Modularityrand, -0.109)
-pvalue_2(sim_res_dataset4$Modularityrand, -0.109)
+pvalue_2(sim_res_dataset4$Modularityrand, -0.108)
 
 
 

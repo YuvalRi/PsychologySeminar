@@ -1,7 +1,6 @@
 library(tidyverse)
 library(dplyr)
 library(igraph)
-library(ggplot2)
 
 # function for converting names of participants to numebrs
 name_to_number <- function(data) {
@@ -49,6 +48,7 @@ neighbors_directed <- function(df, v){
   }
   return(unique(vec[!is.na(vec)]))
 }
+
 
 # input: edge - pair of vertices of df - dataframe
 # output: TRUE - if there is no edge in the graph for a pair of vertices,
@@ -103,9 +103,10 @@ get_prop_directed <- function(data,n){
   return(prop)
 }
 
+
 females_45 <- read.csv("C:\\Users\\yuval\\OneDrive\\english folder\\Seminar - clicks\\more datasets\\45females_subset.csv")
 females_45 <- name_to_number(females_45)
-females_45 <- arrange(females_45, ï..Subject)
+females_45 <- arrange(females_45, Subject)
 get_prop_directed(females_45, 10)
 
 #Normality test
@@ -135,7 +136,7 @@ z_observed_Q2 <=  -qnorm(1-(alpha/2)) | z_observed_Q2 >= qnorm(1-(alpha/2))
 p_val_Q2 = 2*pnorm(z_observed_Q2,lower.tail = TRUE) 
 p_val_Q2
 
-## SIGNIFICANT
+## MARGINALSIGNIFICANT
 
 
 

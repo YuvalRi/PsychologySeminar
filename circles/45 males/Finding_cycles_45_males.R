@@ -147,7 +147,7 @@ neighbors_directed <- function(df, v){
       vec[i] <- df[i,2]
     }
   }
-  if (all(df[df$ï..Participant == v,3]) == "0"){
+  if (all(df[df$Participant == v,3]) == "0"){
     vec[v] <- 0
   }
   return(unique(vec[!is.na(vec)]))
@@ -186,13 +186,13 @@ directed_to_undirected_q3 <- function(df, version){
 
 ## Figure
 # 45 males df
-males_45 <- read.csv("C://Users//yuval//OneDrive//english folder//Seminar - clicks//more datasets//45males_subset.csv")
+males_45 <- read.csv("C://Users//yuval//OneDrive//english folder//Seminar - clicks//more datasets//45males_subset_new.csv")
 males_45 <- name_to_number(males_45)
 edges <- creating_edges(males_45)
 males_45_graph <- graph(edges, directed = TRUE)
 males_45_plot <- plot(males_45_graph, layout = layout_with_graphopt, edge.arrow.size = 0.3, vertex.color="gray63", vertex.label.color="black", vertex.frame.color="black", vertex.label.cex = 1,vertex.size = 25, edge.color = "black")
 
-svg("nodesGraphDataset4.svg")
+svg("figure4.svg")
 plot(males_45_graph, layout = layout_with_graphopt, edge.arrow.size = 0.3, vertex.color="gray63", vertex.label.color="black", vertex.frame.color="black", vertex.label.cex = 1,vertex.size = 25, edge.color = "black", main = "nodesGraphDataset4")
 dev.off()
 

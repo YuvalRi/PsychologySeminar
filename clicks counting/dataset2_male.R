@@ -60,7 +60,7 @@ partner_click_with_subject <- function(df,v){
 male <- read.csv("C://Users//yuval//Desktop//english folder//Seminar - clicks//ClicksMales.csv", header = TRUE)
 male <- male[c(1:42), c(1,2,16)]
 # sorted male df
-male <- arrange(male, ï..Participant)
+male <- arrange(male, Participant)
 male <- name_to_number(male)
 
 # subject's clicks

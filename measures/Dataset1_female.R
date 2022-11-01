@@ -91,6 +91,7 @@ female_plot <- plot(female_graph, layout = layout_with_graphopt, edge.arrow.size
 transitivity(female_graph, type = c("global"))
 transitivity(female_graph,vids = V(female_graph), type = c("local"))
 
+# local CC 
 vertex_names = function (g) {
   vert = V(g)
   if (! is.null(names(vert))) names(vert) else as.vector(vert)
@@ -120,6 +121,15 @@ female_graph <- graph(edges)
 mean(degree(female_graph))
 
 ## Diameter
+# females df
+female <- read.csv("C://Users//yuval//OneDrive//english folder//Seminar - clicks//ClicksYuval.csv", header = TRUE)
+# sub df - relevant columns
+female <- female[,c(1,2,25)]
+# sorted Women df
+female <- arrange(female, Subject)
+female <- name_to_number(female)
+edges <- creating_edges(female)
+female_graph <- graph(edges, directed = TRUE)
 # in directed graph
 diameter(female_graph, directed = TRUE)
 # in undirected graph

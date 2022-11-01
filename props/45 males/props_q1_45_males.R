@@ -1,7 +1,6 @@
 library(tidyverse)
 library(dplyr)
 library(igraph)
-library(ggplot2)
 
 # function for converting names of participants to numebrs
 name_to_number <- function(data) {
@@ -77,7 +76,7 @@ neighbors <- function(df, v){
       vec[i] <- df[i,1]
     }
   }
-  if (all(df[df$ï..Participant == v,3]) == "0"){
+  if (all(df[df$Participant == v,3]) == "0"){
     vec[v] <- 0
   }
   return(unique(vec[!is.na(vec)]))
@@ -138,10 +137,10 @@ get_prop <- function(data,n){
 
 
 #Data Frame
-males_45 <- read.csv("C://Users//yuval//OneDrive//english folder//Seminar - clicks//more datasets//45males_subset.csv")
+males_45 <- read.csv("C://Users//yuval//OneDrive//english folder//Seminar - clicks//more datasets//45males_subset_new.csv")
 males_45 <- name_to_number(males_45)
 males_45 <- directed_to_undirected_q3(males_45, TRUE)
-males_45 <- arrange(males_45, ï..Participant)
+males_45 <- arrange(males_45, Participant)
 
 get_prop(males_45, 10)
 

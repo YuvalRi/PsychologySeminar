@@ -1,7 +1,6 @@
 library(tidyverse)
 library(dplyr)
 library(igraph)
-library(ggplot2)
 
 # function for converting names of participants to numebrs
 name_to_number <- function(data) {
@@ -77,7 +76,7 @@ neighbors <- function(df, v){
       vec[i] <- df[i,1]
     }
   }
-  if (all(df[df$ï..Subject == v,3]) == "0"){
+  if (all(df[df$Subject == v,3]) == "0"){
     vec[v] <- 0
   }
   return(unique(vec[!is.na(vec)]))

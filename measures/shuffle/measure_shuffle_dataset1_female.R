@@ -60,13 +60,13 @@ sample_values <- function(data){
   return(new_vec)
 }
 
-# pvalue for cc and modularity
+# pvalue for cc  
 pvalue_1 <- function(data, real_value){
   vec <- ifelse(data <= real_value, 1,0)
   return(1-mean(vec))
 }
 
-#pvalue for aspl (continuous values)
+# pvalue for aspl (continuous values) and modularity
 pvalue_2 <- function(data, real_value){
   vec <- ifelse(data >= real_value, 0,1)
   return(mean(vec))
@@ -74,9 +74,10 @@ pvalue_2 <- function(data, real_value){
 
 #pvalue for  diameter (discrete values)
 pvalue_3 <- function(data, real_value){
-  vec <- ifelse(data >= real_value, 1,0)
-  return(mean(vec))
+  vec <- ifelse(data >= real_value, 1, 0)
+  return(1-mean(vec))
 }
+
 
 #shuffle 
 B <- 10000
@@ -112,15 +113,15 @@ Clicks_sorted_women <- arrange(Clicks_women, Subject)
 sim_results <- sim_1(Clicks_sorted_women)
 
 library(writexl)
-write_xlsx(sim_results,"C://Users//yuval//OneDrive//english folder//Seminar - clicks//datasets created by simulations//measures//shuffle_dataset1_female.xlsx")
+write_xlsx(sim_results,"C://Users//yuval//OneDrive//english folder//Seminar - clicks//datasets created by simulations//measures//shuffle_dataset1_female_new.xlsx")
 
 # simulation data set 
-sim_res_dataset1 <- read.csv("C:\\Users\\yuval\\OneDrive\\english folder\\Seminar - clicks\\datasets created by simulations\\measures\\shuffle_dataset1_female.csv")
+#sim_res_dataset1 <- read.csv("C:\\Users\\yuval\\OneDrive\\english folder\\Seminar - clicks\\datasets created by simulations\\measures\\shuffle_dataset1_female.csv")
 
-
+sim_res_dataset1_test <- read.csv("C:\\Users\\yuval\\OneDrive\\english folder\\Seminar - clicks\\datasets created by simulations\\measures\\shuffle_dataset1_female_new.csv")
 # cc hist
-cc_hist <- ggplot(sim_res_dataset1,
-                              aes(x= ï..CCrand)
+cc_hist <- ggplot(sim_res_dataset1_test,
+                              aes(x= CCrand)
 ) +
   geom_histogram(bins = 14,
                  aes(y= after_stat(count / sum(count))),
@@ -149,7 +150,7 @@ cc_hist <- ggplot(sim_res_dataset1,
   #ggtitle("Frequency of Clustering Coefficient (CC) in the shuffle") 
 cc_hist
 
-pvalue_1(sim_res_dataset1$ï..CCrand, 0.803)
+pvalue_1(sim_res_dataset1_test$CCrand, 0.803)
 
 # aspl directed hist
 aspl_directed_hist <- ggplot(sim_res_dataset1,
@@ -182,7 +183,7 @@ aspl_directed_hist <- ggplot(sim_res_dataset1,
   #ggtitle("Frequency of Average shortest path length (ASPL) in directed graph") 
 aspl_directed_hist
 
-pvalue_2(sim_res_dataset1$ASPL_directed_rand, 1.578)
+pvalue_2(sim_res_dataset1_test$ASPL_directed_rand, 1.578)
 
 # aspl undirected hist
 aspl_undirected_hist <- ggplot(sim_res_dataset1,
@@ -215,7 +216,7 @@ aspl_undirected_hist <- ggplot(sim_res_dataset1,
   #ggtitle("Frequency of Average shortest path length (ASPL) in undirected graph") 
 aspl_undirected_hist
 
-pvalue_2(sim_res_dataset1$ASPL_undirected_rand, 1.311)
+pvalue_2(sim_res_dataset1_test$ASPL_undirected_rand, 1.311)
 
 
 # diameter directed hist
@@ -249,7 +250,7 @@ diameter_directed_hist<- ggplot(sim_res_dataset1,
   #ggtitle("Frequency of diameter in directed graph") 
 diameter_directed_hist
 
-pvalue_3(sim_res_dataset1$Diameter_directed_rand, 3)
+pvalue_3(sim_res_dataset1_test$Diameter_directed_rand, 3)
 
 # modularity hist
 modularity_hist <- ggplot(sim_res_dataset1,
@@ -282,5 +283,5 @@ modularity_hist <- ggplot(sim_res_dataset1,
   #ggtitle("Frequency of Clustering Coefficient (CC) in the shuffle") 
 modularity_hist
 
-pvalue_1(sim_res_dataset1$Modularityrand, -0.115)
-pvalue_2(sim_res_dataset1$Modularityrand, -0.115)
+#pvalue_1(sim_res_dataset1_test$Modularityrand, -0.115)
+pvalue_2(sim_res_dataset1_test$Modularityrand, -0.115)

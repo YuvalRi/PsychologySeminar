@@ -74,7 +74,7 @@ creating_edges <- function(data){
 male <- read.csv("C://Users//yuval//Desktop//english folder//Seminar - clicks//ClicksMales.csv", header = TRUE)
 male <- male[c(1:42), c(1,2,16)]
 # sorted male df
-male <- arrange(male, ï..Participant)
+male <- arrange(male, Participant)
 male <- name_to_number(male)
 edges <- creating_edges(male)
 #directed graph
@@ -115,6 +115,14 @@ male_graph <- graph(edges)
 mean(degree(male_graph))
 
 ## Diameter
+male <- read.csv("C://Users//yuval//Desktop//english folder//Seminar - clicks//ClicksMales.csv", header = TRUE)
+male <- male[c(1:42), c(1,2,16)]
+# sorted male df
+male <- arrange(male, Participant)
+male <- name_to_number(male)
+edges <- creating_edges(male)
+#directed graph
+male_graph <- graph(edges, directed = TRUE)
 # in directed graph
 diameter(male_graph, directed = TRUE)
 # in undirected graph

@@ -1,7 +1,6 @@
 library(tidyverse)
 library(dplyr)
 library(igraph)
-library(ggplot2)
 
 # function for converting names of participants to numebrs
 name_to_number <- function(data) {
@@ -37,7 +36,7 @@ neighbors_directed <- function(df, v){
       vec[i] <- df[i,2]
     }
   }
-  if (all(df[df$ï..Participant == v,3]) == "0"){
+  if (all(df[df$Participant == v,3]) == "0"){
     vec[v] <- 0
   }
   return(unique(vec[!is.na(vec)]))
@@ -97,15 +96,18 @@ get_prop_directed <- function(data,n){
 }
 
 
-#Data Frame
+# Original dataframe
 Clicks_origin_men_and_women <- read.csv("C://Users//yuval//Desktop//english folder//Seminar - clicks//ClicksMales.csv", header = TRUE)
-#Sub df - Male only
+# only relevant columns 
 Clicks_men <- Clicks_origin_men_and_women[c(1:42), c(1,2,16)]
-#Sorted Male df
-Clicks_sorted_men <- arrange(Clicks_men, ï..Participant)
+# sorted dataframe
+Clicks_sorted_men <- arrange(Clicks_men, Participant)
+# converting participant's name into number
 Clicks_sorted_men <- name_to_number(Clicks_sorted_men)
-Clicks_sorted_men <- arrange(Clicks_sorted_men, ï..Participant)
+# sorted dataframe
+Clicks_sorted_men <- arrange(Clicks_sorted_men, Participant)
 
+# proportions rates 
 get_prop_directed(Clicks_sorted_men, 7)
 
 #Normality test

@@ -75,7 +75,7 @@ creating_edges <- function(data){
 }
 
 # Dataset4 - 45 males df
-males_45 <- read.csv("C://Users//yuval//OneDrive//english folder//Seminar - clicks//more datasets//45males_subset.csv")
+males_45 <- read.csv("C://Users//yuval//OneDrive//english folder//Seminar - clicks//more datasets//45males_subset_new.csv")
 males_45 <- name_to_number(males_45)
 edges <- creating_edges(males_45)
 males_45_graph <- graph(edges, directed = TRUE)
@@ -105,7 +105,7 @@ mean_distance(males_45_graph, directed = FALSE)
 mean(degree(males_45_graph))
 
 # in undirected graph
-males_45 <- read.csv("C://Users//yuval//OneDrive//english folder//Seminar - clicks//more datasets//45males_subset.csv")
+males_45 <- read.csv("C://Users//yuval//OneDrive//english folder//Seminar - clicks//more datasets//45males_subset_new.csv")
 males_45 <- name_to_number(males_45)
 males_45 <- directed_to_undirected_q3(males_45, TRUE)
 edges <- creating_edges(males_45)
@@ -113,6 +113,10 @@ males_45_graph <- graph(edges)
 mean(degree(males_45_graph))
 
 ## Diameter
+males_45 <- read.csv("C://Users//yuval//OneDrive//english folder//Seminar - clicks//more datasets//45males_subset_new.csv")
+males_45 <- name_to_number(males_45)
+edges <- creating_edges(males_45)
+males_45_graph <- graph(edges, directed = TRUE)
 # in directed graph
 diameter(males_45_graph, directed = TRUE)
 # in undirected graph

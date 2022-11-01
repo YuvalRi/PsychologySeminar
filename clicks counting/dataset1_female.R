@@ -31,6 +31,7 @@ name_to_number <- function(data) {
   return(data)
 }
 
+# returns neighbors of each vertex (node)
 neighbors_directed <- function(df, v){
   vec <- c()
   for(i in 1:nrow(df)){
@@ -42,6 +43,7 @@ neighbors_directed <- function(df, v){
 }
 
 
+# calculating the mutual clicks per node
 mutual_clicks <- function(df,v){
   count <- 0
   for(i in 1:10){
@@ -53,6 +55,7 @@ mutual_clicks <- function(df,v){
 }
 
 
+# calculating the number of clicks other felt to a person (v = node)
 partner_click_with_subject <- function(df,v){
   count <- 0
   for(i in 1:10){
