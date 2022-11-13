@@ -63,7 +63,7 @@ sample_values <- function(data){
 
 # pvalue for cc and modularity
 pvalue_1 <- function(data, real_value){
-  vec <- ifelse(data <= real_value, 1,0)
+  vec <- ifelse(data < real_value, 1,0)
   return(1-mean(vec))
 }
 

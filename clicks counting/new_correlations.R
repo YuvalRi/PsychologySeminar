@@ -1,3 +1,6 @@
+library(extrafont)
+
+
 ## Pearson correlation and Pvalue
 
 # A
@@ -31,30 +34,42 @@ cor.test(x_C, y_C)
 
 
 ## Plots
-
 par(mfrow = c(1,3))
 
+windowsFonts(A = windowsFont("Helvetica"))
 plot(x_A, y_A, 
-     xlab = "# clicks each participant felt", 
-     ylab = "# clicks with each participant ", 
-     pch = 19)
+     xlab = "Normalized clicks # each participant felt", 
+     ylab = "Ratio of mutual clicks to the clicks # one felt", 
+     pch = 19,
+     family = "A",
+     cex = 1.5,
+     cex.lab=1.5,
+     cex.axis=1.5)
 abline(lm(y_A ~ x_A), col="dodgerblue2",
        fill = c("dodgerblue2"), bty = "n"
 )
 
 
 plot(x_B, y_B, 
-     xlab = "# clicks each participant felt", 
-     ylab = "# clicks with each participant ", 
-     pch = 19)
+     xlab = "Normalized clicks # each participant felt", 
+     ylab = "Normalized clicks # with each participant", 
+     pch = 19,
+     family = "A",
+     cex = 1.5,
+     cex.lab=1.5,
+     cex.axis=1.5)
 abline(lm(y_B ~ x_B), col="dodgerblue2",
        bty = "n"
 )
 
 plot(x_C, y_C, 
-     xlab = "# clicks each participant felt", 
-     ylab = "# clicks with each participant ", 
-     pch = 19)
+     xlab = "Ratio of mutual clicks to the clicks # one felt", 
+     ylab = "Normalized clicks # with each participant", 
+     pch = 19,
+     family = "A",
+     cex = 1.5,
+     cex.lab=1.5,
+     cex.axis=1.5)
 abline(lm(y_C ~ x_C), col="dodgerblue2",
        bty = "n"
 )
