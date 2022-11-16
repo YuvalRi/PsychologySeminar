@@ -152,13 +152,13 @@ shapiro.test(prop_vec_Q3)
 alpha <- 0.05
 n1 <- nrow(Clicks_sorted_men)
 n2 <- nrow(Clicks_sorted_men)
-Q3_p1_hat <- (sum(Clicks_sorted_men$click_1yes_0no == "1"))/nrow(Clicks_sorted_men)
-Q3_p2_hat <- mean(get_prop(Clicks_sorted_men, 7))
-Q3_p_hat <- (n1*Q3_p1_hat + n2*Q3_p2_hat)/(n1+n2)
+p_chance <- (sum(Clicks_sorted_men$click_1yes_0no == "1"))/nrow(Clicks_sorted_men)
+p_click <- mean(get_prop(Clicks_sorted_men, 7))
+Q3_p_hat <- (n1*p_chance + n2*p_click)/(n1+n2)
 
 # H0: p1 = p2 - null hypothesis
 # H1: p2 != p1 - research hypothesis
-z_observed_Q3 <- ((Q3_p1_hat- Q3_p2_hat) - 0)/sqrt(Q3_p_hat*(1-Q3_p_hat)*((1/n1)+(1/n2)))
+z_observed_Q3 <- ((p_chance- p_click) - 0)/sqrt(Q3_p_hat*(1-Q3_p_hat)*((1/n1)+(1/n2)))
 z_observed_Q3
 z_observed_Q3 <= -qnorm(1-(alpha/2)) | z_observed_Q3 >= qnorm(1-(alpha/2)) #the difference is not significant at 5%
 

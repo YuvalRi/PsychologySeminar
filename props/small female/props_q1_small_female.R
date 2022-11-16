@@ -150,13 +150,13 @@ alpha <- 0.05
 # Question 1 - Given a graph G = (V,E) we chose a vertex v_i. What is the probability that v_j and v_k are connect by one edge where each v_j,v_k connects to v_i by one edge? 
 n1 <- nrow(small_female)
 n2 <- nrow(small_female)
-Q1_p1_hat <- (sum(small_female$click0no1yes == "1"))/n1 #proportion of number of the actual number of edges in the given graph
-Q1_p2_hat <- mean(prop_vec_Q1_female) #mean of proportions vector 
-Q1_p_hat <- (n1*Q1_p1_hat + n2*Q1_p2_hat)/(n1+n2)
+p_click <- (sum(small_female$click0no1yes == "1"))/n1 #proportion of number of the actual number of edges in the given graph
+p_chance <- mean(prop_vec_Q1_female) #mean of proportions vector 
+Q1_p_hat <- (n1*p_click + n2*p_chance)/(n1+n2)
 
 # H0: p1 = p2 - null hypothesis
 # H1: p2  !=  p1 - research hypothesis
-z_observed_Q1 = ((Q1_p1_hat- Q1_p2_hat) - 0)/sqrt(Q1_p_hat*(1-Q1_p_hat)*((1/n1)+(1/n2)))
+z_observed_Q1 = ((p_click- p_chance) - 0)/sqrt(Q1_p_hat*(1-Q1_p_hat)*((1/n1)+(1/n2)))
 z_observed_Q1
 z_observed_Q1 <= -qnorm(1-(alpha/2)) | z_observed_Q1 >= qnorm(1-(alpha/2))
 

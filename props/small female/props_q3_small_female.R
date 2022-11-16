@@ -147,13 +147,13 @@ shapiro.test(prop_vec_Q3)
 alpha <- 0.05
 n1 <- nrow(small_female)
 n2 <- nrow(small_female)
-Q3_p1_hat <- (sum(small_female$click0no1yes == "1"))/nrow(small_female)
-Q3_p2_hat <- mean(get_prop(small_female, 6))
-Q3_p_hat <- (n1*Q3_p1_hat + n2*Q3_p2_hat)/(n1+n2)
+p_chance <- (sum(small_female$click0no1yes == "1"))/nrow(small_female)
+p_click <- mean(get_prop(small_female, 6))
+Q3_p_hat <- (n1*p_chance + n2*p_click)/(n1+n2)
 
 # H0: p1 = p2 - null hypothesis
 # H1: p2 != p1 - research hypothesis
-z_observed_Q3 <- ((Q3_p1_hat- Q3_p2_hat) - 0)/sqrt(Q3_p_hat*(1-Q3_p_hat)*((1/n1)+(1/n2)))
+z_observed_Q3 <- ((p_chance- p_click) - 0)/sqrt(Q3_p_hat*(1-Q3_p_hat)*((1/n1)+(1/n2)))
 z_observed_Q3
 z_observed_Q3 <= -qnorm(1-(alpha/2)) | z_observed_Q3 >= qnorm(1-(alpha/2)) #the difference is not significant at 5%
 
@@ -161,4 +161,4 @@ p_val_Q3 = 2*pnorm(z_observed_Q3,lower.tail = FALSE)
 p_val_Q3
 
 
-## MarginalSIGNIFICANT
+## UNSIGNIFICANT
