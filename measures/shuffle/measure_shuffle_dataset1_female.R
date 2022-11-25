@@ -61,22 +61,22 @@ sample_values <- function(data){
 }
 
 # pvalue for cc  
-pvalue_1 <- function(data, real_value){
-  vec <- ifelse(data < real_value, 1,0)
+pv_right_tail <- function(data, real_value){
+  vec <- ifelse(data < real_value, 1, 0)
   return(1-mean(vec))
 }
 
 # pvalue for aspl (continuous values) and modularity
-pvalue_2 <- function(data, real_value){
-  vec <- ifelse(data >= real_value, 0,1)
+pv_left_tail <- function(data, real_value){
+  vec <- ifelse(data >= real_value, 0, 1)
   return(mean(vec))
 }
 
 #pvalue for  diameter (discrete values)
-pvalue_3 <- function(data, real_value){
-  vec <- ifelse(data >= real_value, 1, 0)
-  return(1-mean(vec))
-}
+#pvalue_3 <- function(data, real_value){
+  #vec <- ifelse(data >= real_value, 1, 0)
+  #return(1-mean(vec))
+#}
 
 
 #shuffle 

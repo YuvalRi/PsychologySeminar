@@ -1,5 +1,4 @@
 library(tidyverse)
-library(dplyr)
 
 # function for converting names of participants to numebrs
 name_to_number <- function(data) {
@@ -110,6 +109,3 @@ partner_click_with_subject(female,7)
 partner_click_with_subject(female,8)
 partner_click_with_subject(female,9)
 partner_click_with_subject(female,10)
-
-
-
