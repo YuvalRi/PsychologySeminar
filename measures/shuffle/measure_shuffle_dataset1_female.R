@@ -3,30 +3,33 @@ library(dplyr)
 library(igraph)
 library(ggplot2)
 
-# function for converting names of participants to numebrs
+
 name_to_number <- function(data) {
-  for( j in 1:2){
-    for (i in 1:nrow(data)){
-      if (data[i,j] == "W396")  {
-        data[i,j] <- "1"
-      } else if(data[i, j] == "W515") {
-        data[i,j] <- "2"
-      } else if(data[i, j] == "W617") {
-        data[i,j] <- "3"
-      } else if(data[i, j] == "W622") {
-        data[i,j] <- "4"
-      } else if(data[i, j] == "W623") {
-        data[i,j] <- "5"
-      } else if(data[i, j] == "W674") {
-        data[i,j] <- "6"
-      } else if(data[i, j] == "W682") {
-        data[i,j] <- "7"
-      } else if(data[i, j] == "W764") {
-        data[i,j] <- "8"
-      } else if(data[i, j] == "W776") {
-        data[i,j] <- "9" 
-      } else if(data[i, j] == "W778") {
-        data[i,j] <- "10"
+  "
+  A function which converts participants names into numbers
+  "
+  for (j in 1:2){
+    for (i in 1:(nrow(data))){
+      if (data[i, j] == "W396")  {
+        data[i, j] <- "1"
+      } else if (data[i, j] == "W515") {
+        data[i, j] <- "2"
+      } else if (data[i, j] == "W617") {
+        data[i, j] <- "3"
+      } else if (data[i, j] == "W622") {
+        data[i, j] <- "4"
+      } else if (data[i, j] == "W623") {
+        data[i, j] <- "5"
+      } else if (data[i, j] == "W674") {
+        data[i, j] <- "6"
+      } else if (data[i, j] == "W682") {
+        data[i, j] <- "7"
+      } else if (data[i, j] == "W764") {
+        data[i, j] <- "8"
+      } else if (data[i, j] == "W776") {
+        data[i, j] <- "9"
+      } else if (data[i, j] == "W778") {
+        data[i, j] <- "10"
       }
     }
   }
@@ -35,6 +38,10 @@ name_to_number <- function(data) {
 
 # input - data frame, output - vector of characters
 creating_edges <- function(data) {
+  "
+  A function which creates a vector of edges (a pair of numbers)
+  from a given dataframe
+  "
   edges_vec <- c()
   for (i in 1:nrow(data)) {
     if (data[i, 3] == 1) {
@@ -46,16 +53,17 @@ creating_edges <- function(data) {
 }
 
 sample_values <- function(data) {
-
-  # original vector
-  g_vec <- data$click0no1yes
-  n <- length(g_vec)
-  new_vec <- c()
-  # sample permutations between [0,1] with length n
-  seq_vec <- sample(c(1:n), n, replace = FALSE)
-
-  for (i in 1:length(seq_vec)){
-    new_vec[i] <- g_vec[seq_vec[i]]
+  "
+  A function which sample 0 or 1 randomly,
+  1 = A click (=edge)
+  0 = No click (=no edge)
+  "
+  clicks_vec <- data[, 3] # third column in the data set
+  n <- length(clicks_vec)
+  new_vec <- c() # an empty vector
+  seq_vec <- sample(c(1:n), n, replace = FALSE) # sampling
+  for (i in 1:length(clicks_vec)){ # inserts the random vetcor into new_vec
+    new_vec[i] <- clicks_vec[seq_vec[i]]
   }
   return(new_vec)
 }
@@ -96,14 +104,14 @@ sim_1 <- function(data) {
   return(df)
 }
 
-#df
-Clicks_origin_women <- read.csv("C://Users//yuval//OneDrive//english folder//Seminar - clicks//ClicksYuval.csv", header = TRUE)
-#sub df - relevant columns
-Clicks_women <- Clicks_origin_women[, c(1, 2, 25)]
-#Sorted Women df
-Clicks_sorted_women <- arrange(Clicks_women, Subject)
+# Data set
+origin_dataset <- read.csv("C://Users//yuval//OneDrive//english folder//Seminar - clicks//ClicksYuval.csv", header = TRUE)
+# Female columns only
+dataset_1 <- origin_dataset[, c(1, 2, 25)]
+# Sorted Women df
+sorted_dataset_1 <- arrange(dataset_1, Subject)
 
-sim_results <- sim_1(Clicks_sorted_women)
+sim_results <- sim_1(sorted_dataset_1)
 
 library(writexl)
 write_xlsx(sim_results, "C://Users//yuval//OneDrive//english folder//Seminar - clicks//datasets created by simulations//measures//shuffle_dataset1_female_new.xlsx")
