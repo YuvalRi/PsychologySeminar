@@ -31,21 +31,21 @@ name_to_number <- function(data) {
 }
 
 # returns neighbors of each vertex (node)
-neighbors_directed <- function(df, v){
+neighbors_directed <- function(df, v) {
   vec <- c()
-  for(i in 1:nrow(df)){
-    if( df[i,3] == "1" && df[i,1] == v){
-      vec[i] <- df[i,2]
+  for (i in 1:nrow(df)){
+    if (df[i, 3] == "1" && df[i, 1] == v) {
+      vec[i] <- df[i, 2]
     }
   }
   return(unique(vec[!is.na(vec)]))
 }
 
 # calculating the mutual clicks per node
-mutual_clicks <- function(df,v){
+mutual_clicks <- function(df, v) {
   count <- 0
-  for(i in 1:10){
-    if ((v %in% neighbors_directed(df,i)) && (i %in% neighbors_directed(df,v))){
+  for (i in 1:10){
+    if ((v %in% neighbors_directed(df, i)) && (i %in% neighbors_directed(df, v))) {
       count <- count + 1
     }
   }
@@ -54,10 +54,10 @@ mutual_clicks <- function(df,v){
 
 
 # calculating the number of clicks other felt to a person (v = node)
-partner_click_with_subject <- function(df,v){
+partner_click_with_subject <- function(df, v) {
   count <- 0
-  for(i in 1:10){
-    if (v %in% neighbors_directed(df,i)){
+  for (i in 1:10){
+    if (v %in% neighbors_directed(df, i)){
       count <- count + 1
     }
   }
@@ -72,39 +72,39 @@ female <- arrange(female, Subject)
 female <- name_to_number(female)
 
 # subject's clicks
-length(neighbors_directed(female,1))
-length(neighbors_directed(female,2))
-length(neighbors_directed(female,3))
-length(neighbors_directed(female,4))
-length(neighbors_directed(female,5))
-length(neighbors_directed(female,6))
-length(neighbors_directed(female,7))
-length(neighbors_directed(female,8))
-length(neighbors_directed(female,9))
-length(neighbors_directed(female,10))
+length(neighbors_directed(female, 1))
+length(neighbors_directed(female, 2))
+length(neighbors_directed(female, 3))
+length(neighbors_directed(female, 4))
+length(neighbors_directed(female, 5))
+length(neighbors_directed(female, 6))
+length(neighbors_directed(female, 7))
+length(neighbors_directed(female, 8))
+length(neighbors_directed(female, 9))
+length(neighbors_directed(female, 10))
 
 
 # mutual clicks
-mutual_clicks(female,1)
-mutual_clicks(female,2)
-mutual_clicks(female,3)
-mutual_clicks(female,4)
-mutual_clicks(female,5)
-mutual_clicks(female,6)
-mutual_clicks(female,7)
-mutual_clicks(female,8)
-mutual_clicks(female,9)
-mutual_clicks(female,10)
+mutual_clicks(female, 1)
+mutual_clicks(female, 2)
+mutual_clicks(female, 3)
+mutual_clicks(female, 4)
+mutual_clicks(female, 5)
+mutual_clicks(female, 6)
+mutual_clicks(female, 7)
+mutual_clicks(female, 8)
+mutual_clicks(female, 9)
+mutual_clicks(female, 10)
 
 
 # partner's click with subject
-partner_click_with_subject(female,1)
-partner_click_with_subject(female,2)
-partner_click_with_subject(female,3)
-partner_click_with_subject(female,4)
-partner_click_with_subject(female,5)
-partner_click_with_subject(female,6)
-partner_click_with_subject(female,7)
-partner_click_with_subject(female,8)
-partner_click_with_subject(female,9)
-partner_click_with_subject(female,10)
+partner_click_with_subject(female, 1)
+partner_click_with_subject(female, 2)
+partner_click_with_subject(female, 3)
+partner_click_with_subject(female, 4)
+partner_click_with_subject(female, 5)
+partner_click_with_subject(female, 6)
+partner_click_with_subject(female, 7)
+partner_click_with_subject(female, 8)
+partner_click_with_subject(female, 9)
+partner_click_with_subject(female, 10)
