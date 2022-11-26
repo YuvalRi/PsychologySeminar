@@ -68,20 +68,18 @@ sample_values <- function(data) {
   return(new_vec)
 }
 
-# pvalue for cc
 pv_right_tail <- function(data, real_value) {
   vec <- ifelse(data < real_value, 1, 0)
   return(1 - mean(vec))
 }
 
-# pvalue for aspl (continuous values) and modularity
 pv_left_tail <- function(data, real_value) {
   vec <- ifelse(data > real_value, 0, 1)
   return(mean(vec))
 }
 
 #shuffle
-B <- 10000
+n_sim <- 10000
 cc <- c()
 aspl_directed <- c()
 aspl_undirected <- c()
@@ -89,7 +87,7 @@ diameter_directed <- c()
 mod <- c()
 sim_1 <- function(data) {
   data <- name_to_number(data)
-  for (i in 1:B){
+  for (i in 1:n_sim){
     data[, 3] <- sample_values(data)
     edges <- creating_edges(data)
     g <- graph(edges, directed = TRUE)
@@ -117,8 +115,6 @@ library(writexl)
 write_xlsx(sim_results, "C://Users//yuval//OneDrive//english folder//Seminar - clicks//datasets created by simulations//measures//shuffle_dataset1_female_new.xlsx")
 
 # simulation data set
-#sim_res_dataset1 <- read.csv("C:\\Users\\yuval\\OneDrive\\english folder\\Seminar - clicks\\datasets created by simulations\\measures\\shuffle_dataset1_female.csv")
-
 sim_res_dataset1_test <- read.csv("C:\\Users\\yuval\\OneDrive\\english folder\\Seminar - clicks\\datasets created by simulations\\measures\\shuffle_dataset1_female_new.csv")
 
 # cc hist
@@ -151,7 +147,7 @@ cc_hist <- ggplot(sim_res_dataset1_test,
   theme(legend.position = "none")
 cc_hist
 
-pvalue_1(sim_res_dataset1_test$CCrand, 0.803)
+pv_right_tail(sim_res_dataset1_test$CCrand, 0.803)
 
 # aspl directed hist
 aspl_directed_hist <- ggplot(sim_res_dataset1,
@@ -183,7 +179,7 @@ aspl_directed_hist <- ggplot(sim_res_dataset1,
   theme(legend.position = "none")
 aspl_directed_hist
 
-pvalue_2(sim_res_dataset1_test$ASPL_directed_rand, 1.578)
+pv_left_tail(sim_res_dataset1_test$ASPL_directed_rand, 1.578)
 
 # aspl undirected hist
 aspl_undirected_hist <- ggplot(sim_res_dataset1,
@@ -215,7 +211,7 @@ aspl_undirected_hist <- ggplot(sim_res_dataset1,
   theme(legend.position = "none")
 aspl_undirected_hist
 
-pvalue_2(sim_res_dataset1_test$ASPL_undirected_rand, 1.311)
+pv_left_tail(sim_res_dataset1_test$ASPL_undirected_rand, 1.311)
 
 
 # diameter directed hist
@@ -248,7 +244,7 @@ diameter_directed_hist <- ggplot(sim_res_dataset1,
   theme(legend.position = "none")
 diameter_directed_hist
 
-pvalue_3(sim_res_dataset1_test$Diameter_directed_rand, 3)
+pv_left_tail(sim_res_dataset1_test$Diameter_directed_rand, 3)
 
 # modularity hist
 modularity_hist <- ggplot(sim_res_dataset1,
@@ -280,4 +276,4 @@ modularity_hist <- ggplot(sim_res_dataset1,
   theme(legend.position = "none")
 modularity_hist
 
-pvalue_2(sim_res_dataset1_test$Modularityrand, -0.115)
+pv_left_tail(sim_res_dataset1_test$Modularityrand, -0.115)

@@ -61,26 +61,18 @@ sample_values <- function(data){
   return(new_vec)
 }
 
-# pvalue for cc and modularity
-pvalue_1 <- function(data, real_value){
-  vec <- ifelse(data < real_value, 1,0)
-  return(1-mean(vec))
+pv_right_tail <- function(data, real_value) {
+  vec <- ifelse(data < real_value, 1, 0)
+  return(1 - mean(vec))
 }
 
-#pvalue for aspl (continuous values)
-pvalue_2 <- function(data, real_value){
-  vec <- ifelse(data >= real_value, 0,1)
+pv_left_tail <- function(data, real_value) {
+  vec <- ifelse(data > real_value, 0, 1)
   return(mean(vec))
 }
 
-#pvalue for  diameter (discrete values)
-pvalue_3 <- function(data, real_value){
-  vec <- ifelse(data >= real_value, 1, 0)
-  return(1-mean(vec))
-}
-
-#shuffle 
-B <- 10000
+#shuffle
+n_sim <- 10000
 cc <- c()
 aspl_directed <- c()
 aspl_undirected <- c()
@@ -88,8 +80,8 @@ diameter_directed <- c()
 mod <- c()
 sim_1 <- function(data){
   data <- name_to_number(data)
-  for (i in 1:B){
-    data[,3] <- sample_values(data)
+  for (i in 1:n_sim){
+    data[, 3] <- sample_values(data)
     edges <- creating_edges(data)
     g <- graph(edges, directed = TRUE)
     cc[i] <- transitivity(g, type = c("global"))
@@ -110,17 +102,16 @@ sim_results <- sim_1(females_45)
 library(writexl)
 write_xlsx(sim_results,"C://Users//yuval//OneDrive//english folder//Seminar - clicks//datasets created by simulations//measures//shuffle_dataset3_45_females_new.xlsx")
 
-# simulation data set 
-#sim_res_dataset3 <- read.csv("C:\\Users\\yuval\\OneDrive\\english folder\\Seminar - clicks\\datasets created by simulations\\measures\\shuffle_dataset3_45_females.csv")
+# simulation data set
 
 sim_res_dataset3_test <- read.csv("C:\\Users\\yuval\\OneDrive\\english folder\\Seminar - clicks\\datasets created by simulations\\measures\\shuffle_dataset3_45_females_new.csv")
 
 # cc hist
 cc_hist <- ggplot(sim_res_dataset3_test,
-                  aes(x= CCrand)
+                  aes(x = CCrand)
 ) +
   geom_histogram(bins = 14,
-                 aes(y= after_stat(count / sum(count))),
+                 aes(y = after_stat(count / sum(count))),
                  fill = "gray63",
                  colour = "black") +
   theme_bw() +
@@ -135,8 +126,8 @@ cc_hist <- ggplot(sim_res_dataset3_test,
                      expand = c(0, 0)) +
   scale_y_continuous(expand = c(0, 0)) +
   geom_vline(aes(xintercept = 0.786),
-             color="dodgerblue2",
-             linetype="dashed",
+             color = "dodgerblue2",
+             linetype = "dashed",
              size=1) +
   geom_text(x=0.81,
             y=0.26,
@@ -146,7 +137,7 @@ cc_hist <- ggplot(sim_res_dataset3_test,
 #ggtitle("Frequency of Clustering Coefficient (CC) in the shuffle") 
 cc_hist
 
-pvalue_1(sim_res_dataset3_test$CCrand, 0.786)
+pv_right_tail(sim_res_dataset3_test$CCrand, 0.786)
 
 # aspl directed hist
 aspl_directed_hist <- ggplot(sim_res_dataset3,
@@ -176,17 +167,16 @@ aspl_directed_hist <- ggplot(sim_res_dataset3,
             label="1.431") + 
   coord_cartesian(ylim = c(0, 0.7), xlim = c(1.35, 1.85)) +
   theme(legend.position = "none") 
-#ggtitle("Frequency of Average shortest path length (ASPL) in directed graph") 
 aspl_directed_hist
 
-pvalue_2(sim_res_dataset3_test$ASPL_directed_rand, 1.431)
+pv_left_tail(sim_res_dataset3_test$ASPL_directed_rand, 1.431)
 
 # aspl undirected hist
 aspl_undirected_hist <- ggplot(sim_res_dataset3,
                                aes(x= ASPL_undirected_rand)
 ) +
   geom_histogram(bins = 10,
-                 aes(y= after_stat(count / sum(count))),
+                 aes(y = after_stat(count / sum(count))),
                  fill = "gray63",
                  colour = "black") +
   theme_bw() +
@@ -196,8 +186,8 @@ aspl_undirected_hist <- ggplot(sim_res_dataset3,
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
         text = element_text(size = 15),
-        aspect.ratio=1) +
-  scale_x_continuous(breaks = seq(1.1,1.5,0.1),
+        aspect.ratio = 1) +
+  scale_x_continuous(breaks = seq(1.1, 1.5, 0.1),
                      expand = c(0, 0)) +
   scale_y_continuous(expand = c(0, 0)) +
   geom_vline(aes(xintercept = 1.244),
@@ -209,10 +199,9 @@ aspl_undirected_hist <- ggplot(sim_res_dataset3,
             label="1.244") + 
   coord_cartesian(ylim = c(0, 0.5), xlim = c(1.1, 1.5)) +
   theme(legend.position = "none") 
-#ggtitle("Frequency of Average shortest path length (ASPL) in undirected graph") 
 aspl_undirected_hist
 
-pvalue_2(sim_res_dataset3_test$ASPL_undirected_rand, 1.244)
+pv_left_tail(sim_res_dataset3_test$ASPL_undirected_rand, 1.244)
 
 
 # diameter directed hist
@@ -243,14 +232,13 @@ diameter_directed_hist<- ggplot(sim_res_dataset3,
             label="3") + 
   coord_cartesian(ylim = c(0, 1), xlim = c(1, 6)) +
   theme(legend.position = "none") 
-#ggtitle("Frequency of diameter in directed graph") 
 diameter_directed_hist
 
-pvalue_3(sim_res_dataset3_test$Diameter_directed_rand, 3)
+pv_left_tail(sim_res_dataset3_test$Diameter_directed_rand, 3)
 
 # modularity hist
 modularity_hist <- ggplot(sim_res_dataset3,
-                          aes(x= Modularityrand)
+                          aes(x = Modularityrand)
 ) +
   geom_histogram(bins = 14,
                  aes(y= after_stat(count / sum(count))),
@@ -279,6 +267,4 @@ modularity_hist <- ggplot(sim_res_dataset3,
 #ggtitle("Frequency of Clustering Coefficient (CC) in the shuffle") 
 modularity_hist
 
-pvalue_2(sim_res_dataset3_test$Modularityrand, -0.109)
-
-
+pv_left_tail(sim_res_dataset3_test$Modularityrand, -0.109)
