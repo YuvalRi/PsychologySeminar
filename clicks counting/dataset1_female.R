@@ -41,7 +41,6 @@ neighbors_directed <- function(df, v){
   return(unique(vec[!is.na(vec)]))
 }
 
-
 # calculating the mutual clicks per node
 mutual_clicks <- function(df,v){
   count <- 0
@@ -50,7 +49,7 @@ mutual_clicks <- function(df,v){
       count <- count + 1
     }
   }
-  print(count)
+  return(count)
 }
 
 
@@ -62,12 +61,12 @@ partner_click_with_subject <- function(df,v){
       count <- count + 1
     }
   }
-  print(count)
+  return(count)
 }
 
 female <- read.csv("C://Users//yuval//OneDrive//english folder//Seminar - clicks//ClicksYuval.csv", header = TRUE)
 # sub df - relevant columns
-female <- female[,c(1,2,25)]
+female <- female[, c(1, 2, 25)]
 # sorted Women df
 female <- arrange(female, Subject)
 female <- name_to_number(female)
