@@ -50,7 +50,7 @@ mutual_clicks <- function(df,v){
       count <- count + 1
     }
   }
-  print(count)
+  return(count)
 }
 
 
@@ -61,7 +61,7 @@ partner_click_with_subject <- function(df,v){
       count <- count + 1
     }
   }
-  print(count)
+  return(count)
 }
 
 males_45 <- read.csv("C://Users//yuval//OneDrive//english folder//Seminar - clicks//more datasets//45males_subset_new.csv")

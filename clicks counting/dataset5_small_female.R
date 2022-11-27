@@ -42,7 +42,7 @@ mutual_clicks <- function(df,v){
       count <- count + 1
     }
   }
-  print(count)
+  return(count)
 }
 
 
@@ -53,7 +53,7 @@ partner_click_with_subject <- function(df,v){
       count <- count + 1
     }
   }
-  print(count)
+  return(count)
 }
 
 small_female <- read.csv("C://Users//yuval//OneDrive//english folder//Seminar - clicks//more datasets//small_female_subset.csv")

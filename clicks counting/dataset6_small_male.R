@@ -44,7 +44,7 @@ mutual_clicks <- function(df,v){
       count <- count + 1
     }
   }
-  print(count)
+  return(count)
 }
 
 # v is the subject 
@@ -55,7 +55,7 @@ partner_click_with_subject <- function(df,v){
       count <- count + 1
     }
   }
-  print(count)
+  return(count)
 }
 
 
