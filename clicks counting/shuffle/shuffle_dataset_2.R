@@ -43,3 +43,11 @@ sim_results <- simulation(dataset_2)
 
 write_xlsx(sim_results, "C://Users//yuval//OneDrive//english folder//Seminar - clicks//datasets created by simulations//clicks_counting//shuffle_dataset21.xlsx")
 sim_results_dataset <- read.csv("C://Users//yuval//OneDrive//english folder//Seminar - clicks//datasets created by simulations//clicks_counting//shuffle_dataset2.csv")
+
+# Analysis 1 - mean of the required proportion (prop1 mean of every 10 rows)
+mean_prop_vec <- sim_results_dataset[1: 10000, 4]
+pv_right_tail(mean_prop_vec, 0.728)
+
+# Analysis 2 - mean of the required proportion (mutual clicks mean of every 10 rows)
+mean_prop_vec <- sim_results_dataset[1: 10000, 5]
+pv_right_tail(mean_prop_vec, 2.286)

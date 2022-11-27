@@ -45,16 +45,11 @@ write_xlsx(sim_results, "C://Users//yuval//OneDrive//english folder//Seminar - c
 sim_results_dataset <- read.csv("C://Users//yuval//OneDrive//english folder//Seminar - clicks//datasets created by simulations//clicks_counting//shuffle_dataset1.csv")
 
 
-mean_calc <- function(dataset) {
-  mean_mutual_clicks <- rep(0, 10000)
-  mean_participants_clicks <- rep(0, 10000)
-  for (i in 1:nrow(dataset)) {
-    mean_mutual_clicks[i] <- mean(dataset[i:i + 9, 1])
-    mean_participants_clicks[i] <- mean(dataset[i:i + 9, 2])
-  }
-  return(data.frame(mean_mutual_clicks, mean_participants_clicks))
-}
+# Analysis 1 - mean of the required proportion (prop1 mean of every 10 rows)
+mean_prop_vec <- sim_results_dataset[1: 10000, 4]
+pv_right_tail(mean_prop_vec, 0.644)
 
-mean_vec_1 <- mean_calc(sim_results_dataset)
+# Analysis 2 - mean of the required proportion (mutual clicks mean of every 10 rows)
+mean_prop_vec <- sim_results_dataset[1: 10000, 5]
+pv_right_tail(mean_prop_vec, 2.8)
 
-View(mean_vec_1)
