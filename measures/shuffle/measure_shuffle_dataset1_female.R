@@ -2,7 +2,7 @@ library(tidyverse)
 library(dplyr)
 library(igraph)
 library(ggplot2)
-
+library(httpgd)
 
 name_to_number <- function(data) {
   "
@@ -117,6 +117,8 @@ write_xlsx(sim_results, "C://Users//yuval//OneDrive//english folder//Seminar - c
 # simulation data set
 sim_res_dataset1_test <- read.csv("C:\\Users\\yuval\\OneDrive\\english folder\\Seminar - clicks\\datasets created by simulations\\measures\\shuffle_dataset1_female_new.csv")
 
+hgd()
+hgd_browse()
 # cc hist
 cc_hist <- ggplot(sim_res_dataset1_test,
                               aes(x = CCrand)
@@ -128,23 +130,29 @@ cc_hist <- ggplot(sim_res_dataset1_test,
   theme_bw() +
   ylab("Frequency") +
   xlab("Clustering Coefficient (CC)") +
-  theme(plot.title = element_text(size = 15),
+  theme(plot.title = element_text(size = 20),
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
-        text = element_text(size = 15),
+        text = element_text(size = 17),
         aspect.ratio = 1) +
-  scale_x_continuous(breaks = seq(0.5, 1, 0.1),
+  scale_x_continuous(breaks = seq(0.4, 1.2, 0.1),
                      expand = c(0, 0)) +
   scale_y_continuous(expand = c(0, 0)) +
-  geom_vline(aes(xintercept = 0.803),
-             color = "dodgerblue2",
+  geom_vline(aes(xintercept = 0.803, size = 0.3),
+             color = "#c72727",
              linetype = "dashed",
-             size = 1) +
-  geom_text(x = 0.825,
-            y = 0.27,
-            label =  "0.803") +
-  coord_cartesian(ylim = c(0, 0.32), xlim = c(0.5, 1)) +
-  theme(legend.position = "none")
+             size = 0.8) +
+  annotate("text",
+          x=0.86,
+          y=0.27, 
+          label="0.803",
+          color = "black",
+          size = 4.5) +
+  labs(x = "Global CC", y = "Frequency", size = 30, family = "Helvetica") +
+  coord_cartesian(ylim = c(0, 0.32), xlim = c(0.45, 1)) +
+  theme(legend.position = "none",
+        axis.text.x = element_text(size=20),
+        axis.text.y = element_text(size=20))
 cc_hist
 
 pv_right_tail(sim_res_dataset1_test$CCrand, 0.803)
