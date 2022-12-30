@@ -2,6 +2,7 @@ library(tidyverse)
 library(dplyr)
 library(igraph)
 library(ggplot2)
+library(httpgd)
 
 # function for converting names of participants to numebrs
 name_to_number <- function(data) {
@@ -53,8 +54,7 @@ sample_values <- function(data){
   n <- length(g_vec)
   new_vec <- c()
   # sample permutations between [0,1] with length n
-  seq_vec <- sample(c(1:n), n, replace = FALSE)
-  
+  seq_vec <- sample(c(1:n), n, replace = FALSE) 
   for (i in 1:length(seq_vec)){
     new_vec[i] <- g_vec[seq_vec[i]]
   }
@@ -106,10 +106,10 @@ write_xlsx(sim_results,"C://Users//yuval//OneDrive//english folder//Seminar - cl
 
 sim_res_dataset3_test <- read.csv("C:\\Users\\yuval\\OneDrive\\english folder\\Seminar - clicks\\datasets created by simulations\\measures\\shuffle_dataset3_45_females_new.csv")
 
-# cc hist
+hgd()
+hgd_browse()
 cc_hist <- ggplot(sim_res_dataset3_test,
-                  aes(x = CCrand)
-) +
+                  aes(x = CCrand)) +
   geom_histogram(bins = 14,
                  aes(y = after_stat(count / sum(count))),
                  fill = "gray63",
@@ -117,64 +117,77 @@ cc_hist <- ggplot(sim_res_dataset3_test,
   theme_bw() +
   ylab("Frequency") +
   xlab("Clustering Coefficient (CC)") +
-  theme(plot.title = element_text(size=15),
+  theme(plot.title = element_text(size = 20),
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
-        text = element_text(size = 15),
-        aspect.ratio=1) +
-  scale_x_continuous(breaks = seq(0.5,1,0.1),
+        text = element_text(size = 17),
+        aspect.ratio = 1) +
+  scale_x_continuous(breaks = seq(0.5, 1, 0.1),
                      expand = c(0, 0)) +
   scale_y_continuous(expand = c(0, 0)) +
-  geom_vline(aes(xintercept = 0.786),
-             color = "dodgerblue2",
+  geom_vline(aes(xintercept = 0.786, size = 0.3),
+             color = "#c72727",
              linetype = "dashed",
-             size=1) +
-  geom_text(x=0.81,
-            y=0.26,
-            label="0.786") + 
-  coord_cartesian(ylim = c(0, 0.31), xlim = c(0.5, 1)) +
-  theme(legend.position = "none") 
-#ggtitle("Frequency of Clustering Coefficient (CC) in the shuffle") 
+             size = 0.8) +
+  annotate("text",
+            x = 0.83,
+            y = 0.26,
+            label = "0.786",
+            color = "black",
+            size = 5) +
+  labs(x = "Global CC",
+       y = "Frequency",
+       size = 34,
+       family = "Helvetica") +
+  coord_cartesian(ylim = c(0, 0.31), xlim = c(0.5, 0.95)) +
+  theme(legend.position = "none",
+        axis.text.x = element_text(size = 15),
+        axis.text.y = element_text(size = 15))
 cc_hist
 
 pv_right_tail(sim_res_dataset3_test$CCrand, 0.786)
 
-# aspl directed hist
-aspl_directed_hist <- ggplot(sim_res_dataset3,
-                             aes(x= ASPL_directed_rand)
-) +
+aspl_directed_hist <- ggplot(sim_res_dataset3_test,
+                            aes(x = ASPL_directed_rand)) +
   geom_histogram(bins = 10,
-                 aes(y= after_stat(count / sum(count))),
+                 aes(y = after_stat(count / sum(count))),
                  fill = "gray63",
                  colour = "black") +
   theme_bw() +
   ylab("Frequency") +
   xlab("ASPL - directed graph") +
-  theme(plot.title = element_text(size=15),
+  theme(plot.title = element_text(size = 20),
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
-        text = element_text(size = 15),
-        aspect.ratio=1) +
-  scale_x_continuous(breaks = seq(1.35,1.85,0.05),
+        text = element_text(size = 17),
+        aspect.ratio = 1) +
+  scale_x_continuous(breaks = seq(1.35, 1.85, 0.15),
                      expand = c(0, 0)) +
   scale_y_continuous(expand = c(0, 0)) +
-  geom_vline(aes(xintercept = 1.431),
-             color="dodgerblue2",
-             linetype="dashed",
-             size=1) +
-  geom_text(x=1.45,
-            y=0.5,
-            label="1.431") + 
-  coord_cartesian(ylim = c(0, 0.7), xlim = c(1.35, 1.85)) +
-  theme(legend.position = "none") 
+  geom_vline(aes(xintercept = 1.431, size = 0.3),
+             color = "#c72727",
+             linetype = "dashed",
+             size = 0.8) +
+  annotate("text",
+            x = 1.48,
+            y = 0.6,
+            label = "1.431",
+            color = "black",
+            size = 5) +
+  labs(x = "ASPL - directed graph",
+       y = "Frequency",
+       size = 34,
+       family = "Helvetica") +
+  coord_cartesian(ylim = c(0, 0.7), xlim = c(1.34, 1.85)) +
+  theme(legend.position = "none",
+        axis.text.x = element_text(size = 15),
+        axis.text.y = element_text(size = 15))
 aspl_directed_hist
 
 pv_left_tail(sim_res_dataset3_test$ASPL_directed_rand, 1.431)
 
-# aspl undirected hist
-aspl_undirected_hist <- ggplot(sim_res_dataset3,
-                               aes(x= ASPL_undirected_rand)
-) +
+aspl_undirected_hist <- ggplot(sim_res_dataset3_test,
+                               aes(x = ASPL_undirected_rand)) +
   geom_histogram(bins = 10,
                  aes(y = after_stat(count / sum(count))),
                  fill = "gray63",
@@ -182,7 +195,7 @@ aspl_undirected_hist <- ggplot(sim_res_dataset3,
   theme_bw() +
   ylab("Frequency") +
   xlab("ASPL - undirected graph") +
-  theme(plot.title = element_text(size=15),
+  theme(plot.title = element_text(size = 15),
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
         text = element_text(size = 15),
@@ -190,81 +203,102 @@ aspl_undirected_hist <- ggplot(sim_res_dataset3,
   scale_x_continuous(breaks = seq(1.1, 1.5, 0.1),
                      expand = c(0, 0)) +
   scale_y_continuous(expand = c(0, 0)) +
-  geom_vline(aes(xintercept = 1.244),
-             color="dodgerblue2",
-             linetype="dashed",
-             size=1) +
-  geom_text(x=1.262,
-            y=0.45,
-            label="1.244") + 
-  coord_cartesian(ylim = c(0, 0.5), xlim = c(1.1, 1.5)) +
-  theme(legend.position = "none") 
+  geom_vline(aes(xintercept = 1.244, size = 0.3),
+             color = "#c72727",
+             linetype = "dashed",
+             size = 0.8) +
+  annotate("text",
+            x = 1.275,
+            y = 0.45,
+            label = "1.244",
+            color = "black",
+            size = 5) +
+  labs(x = "ASPL - undirected graph",
+       y = "Frequency",
+       size = 34,
+       family = "Helvetica") +
+  coord_cartesian(ylim = c(0, 0.5), xlim = c(1.12, 1.45)) +
+  theme(legend.position = "none",
+        axis.text.x = element_text(size = 15),
+        axis.text.y = element_text(size = 15))
 aspl_undirected_hist
 
 pv_left_tail(sim_res_dataset3_test$ASPL_undirected_rand, 1.244)
 
-
-# diameter directed hist
-diameter_directed_hist<- ggplot(sim_res_dataset3,
-                                aes(x= Diameter_directed_rand)
-) +
+diameter_directed_hist <- ggplot(sim_res_dataset3_test,
+                                aes(x = Diameter_directed_rand)) +
   geom_histogram(bins = 5,
-                 aes(y= after_stat(count / sum(count))),
+                 aes(y = after_stat(count / sum(count))),
                  fill = "gray63",
                  colour = "black") +
   theme_bw() +
   ylab("Frequency") +
   xlab("Diameter - directed graph") +
-  theme(plot.title = element_text(size=15),
+  theme(plot.title = element_text(size = 20),
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
-        text = element_text(size = 15),
-        aspect.ratio=1) +
-  scale_x_continuous(breaks = seq(1,6,1),
+        text = element_text(size = 17),
+        aspect.ratio = 1) +
+  scale_x_continuous(breaks = seq(1, 6, 1),
                      expand = c(0, 0)) +
   scale_y_continuous(expand = c(0, 0)) +
-  geom_vline(aes(xintercept = 3),
-             color="dodgerblue2",
-             linetype="dashed",
-             size=1) +
-  geom_text(x=3.1,
-            y=0.95,
-            label="3") + 
+  geom_vline(aes(xintercept = 3, size = 0.3),
+             color = "#c72727",
+             linetype = "dashed",
+             size = 1) +
+  annotate("text",
+            x = 3.2,
+            y = 0.95,
+            label = "3",
+            color = "black",
+            size = 5) +
+  labs(x = "Diameter - directed graph",
+       y = "Frequency",
+       size = 34,
+       family = "Helvetica") +
   coord_cartesian(ylim = c(0, 1), xlim = c(1, 6)) +
-  theme(legend.position = "none") 
+  theme(legend.position = "none",
+        axis.text.x = element_text(size = 15),
+        axis.text.y = element_text(size = 15))
 diameter_directed_hist
 
 pv_left_tail(sim_res_dataset3_test$Diameter_directed_rand, 3)
 
-# modularity hist
-modularity_hist <- ggplot(sim_res_dataset3,
-                          aes(x = Modularityrand)
-) +
+modularity_hist <- ggplot(sim_res_dataset3_test,
+                          aes(x = Modularityrand)) +
   geom_histogram(bins = 14,
-                 aes(y= after_stat(count / sum(count))),
+                 aes(y = after_stat(count / sum(count))),
                  fill = "gray63",
                  colour = "black") +
   theme_bw() +
   ylab("Frequency") +
   xlab("Modularity") +
-  theme(plot.title = element_text(size=15),
+  theme(plot.title = element_text(size = 20),
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
-        text = element_text(size = 15),
-        aspect.ratio=1) +
+        text = element_text(size = 17),
+        aspect.ratio = 1) +
   scale_x_continuous(breaks = seq(-0.12, -0.09, 0.01),
                      expand = c(0, 0)) +
   scale_y_continuous(expand = c(0, 0)) +
-  geom_vline(aes(xintercept = -0.109),
-             color="dodgerblue2",
-             linetype="dashed",
-             size=1) +
-  geom_text(x=-0.1075,
-            y=0.22,
-            label="-0.109") + 
-  coord_cartesian(ylim = c(0, 0.31), xlim = c(-0.12, -0.09)) +
-  theme(legend.position = "none") 
-#ggtitle("Frequency of Clustering Coefficient (CC) in the shuffle") 
+  geom_vline(aes(xintercept = -0.109, size = 0.3),
+             color = "#c72727",
+             linetype = "dashed",
+             size = 1) +
+  annotate("text",
+            x = -0.1055,
+            y = 0.32,
+            label = "-0.109",
+            color = "black",
+            size = 5) +
+  labs(x = "Modularity",
+       y = "Frequency",
+       size = 34,
+       family = "Helvetica") +
+  coord_cartesian(ylim = c(0, 0.35), xlim = c(-0.121, -0.09)) +
+  theme(legend.position = "none",
+        axis.text.x = element_text(size = 15),
+        axis.text.y = element_text(size = 15))
 modularity_hist
 
 pv_left_tail(sim_res_dataset3_test$Modularityrand, -0.109)
