@@ -262,7 +262,9 @@ diameter_directed_hist <- ggplot(sim_res_dataset1_test,
   annotate("text",
           x = 3.15,
           y = 0.95,
-          label = "3") +
+          label = "3",
+          color = "black",
+          size = 5) +
   labs(x = "Diameter - directed graph",
        y = "Frequency",
        size = 34,
