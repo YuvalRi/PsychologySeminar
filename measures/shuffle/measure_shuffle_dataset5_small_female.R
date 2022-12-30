@@ -2,6 +2,7 @@ library(tidyverse)
 library(dplyr)
 library(igraph)
 library(ggplot2)
+library(httpgd)
 
 # function for converting names of participants to numebrs
 name_to_number <- function(data) {
@@ -98,10 +99,10 @@ write_xlsx(sim_results,"C://Users//yuval//OneDrive//english folder//Seminar - cl
 # simulation data set
 sim_res_dataset5 <- read.csv("C:\\Users\\yuval\\OneDrive\\english folder\\Seminar - clicks\\datasets created by simulations\\measures\\shuffle_dataset5_small_female_new_2.csv")
 
-# cc hist
+hgd()
+hgd_browse()
 cc_hist <- ggplot(sim_res_dataset5,
-                  aes(x = ?..CCrand)
-) +
+                  aes(x = CCrand)) +
   geom_histogram(bins = 14,
                  aes(y = after_stat(count / sum(count))),
                  fill = "gray63",
@@ -109,31 +110,38 @@ cc_hist <- ggplot(sim_res_dataset5,
   theme_bw() +
   ylab("Frequency") +
   xlab("Clustering Coefficient (CC)") +
-  theme(plot.title = element_text(size=15),
+  theme(plot.title = element_text(size = 20),
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
-        text = element_text(size = 15),
+        text = element_text(size = 17),
         aspect.ratio = 1) +
   scale_x_continuous(breaks = seq(0.1, 1, 0.1),
                      expand = c(0, 0)) +
   scale_y_continuous(expand = c(0, 0)) +
-  geom_vline(aes(xintercept = 0.846),
-             color = "dodgerblue2",
+  geom_vline(aes(xintercept = 0.846, size = 0.3),
+             color = "#c72727",
              linetype = "dashed",
-             size = 1) +
-  geom_text(x = 0.88,
-            y = 0.27,
-            label = "0.846") +
-  coord_cartesian(ylim = c(0, 0.32), xlim = c(0.1, 1)) +
-  theme(legend.position = "none")
+             size = 0.8) +
+  annotate("text",
+            x = 0.93,
+            y = 0.3,
+            label = "0.846",
+            color = "black",
+            size = 5) +
+  labs(x = "Global CC",
+         y = "Frequency",
+         size = 34,
+         family = "Helvetica") +
+  coord_cartesian(ylim = c(0, 0.35), xlim = c(0.09, 1)) +
+  theme(legend.position = "none",
+        axis.text.x = element_text(size = 15),
+        axis.text.y = element_text(size = 15))
 cc_hist
 
 pv_right_tail(sim_res_dataset5$CCrand, 0.846)
 
-# aspl directed hist
 aspl_directed_hist <- ggplot(sim_res_dataset5,
-                             aes(x = ASPL_directed_rand)
-) +
+                             aes(x = ASPL_directed_rand)) +
   geom_histogram(bins = 10,
                  aes(y = after_stat(count / sum(count))),
                  fill = "gray63",
@@ -141,31 +149,38 @@ aspl_directed_hist <- ggplot(sim_res_dataset5,
   theme_bw() +
   ylab("Frequency") +
   xlab("ASPL - directed graph") +
-  theme(plot.title = element_text(size = 15),
+  theme(plot.title = element_text(size = 20),
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
-        text = element_text(size = 15),
+        text = element_text(size = 17),
         aspect.ratio = 1) +
-  scale_x_continuous(breaks = seq(1, 2.1, 0.1),
+  scale_x_continuous(breaks = seq(1, 2.1, 0.2),
                      expand = c(0, 0)) +
   scale_y_continuous(expand = c(0, 0)) +
-  geom_vline(aes(xintercept = 1.4),
-             color = "dodgerblue2",
+  geom_vline(aes(xintercept = 1.4, size = 0.3),
+             color = "#c72727",
              linetype = "dashed",
-             size = 1) +
-  geom_text(x = 1.42,
-            y = 0.5,
-            label = "1.4") +
-  coord_cartesian(ylim = c(0, 0.7), xlim = c(1, 2.1)) +
-  theme(legend.position = "none")
+             size = 0.8) +
+  annotate("text",
+            x = 1.47,
+            y = 0.42,
+            label = "1.4",
+            color = "black",
+            size = 5) +
+  labs(x = "ASPL - directed graph",
+         y = "Frequency",
+         size = 34,
+         family = "Helvetica") +
+  coord_cartesian(ylim = c(0, 0.5), xlim = c(0.99, 2.1)) +
+  theme(legend.position = "none",
+        axis.text.x = element_text(size = 15),
+        axis.text.y = element_text(size = 15))
 aspl_directed_hist
 
 pv_left_tail(sim_res_dataset5$ASPL_directed_rand, 1.400)
 
-# aspl undirected hist
 aspl_undirected_hist <- ggplot(sim_res_dataset5,
-                               aes(x = ASPL_undirected_rand)
-) +
+                               aes(x = ASPL_undirected_rand)) +
   geom_histogram(bins = 10,
                  aes(y = after_stat(count / sum(count))),
                  fill = "gray63",
@@ -173,31 +188,38 @@ aspl_undirected_hist <- ggplot(sim_res_dataset5,
   theme_bw() +
   ylab("Frequency") +
   xlab("ASPL - undirected graph") +
-  theme(plot.title = element_text(size = 15),
+  theme(plot.title = element_text(size = 20),
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
-        text = element_text(size = 15),
+        text = element_text(size = 17),
         aspect.ratio = 1) +
   scale_x_continuous(breaks = seq(1, 1.7, 0.1),
                      expand = c(0, 0)) +
   scale_y_continuous(expand = c(0, 0)) +
-  geom_vline(aes(xintercept = 1.2),
-             color = "dodgerblue2",
+  geom_vline(aes(xintercept = 1.2, size = 0.3),
+             color = "#c72727",
              linetype = "dashed",
-             size = 1) +
-  geom_text(x = 1.22,
+             size = 0.8) +
+  annotate("text",
+            x = 1.25,
             y = 0.45,
-            label = "1.2") +
-  coord_cartesian(ylim = c(0, 0.51), xlim = c(1, 1.7)) +
-  theme(legend.position = "none")
+            label = "1.2",
+            color = "black",
+            size = 5) +
+  labs(x = "ASPL - undirected graph",
+         y = "Frequency",
+         size = 34,
+         family = "Helvetica") +
+  coord_cartesian(ylim = c(0, 0.51), xlim = c(0.99, 1.7)) +
+  theme(legend.position = "none",
+        axis.text.x = element_text(size = 15),
+        axis.text.y = element_text(size = 15))
 aspl_undirected_hist
 
 pv_left_tail(sim_res_dataset5$ASPL_undirected_rand, 1.200)
 
-# diameter directed hist
 diameter_directed_hist <- ggplot(sim_res_dataset5,
-                                  aes(x = Diameter_directed_rand)
-) +
+                                aes(x = Diameter_directed_rand)) +
   geom_histogram(bins = 4,
                  aes(y = after_stat(count / sum(count))),
                  fill = "gray63",
@@ -205,31 +227,38 @@ diameter_directed_hist <- ggplot(sim_res_dataset5,
   theme_bw() +
   ylab("Frequency") +
   xlab("Diameter - directed graph") +
-  theme(plot.title = element_text(size = 15),
+  theme(plot.title = element_text(size = 20),
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
-        text = element_text(size = 15),
+        text = element_text(size = 17),
         aspect.ratio = 1) +
   scale_x_continuous(breaks = seq(1, 6, 1),
                      expand = c(0, 0)) +
   scale_y_continuous(expand = c(0, 0)) +
-  geom_vline(aes(xintercept = 2),
-             color = "dodgerblue2",
+  geom_vline(aes(xintercept = 2, size = 0.3),
+             color = "#c72727",
              linetype = "dashed",
-             size = 1) +
-  geom_text(x = 2.1,
-            y = 0.95,
-            label = "2") +
+             size = 0.8) +
+  annotate("text",
+            x = 2.2,
+            y = 0.85,
+            label = "2",
+            color = "black",
+            size = 5) +
+  labs(x = "Diameter - directed graph",
+       y = "Frequency",
+       size = 34,
+      family = "Helvetica") +
   coord_cartesian(ylim = c(0, 1), xlim = c(1, 6)) +
-  theme(legend.position = "none")
+  theme(legend.position = "none",
+        axis.text.x = element_text(size = 15),
+        axis.text.y = element_text(size = 15))
 diameter_directed_hist
 
 pv_left_tail(sim_res_dataset5$Diameter_directed_rand, 2)
 
-# modularity hist
 modularity_hist <- ggplot(sim_res_dataset5,
-                          aes(x = Modularityrand)
-) +
+                          aes(x = Modularityrand)) +
   geom_histogram(bins = 14,
                  aes(y = after_stat(count / sum(count))),
                  fill = "gray63",
@@ -237,23 +266,32 @@ modularity_hist <- ggplot(sim_res_dataset5,
   theme_bw() +
   ylab("Frequency") +
   xlab("Modularity") +
-  theme(plot.title = element_text(size = 15),
+  theme(plot.title = element_text(size = 20),
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
-        text = element_text(size = 15),
+        text = element_text(size = 17),
         aspect.ratio = 1) +
   scale_x_continuous(breaks = seq(-0.22, -0.16, 0.01),
                      expand = c(0, 0)) +
   scale_y_continuous(expand = c(0, 0)) +
-  geom_vline(aes(xintercept = -0.180),
-             color = "dodgerblue2",
+  geom_vline(aes(xintercept = -0.180, size = 0.3),
+             color = "#c72727",
              linetype = "dashed",
-             size = 1) +
-  geom_text(x = -0.177,
-            y = 0.3,
-            label = "-0.180") +
-  coord_cartesian(ylim = c(0, 0.31), xlim = c(-0.22, -0.16)) +
-  theme(legend.position = "none")
+             size = 0.8) +
+  annotate("text",
+            x = -0.173,
+            y = 0.29,
+            label = "-0.180",
+            color = "black",
+            size = 5) +
+  labs(x = "Modularity",
+       y = "Frequency",
+       size = 34,
+       family = "Helvetica") +
+  coord_cartesian(ylim = c(0, 0.31), xlim = c(-0.215, -0.16)) +
+  theme(legend.position = "none",
+        axis.text.x = element_text(size = 15),
+        axis.text.y = element_text(size = 15))
 modularity_hist
 
 pv_left_tail(sim_res_dataset5$Modularityrand, -0.180)

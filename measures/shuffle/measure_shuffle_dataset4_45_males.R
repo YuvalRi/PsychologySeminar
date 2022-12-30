@@ -164,7 +164,7 @@ aspl_directed_hist <- ggplot(sim_res_dataset4,
   scale_x_continuous(breaks = seq(1.3, 1.55, 0.05),
                      expand = c(0, 0)) +
   scale_y_continuous(expand = c(0, 0)) +
-  geom_vline(aes(xintercept = 1.333),
+  geom_vline(aes(xintercept = 1.333, size = 0.3),
              color = "#c72727",
              linetype = "dashed",
              size = 0.8) +
@@ -281,13 +281,13 @@ modularity_hist <- ggplot(sim_res_dataset4,
   scale_x_continuous(breaks = seq(-0.112, -0.099, 0.005),
                      expand = c(0, 0)) +
   scale_y_continuous(expand = c(0, 0)) +
-  geom_vline(aes(xintercept = -0.108),
+  geom_vline(aes(xintercept = -0.108, size = 0.3),
              color = "#c72727",
              linetype = "dashed",
              size = 0.8) +
   annotate("text",
-            x = -0.1068,
-            y = 0.255,
+            x = -0.1066,
+            y = 0.29,
             label = "-0.108",
             color = "black",
             size = 5) +
@@ -295,7 +295,7 @@ modularity_hist <- ggplot(sim_res_dataset4,
        y = "Frequency",
        size = 34,
        family = "Helvetica") +
-  coord_cartesian(ylim = c(0, 0.3), xlim =  c(-0.111, -0.099)) +
+  coord_cartesian(ylim = c(0, 0.35), xlim =  c(-0.111, -0.099)) +
   theme(legend.position = "none",
         axis.text.x = element_text(size = 15),
         axis.text.y = element_text(size = 15))
