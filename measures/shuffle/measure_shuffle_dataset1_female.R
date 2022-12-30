@@ -160,8 +160,7 @@ cc_hist
 pv_right_tail(sim_res_dataset1_test$CCrand, 0.803)
 
 aspl_directed_hist <- ggplot(sim_res_dataset1_test,
-                  aes(x = ASPL_directed_rand)
-) +
+                  aes(x = ASPL_directed_rand)) +
   geom_histogram(bins = 14,
                  aes(y = after_stat(count / sum(count))),
                  fill = "gray63",
