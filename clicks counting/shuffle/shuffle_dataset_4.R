@@ -107,9 +107,9 @@ hist_2 <- ggplot(data_for_hists,
              linetype = "dashed",
              size = 0.8) +
   annotate("text",
-          x = 4.1,
+          x = 3.9,
           y = 0.26,
-          label = "0.617",
+          label = "3.6",
           color = "black",
           size = 5) +
   labs(x = "Mutual clicks", y = "Frequency", size = 34, family = "Helvetica") +
