@@ -206,7 +206,7 @@ aspl_undirected_hist <- ggplot(sim_res_dataset2_test,
   geom_vline(aes(xintercept = 1.238, size = 0.3),
              color = "#c72727",
              linetype = "dashed",
-             size = 1) +
+             size = 0.8) +
   annotate("text",
             x = 1.29,
             y = 0.32,
@@ -216,7 +216,7 @@ aspl_undirected_hist <- ggplot(sim_res_dataset2_test,
   labs(x = "ASPL - undirected graph",
        y = "Frequency",
        size = 34,
-      family = "Helvetica") +
+       family = "Helvetica") +
   coord_cartesian(ylim = c(0, 0.4), xlim = c(0.94, 1.45)) +
   theme(legend.position = "none",
         axis.text.x = element_text(size = 15),
