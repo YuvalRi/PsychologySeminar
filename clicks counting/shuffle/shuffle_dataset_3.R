@@ -4,6 +4,7 @@ library(tidyverse)
 library(dplyr)
 library(igraph)
 library(writexl)
+library(httpgd)
 
 #' The simulation creates random graphs.
 #' In each graph, for each participant
@@ -45,6 +46,79 @@ sim_results_dataset <- read.csv("C://Users//yuval//OneDrive//english folder//Sem
 mean_prop_vec <- sim_results_dataset[1: 10000, 4]
 pv_right_tail(mean_prop_vec, 0.462)
 
+data_for_hists <- sim_results_dataset[1:10000, ]
+
+hgd()
+hgd_browse()
+# Analysis 1 - Histogram
+hist_1 <- ggplot(data_for_hists,
+                 aes(x = as.numeric(mean.prop.1))) +
+  geom_histogram(bins = 20,
+                 fill = "gray63",
+                 colour = "black",
+                 aes(y = after_stat(count / sum(count)))) +
+  theme_bw() +
+  ylab("Frequency") +
+  xlab("Hav to complete") +
+  theme(plot.title = element_text(size = 20),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        text = element_text(size = 17),
+        aspect.ratio = 1) +
+  scale_x_continuous(expand = c(0, 0)) +
+  scale_y_continuous(expand = c(0, 0)) +
+  geom_vline(aes(xintercept = 0.462, size = 0.3),
+             color = "#c72727",
+             linetype = "dashed",
+             size = 0.8) +
+  annotate("text",
+          x = 0.52,
+          y = 0.18,
+          label = "0.462",
+          color = "black",
+          size = 5) +
+  labs(x = "", y = "Frequency", size = 34, family = "Helvetica") +
+  coord_cartesian(ylim = c(0, 0.2), xlim = c(0.1, 1)) +
+  theme(legend.position = "none",
+        axis.text.x = element_text(size = 15),
+        axis.text.y = element_text(size = 15))
+hist_1
+
 # Analysis 2 - mean of the required proportion (mutual clicks mean of every 10 rows)
 mean_prop_vec <- sim_results_dataset[1: 10000, 5]
 pv_right_tail(mean_prop_vec, 1.8)
+
+hist_2 <- ggplot(data_for_hists,
+                 aes(x = as.numeric(mean.mutual.clicks))) +
+  geom_histogram(bins = 9,
+                 fill = "gray63",
+                 colour = "black",
+                 aes(y = after_stat(count / sum(count)))) +
+  theme_bw() +
+  ylab("Frequency") +
+  xlab("Hav to complete") +
+  theme(plot.title = element_text(size = 20),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        text = element_text(size = 17),
+        aspect.ratio = 1) +
+  scale_x_continuous(breaks = seq(0.5, 3.5, 0.5),
+                    expand = c(0, 0)) +
+  scale_y_continuous(expand = c(0, 0)) +
+  geom_vline(aes(xintercept = 1.8, size = 0.3),
+             color = "#c72727",
+             linetype = "dashed",
+             size = 0.8) +
+  annotate("text",
+          x = 1.95,
+          y = 0.43,
+          label = "1.8",
+          color = "black",
+          size = 5) +
+  labs(x = "", y = "Frequency", size = 34, family = "Helvetica") +
+  coord_cartesian(ylim = c(0, 0.45), xlim = c(0.4, 3.5)) +
+  theme(legend.position = "none",
+        axis.text.x = element_text(size = 15),
+        axis.text.y = element_text(size = 15))
+hist_2
+
