@@ -72,12 +72,12 @@ hist_1 <- ggplot(data_for_hists,
              linetype = "dashed",
              size = 0.8) +
   annotate("text",
-          x = 0.535,
+          x = 0.59,
           y = 0.18,
           label = "0.458",
           color = "black",
           size = 5) +
-  labs(x = "", y = "Frequency", size = 34, family = "Helvetica") +
+  labs(x = "Ratio of mutual clicks to\n clicking experiences", y = "Frequency", size = 34, family = "Helvetica") +
   coord_cartesian(ylim = c(0, 0.2), xlim = c(-0.1, 1)) +
   theme(legend.position = "none",
         axis.text.x = element_text(size = 15),
@@ -96,8 +96,6 @@ hist_2 <- ggplot(data_for_hists,
                  colour = "black",
                  aes(y = after_stat(count / sum(count)))) +
   theme_bw() +
-  ylab("Frequency") +
-  xlab("Hav to complete") +
   theme(plot.title = element_text(size = 20),
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
@@ -115,7 +113,7 @@ hist_2 <- ggplot(data_for_hists,
           label = "1",
           color = "black",
           size = 5) +
-  labs(x = "", y = "Frequency", size = 34, family = "Helvetica") +
+  labs(x = "Mutual clicks", y = "Frequency", size = 34, family = "Helvetica") +
   coord_cartesian(ylim = c(0, 0.5), xlim = c(-0.2, 3)) +
   theme(legend.position = "none",
         axis.text.x = element_text(size = 15),

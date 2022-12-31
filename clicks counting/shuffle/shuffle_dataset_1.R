@@ -62,8 +62,6 @@ hist_1 <- ggplot(data_for_hists,
                  colour = "black",
                  aes(y = after_stat(count / sum(count))))+
   theme_bw() +
-  ylab("Frequency") +
-  xlab("Hav to complete") +
   theme(plot.title = element_text(size = 20),
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
@@ -76,12 +74,15 @@ hist_1 <- ggplot(data_for_hists,
              linetype = "dashed",
              size = 0.8) +
   annotate("text",
-          x = 0.7,
-          y = 0.18,
+          x = 0.75,
+          y = 0.16,
           label = "0.644",
           color = "black",
           size = 5) +
-  labs(x = "", y = "Frequency", size = 34, family = "Helvetica") +
+  labs(x = "Ratio of mutual clicks to\n clicking experiences",
+       y = "Frequency",
+       size = 34,
+       family = "Helvetica") +
   coord_cartesian(ylim = c(0, 0.2), xlim = c(0.1, 1)) +
   theme(legend.position = "none",
         axis.text.x = element_text(size = 15),
@@ -94,13 +95,11 @@ pv_right_tail(mean_prop_vec, 2.8)
 
 hist_2 <- ggplot(data_for_hists,
                  aes(x = as.numeric(mean.mutual.clicks))) +
-  geom_histogram(bins = 14,
+  geom_histogram(bins = 10,
                  fill = "gray63",
                  colour = "black",
                  aes(y = after_stat(count / sum(count))))+
   theme_bw() +
-  ylab("Frequency") +
-  xlab("Hav to complete") +
   theme(plot.title = element_text(size = 20),
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
@@ -113,12 +112,12 @@ hist_2 <- ggplot(data_for_hists,
              linetype = "dashed",
              size = 0.8) +
   annotate("text",
-          x = 3,
+          x = 3.1,
           y = 0.25,
           label = "2.8",
           color = "black",
           size = 5) +
-  labs(x = "", y = "Frequency", size = 34, family = "Helvetica") +
+  labs(x = "Mutual clicks", y = "Frequency", size = 34, family = "Helvetica") +
   coord_cartesian(ylim = c(0, 0.3), xlim = c(0.5, 4)) +
   theme(legend.position = "none",
         axis.text.x = element_text(size = 15),
