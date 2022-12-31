@@ -245,7 +245,7 @@ diameter_directed_hist <- ggplot(sim_res_dataset3_test,
   geom_vline(aes(xintercept = 3, size = 0.3),
              color = "#c72727",
              linetype = "dashed",
-             size = 1) +
+             size = 0.8) +
   annotate("text",
             x = 3.2,
             y = 0.95,
@@ -284,7 +284,7 @@ modularity_hist <- ggplot(sim_res_dataset3_test,
   geom_vline(aes(xintercept = -0.109, size = 0.3),
              color = "#c72727",
              linetype = "dashed",
-             size = 1) +
+             size = 0.8) +
   annotate("text",
             x = -0.1055,
             y = 0.32,
