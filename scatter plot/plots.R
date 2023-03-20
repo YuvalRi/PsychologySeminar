@@ -1,5 +1,6 @@
 library(ggplot2)
 library(svglite)
+library(httpgd)
 
 ## Scatter Plots for self reports
 
@@ -30,9 +31,9 @@ sum_consecutive_yuval <- function(column) {
   }
   return(result)
 }
-
-data <- read.csv("C:\\Users\\Coffe\\OneDrive\\english folder\\Seminar - clicks\\analysis\\scatter plot\\all_datasets_together.csv")
-# data <- read.csv("scatter plot//all_datasets_together.csv")
+ 
+# original data set- self reports for all dyads
+data <- read.csv("C:\\Users\\yuval\\OneDrive\\english folder\\Seminar - clicks\\analysis\\scatter plot\\all_datasets_together.csv")
 
 creating_scatter_plots <- function(data, column) {
   #' Creating scatter plot for a specific column in data
@@ -41,15 +42,33 @@ creating_scatter_plots <- function(data, column) {
   df_for_plot$color <- sum_vector
   graph <- ggplot(data = df_for_plot, aes(x = x,
                                 y = y)) +
-    geom_point(aes(color = as.character(color))) +
-    scale_color_brewer(palette = "Paired",
+    geom_point(aes(color = as.character(color)), shape=19) +
+    #scale_color_brewer(palette = 1,
+      #labels = c("No click", "One sided click",
+                                  #"Mutual click")) +
+    scale_color_manual(values = c("lightskyblue", "dodgerblue1", "dodgerblue4"),
                        labels = c("No click", "One sided click",
-                                  "Two sided click")) +
-    theme(panel.background = element_blank()) +
+                                  "Mutual click"))+
+    theme_bw() +
+    theme(
+      # Hide panel borders and remove grid lines
+      panel.border = element_blank(),
+      panel.grid.major = element_blank(),
+      panel.grid.minor = element_blank(),
+      # Change axis line
+      axis.line = element_line(colour = "black"),
+      axis.text.x = element_text(size = 15),
+      axis.text.y = element_text(size = 15),
+      text = element_text(size = 17)
+    ) +
     labs(x = "Subject", y = "Partner") +
-    labs(colour = "legend")
+    labs(colour = "")
   return(graph)
 }
+
+hgd()
+hgd_browse()
+creating_scatter_plots(data, data$liking)
 
 all_plots <- function(data) {
   #' Creating scatter plots and save them as svg
